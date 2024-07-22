@@ -14,6 +14,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.ernestschcneider.remindersapp.ui.theme.AppTheme
+import com.ernestschcneider.remindersapp.ui.theme.PreviewLightDark
 
 @Composable
 fun PrimaryButton(
@@ -53,10 +54,6 @@ fun SecondaryButton(
         Text(text = label, style = AppTheme.typography.labelLarge)
     }
 }
-
-@Preview(name = "Light", uiMode = Configuration.UI_MODE_NIGHT_NO)
-@Preview(name = "Dark", uiMode = Configuration.UI_MODE_NIGHT_YES)
-annotation class PreviewLightDark
 
 @PreviewLightDark
 @Composable
