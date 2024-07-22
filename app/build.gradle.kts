@@ -69,6 +69,7 @@ dependencies {
     androidTestImplementation(libs.bundles.ui.testing)
 
     testImplementation(libs.bundles.unit.testing)
+    debugImplementation(libs.androidx.ui.tooling)
 
     testRuntimeOnly(libs.junit.jupiter.engine)
 }
