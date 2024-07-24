@@ -5,7 +5,7 @@ plugins {
 }
 
 android {
-    namespace = "com.ernestschcneider.remindersapp.core.view"
+    namespace = "com.ernestschcneider.feature.reminders"
     compileSdk = libs.versions.compileSdkVersion.get().toInt()
 
     defaultConfig {
@@ -36,12 +36,8 @@ android {
     buildFeatures {
         compose = true
     }
-
 }
 
 dependencies {
-    api(platform(libs.compose.bom))
-    api(libs.bundles.compose)
-
-    debugImplementation(libs.bundles.compose.debug)
+    implementation(project(":core:view"))
 }

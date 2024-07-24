@@ -5,7 +5,7 @@ plugins {
 }
 
 android {
-    namespace = "com.ernestschcneider.remindersapp.core.view"
+    namespace = "com.ernestschcneider.feature.remiderdetails"
     compileSdk = libs.versions.compileSdkVersion.get().toInt()
 
     defaultConfig {
@@ -24,6 +24,7 @@ android {
             )
         }
     }
+
     compileOptions {
         val javaVersion = libs.versions.javaVersion.get()
         sourceCompatibility = JavaVersion.toVersion(javaVersion)
@@ -36,12 +37,8 @@ android {
     buildFeatures {
         compose = true
     }
-
 }
 
 dependencies {
-    api(platform(libs.compose.bom))
-    api(libs.bundles.compose)
-
-    debugImplementation(libs.bundles.compose.debug)
+    implementation(project(":core:view"))
 }

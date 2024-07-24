@@ -2,6 +2,7 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kapt)
+    alias(libs.plugins.compose.compiler)
 }
 
 android {
@@ -61,6 +62,8 @@ android {
 
 dependencies {
     implementation(project(":core:view"))
+    implementation(project(":feature:reminders"))
+    implementation(project(":feature:reminderdetails"))
     api(platform(libs.compose.bom))
     api(libs.bundles.compose)
 
