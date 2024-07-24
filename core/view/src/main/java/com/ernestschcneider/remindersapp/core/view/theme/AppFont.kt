@@ -1,9 +1,9 @@
-package com.ernestschcneider.remindersapp.ui.theme
+package com.ernestschcneider.remindersapp.core.view.theme
 
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
-import com.ernestschcneider.remindersapp.R
+import com.ernestschcneider.remindersapp.core.view.R
 
 val IbmPlexSans = FontFamily(
     Font(R.font.ibmplexsans_regular, FontWeight.Normal),

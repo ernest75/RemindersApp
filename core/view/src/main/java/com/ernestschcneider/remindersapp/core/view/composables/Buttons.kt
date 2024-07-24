@@ -1,6 +1,5 @@
-package com.ernestschcneider.remindersapp
+package com.ernestschcneider.remindersapp.core.view.composables
 
-import android.content.res.Configuration
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -11,10 +10,10 @@ import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.ernestschcneider.remindersapp.ui.theme.AppTheme
-import com.ernestschcneider.remindersapp.ui.theme.PreviewLightDark
+import com.ernestschcneider.remindersapp.core.view.theme.AppTheme
+import com.ernestschcneider.remindersapp.core.view.theme.PreviewLightDark
+
 
 @Composable
 fun PrimaryButton(

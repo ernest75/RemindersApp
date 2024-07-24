@@ -1,4 +1,4 @@
-package com.ernestschcneider.remindersapp.ui.theme
+package com.ernestschcneider.remindersapp.core.view.theme
 
 import android.content.res.Configuration
 import androidx.compose.ui.tooling.preview.Preview

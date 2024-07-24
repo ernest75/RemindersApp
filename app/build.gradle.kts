@@ -6,14 +6,12 @@ plugins {
 
 android {
     namespace = "com.ernestschcneider.remindersapp"
-    compileSdk = 34
+    compileSdk = libs.versions.compileSdkVersion.get().toInt()
 
     defaultConfig {
         applicationId = "com.ernestschcneider.remindersapp"
-        minSdk = 24
-        targetSdk = 34
-        versionCode = 1
-        versionName = "1.0"
+        minSdk = libs.versions.minSdkVersion.get().toInt()
+        targetSdk = libs.versions.compileSdkVersion.get().toInt()
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
@@ -62,6 +60,7 @@ android {
 }
 
 dependencies {
+    implementation(project(":core:view"))
     api(platform(libs.compose.bom))
     api(libs.bundles.compose)
 

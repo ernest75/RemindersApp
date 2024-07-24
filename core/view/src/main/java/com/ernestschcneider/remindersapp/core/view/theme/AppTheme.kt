@@ -1,4 +1,4 @@
-package com.ernestschcneider.remindersapp.ui.theme
+package com.ernestschcneider.remindersapp.core.view.theme
 
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.shape.RoundedCornerShape
