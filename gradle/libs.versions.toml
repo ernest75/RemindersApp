@@ -6,7 +6,7 @@ javaVersion = "17"
 gradlePluginVersion = "8.4.1"
 kotlinSerializationVersion = "1.7.20"
 truthVersion = "1.1.5"
-kotlinVersion = "1.7.20"
+kotlinVersion = "2.0.0"
 androidxCoreKtxVersion = "1.13.1"
 composeBomVersion = "2024.05.00"
 composeActivityVersion = "1.9.0"
@@ -65,3 +65,4 @@ kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlinVer
 kapt = { id = "org.jetbrains.kotlin.kapt", version.ref = "kotlinVersion" }
 kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlinSerializationVersion" }
 parcelable = { id = "org.jetbrains.kotlin.plugin.parcelize", version.ref = "kotlinVersion" }
+compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlinVersion" }
