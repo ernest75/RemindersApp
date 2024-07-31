@@ -7,7 +7,6 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.rememberNavController
 import com.ernestschcneider.feature.remiderdetails.navigateToReminderDetailsScreen
 import com.ernestschcneider.feature.remiderdetails.remindersDetailScreen
-import com.ernestschcneider.feature.reminders.navigateToReminders
 import com.ernestschcneider.feature.reminders.remindersScreen
 
 @Composable
@@ -19,8 +18,8 @@ fun MainApp() {
         startDestination = "reminders"
     ){
         remindersScreen(
-            onReminderDetail = {
-                navController.navigateToReminderDetailsScreen()
+            onReminderClick = { reminderId ->
+                navController.navigateToReminderDetailsScreen(reminderId)
             }
         )
 

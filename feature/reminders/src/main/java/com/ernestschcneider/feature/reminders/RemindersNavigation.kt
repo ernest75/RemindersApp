@@ -11,11 +11,11 @@ import androidx.navigation.compose.composable
 const val REMINDERS_ROUTE = "reminders"
 
 fun NavGraphBuilder.remindersScreen(
-  onReminderDetail: () -> Unit
+    onReminderClick: (reminderId: String) -> Unit
 ){
     composable(REMINDERS_ROUTE) {
         RemindersScreen(
-            onReminderDetail = onReminderDetail
+            onReminderDetail = onReminderClick
         )
     }
 }
@@ -26,11 +26,11 @@ fun NavController.navigateToReminders() {
 
 @Composable
 internal fun RemindersScreen(
-    onReminderDetail: () -> Unit
+    onReminderDetail: (reminderId: String) -> Unit
 ) {
     Column {
         Text(text = "RemindersScreen")
-        TextButton(onClick = onReminderDetail) {
+        TextButton(onClick = { onReminderDetail("reminderId") }) {
             Text(text = "ToDetail")
         }
     }

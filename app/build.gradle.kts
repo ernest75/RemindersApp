@@ -3,6 +3,7 @@ plugins {
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kapt)
     alias(libs.plugins.compose.compiler)
+    alias(libs.plugins.hilt.android)
 }
 
 android {
@@ -66,6 +67,10 @@ dependencies {
     implementation(project(":feature:reminderdetails"))
     api(platform(libs.compose.bom))
     api(libs.bundles.compose)
+
+    implementation(libs.bundles.hilt)
+
+    kapt(libs.hilt.compiler)
 
     androidTestImplementation(platform(libs.compose.bom))
     androidTestImplementation(libs.bundles.ui.testing)

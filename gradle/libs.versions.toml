@@ -20,6 +20,8 @@ uiToolingVersion = "1.6.8"
 junitVersion = "4.13.2"
 appcompatVersion = "1.7.0"
 materialVersion = "1.12.0"
+hiltVersion = "2.51"
+hiltNavigationVersion = "1.2.0"
 
 [libraries]
 androidx-ktx = { module = "androidx.core:core-ktx", version.ref = "androidxCoreKtxVersion" }
@@ -54,6 +56,12 @@ androidx-ui-tooling = { group = "androidx.compose.ui", name = "ui-tooling", vers
 junit = { group = "junit", name = "junit", version.ref = "junitVersion" }
 androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompatVersion" }
 material = { group = "com.google.android.material", name = "material", version.ref = "materialVersion" }
+hilt-android = { module = "com.google.dagger:hilt-android", version.ref = "hiltVersion" }
+hilt-navigation = { module = "androidx.hilt:hilt-navigation-compose", version.ref = "hiltNavigationVersion" }
+hilt-compiler = { module = "com.google.dagger:hilt-compiler", version.ref = "hiltVersion" }
+hilt-android-test = { module = "com.google.dagger:hilt-android-testing", version.ref = "hiltVersion" }
+hilt-android-test-compiler = { module = "com.google.dagger:hilt-android-compiler", version.ref = "hiltVersion" }
+
 
 [bundles]
 androidx = ["androidx-ktx", "androidx-lifecycle-runtime"]
@@ -62,6 +70,7 @@ compose-debug = ["compose-ui-tooling", "compose-ui-test-manifest"]
 retrofit = ["network-okhttp", "network-retrofit", "network-serialization", "network-serialization-converter"]
 ui-testing = ["androidx-junit", "androidx-espresso", "androidx-compose-test"]
 unit-testing = ["jupiter", "jupiter-params", "truth", "jupiter-vintage", "test-coroutines", "test-okhttp-mockserver"]
+hilt = ["hilt-android", "hilt-navigation"]
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "gradlePluginVersion" }
@@ -71,3 +80,4 @@ kapt = { id = "org.jetbrains.kotlin.kapt", version.ref = "kotlinVersion" }
 kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlinVersion" }
 parcelable = { id = "org.jetbrains.kotlin.plugin.parcelize", version.ref = "kotlinVersion" }
 compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlinVersion" }
+hilt-android = { id = "com.google.dagger.hilt.android", version.ref = "hiltVersion" }

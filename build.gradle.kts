@@ -6,4 +6,5 @@ plugins {
     alias(libs.plugins.kapt) apply false
     alias(libs.plugins.parcelable) apply false
     alias(libs.plugins.compose.compiler) apply false
+    alias(libs.plugins.hilt.android) apply false
 }
