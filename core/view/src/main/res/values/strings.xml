@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">RemindersApp</string>
+    <string name="note_icon">Note icon</string>
+    <string name="delete_icon">"Delete icon"</string>
+    <string name="close_icon">"Close icon"</string>
+</resources>

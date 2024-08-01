@@ -12,7 +12,7 @@ fun NavGraphBuilder.remindersDetailScreen(
     onNavigateUp: () -> Unit
 ) {
     composable(REMINDER_DETAILS_ROUTE) {
-        RemindersDetailScreenContainer(
+        ReminderDetailScreenContainer(
             onNavigateUp = onNavigateUp
         )
     }

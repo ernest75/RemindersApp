@@ -16,6 +16,8 @@ data class AppColorScheme(
     val onPrimary: Color,
     val secondary: Color,
     val onSecondary: Color,
+    val primaryContainer: Color,
+    val surfaceContainerHigh: Color
 )
 
 @Stable
@@ -50,6 +52,8 @@ val LocalAppColorScheme = staticCompositionLocalOf {
         onPrimary = Color.Unspecified,
         secondary = Color.Unspecified,
         onSecondary = Color.Unspecified,
+        primaryContainer = Color.Unspecified,
+        surfaceContainerHigh = Color.Unspecified
     )
 }
 

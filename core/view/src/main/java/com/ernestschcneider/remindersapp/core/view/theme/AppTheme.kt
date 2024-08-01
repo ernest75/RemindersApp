@@ -15,7 +15,9 @@ private val darkColorScheme = AppColorScheme(
     primary = primaryDark,
     onPrimary = onPrimaryDark,
     secondary = secondaryDark,
-    onSecondary = onSecondaryDark
+    onSecondary = onSecondaryDark,
+    primaryContainer = primaryContainerDark,
+    surfaceContainerHigh = surfaceContainerHighDark
 )
 
 private val lightColorScheme = AppColorScheme(
@@ -24,7 +26,9 @@ private val lightColorScheme = AppColorScheme(
     primary = primaryLight,
     onPrimary = onPrimaryLight,
     secondary = secondaryLight,
-    onSecondary = onSecondaryLight
+    onSecondary = onSecondaryLight,
+    primaryContainer = primaryContainerLight,
+    surfaceContainerHigh = surfaceContainerHighLight
 )
 
 private val typography = AppTypography(
