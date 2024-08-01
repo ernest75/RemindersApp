@@ -12,7 +12,7 @@ import com.ernestschcneider.remindersapp.core.view.theme.AppTheme
 import com.ernestschcneider.remindersapp.core.view.theme.PreviewLightDark
 
 @Composable
-internal fun ReminderDetailScreenContainer(
+internal fun ReminderDetailScreen(
     viewModel: ReminderDetailsViewModel = hiltViewModel(),
     onNavigateUp: () -> Unit
 ) {
@@ -20,14 +20,14 @@ internal fun ReminderDetailScreenContainer(
     LaunchedEffect(Unit) {
         viewModel.loadRemindersDetails()
     }
-    ReminderDetailScreen(
+    ReminderDetailScreenContent(
         onNavigateUp,
         screenState
     )
 }
 
 @Composable
-private fun ReminderDetailScreen(
+private fun ReminderDetailScreenContent(
     onNavigateUp: () -> Unit,
     screenState: ReminderDetailsScreenState
 ) {
@@ -44,7 +44,7 @@ private fun ReminderDetailScreen(
 @PreviewLightDark
 private fun ReminderDetailsScreenPreview() {
 AppTheme{
-    ReminderDetailScreen(
+    ReminderDetailScreenContent(
         screenState = ReminderDetailsScreenState("Reminder Title"),
         onNavigateUp = {}
     )
