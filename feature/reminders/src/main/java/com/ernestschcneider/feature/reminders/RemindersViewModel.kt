@@ -68,6 +68,4 @@ class RemindersViewModel: ViewModel() {
         val items = items.filter { it != item }.toList()
         _screenState.update { it.copy(reminders = items) }
     }
-
-
 }
