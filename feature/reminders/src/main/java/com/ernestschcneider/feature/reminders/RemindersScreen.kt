@@ -26,14 +26,16 @@ import com.ernestschcneider.remindersapp.core.view.R
 import com.ernestschcneider.remindersapp.core.view.theme.AppTheme
 import com.ernestschcneider.remindersapp.core.view.theme.PreviewLightDark
 
-//@Composable
-//internal fun RemindersScreenContainer(
-//    onNavigateUp: () -> Unit
-//) {
-//    RemindersScreen(onNavigateUp = onNavigateUp) {
-//
-//    }
-//}
+@Composable
+internal fun RemindersScreenContainer(
+    onNavigateUp: () -> Unit,
+    onItemClicked: (reminderId: String) -> Unit
+) {
+    RemindersScreen(
+        onNavigateUp = onNavigateUp,
+        onItemClicked = onItemClicked
+    )
+}
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
