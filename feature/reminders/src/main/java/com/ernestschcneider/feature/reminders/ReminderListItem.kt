@@ -9,9 +9,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.Card
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -27,9 +25,10 @@ import com.ernestschcneider.remindersapp.core.view.theme.PreviewLightDark
 @Composable
 fun ReminderListItem(
     modifier: Modifier = Modifier,
-    item: RemindersScreenState.Reminder,
+    item: Reminder,
     onItemClicked: (reminderId: String) -> Unit,
-    @DrawableRes startDrawableRes: Int = R.drawable.ic_note_24
+    @DrawableRes startDrawableRes: Int = R.drawable.ic_note_24,
+    onDeleteItemClicked: (Reminder) -> Unit
 ) {
     Row(
         modifier = modifier
@@ -46,7 +45,8 @@ fun ReminderListItem(
             modifier = Modifier
                 .padding(start = 8.dp),
             painter = painterResource(
-                id = startDrawableRes),
+                id = startDrawableRes
+            ),
             contentDescription = stringResource(
                 R.string.note_icon
             )
@@ -58,7 +58,9 @@ fun ReminderListItem(
         )
         Spacer(modifier = Modifier.weight(1F))
         Image(
-            modifier = Modifier.padding(end = 8.dp  ),
+            modifier = Modifier
+                .padding(end = 8.dp)
+                .clickable { onDeleteItemClicked(item) },
             painter = painterResource(id = R.drawable.ic_delete_outline_24),
             contentDescription = stringResource(
                 id = R.string.delete_icon
@@ -67,7 +69,7 @@ fun ReminderListItem(
     }
 }
 
-val reminderNote = RemindersScreenState.Reminder(
+val reminderNote = Reminder(
     title = "TitleNote",
     type = ReminderType.Note,
     id = "1"
@@ -79,7 +81,8 @@ private fun ReminderListItemPreview() {
     AppTheme {
         ReminderListItem(
             item = reminderNote,
-            onItemClicked = {}
+            onItemClicked = {},
+            onDeleteItemClicked = {}
         )
     }
 }

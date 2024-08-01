@@ -11,7 +11,7 @@ fun NavGraphBuilder.remindersScreen(
     onReminderClick: (reminderId: String) -> Unit
 ){
     composable(REMINDERS_ROUTE) {
-        RemindersScreenContainer(
+        RemindersScreen(
             onNavigateUp = onNavigateUp,
             onItemClicked = onReminderClick
         )
