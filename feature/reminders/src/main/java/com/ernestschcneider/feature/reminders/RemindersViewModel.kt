@@ -11,7 +11,7 @@ class RemindersViewModel : ViewModel() {
     val screenState: StateFlow<RemindersScreenState> = _screenState.asStateFlow()
     var items = (1..50).map {
         Reminder(
-            id = it.toString(), title = "Item $it", type = if (it % 2 == 0) {
+            id = it.toString(), title = "Reminder $it", type = if (it % 3 == 0) {
                 ReminderType.Note
             } else ReminderType.List
         )

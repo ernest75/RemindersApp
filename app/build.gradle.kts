@@ -1,9 +1,12 @@
+import org.jlleitschuh.gradle.ktlint.reporter.ReporterType
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kapt)
     alias(libs.plugins.compose.compiler)
     alias(libs.plugins.hilt.android)
+    alias(libs.plugins.ktlint)
 }
 
 android {
@@ -18,6 +21,15 @@ android {
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
             useSupportLibrary = true
+        }
+    }
+
+    ktlint {
+        android = true
+        ignoreFailures = false
+        reporters {
+            reporter(ReporterType.CHECKSTYLE)
+            reporter(ReporterType.PLAIN)
         }
     }
 
