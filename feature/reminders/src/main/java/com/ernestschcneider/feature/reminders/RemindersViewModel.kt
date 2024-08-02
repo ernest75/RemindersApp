@@ -25,4 +25,12 @@ class RemindersViewModel : ViewModel() {
         items = items.filter { it != item }
         _screenState.update { it.copy(reminders = items) }
     }
+
+    fun onAddButtonClicked() {
+        _screenState.update { it.copy(showCreationDialog = true) }
+    }
+
+    fun onDismissDialog() {
+        _screenState.update { it.copy(showCreationDialog = false) }
+    }
 }

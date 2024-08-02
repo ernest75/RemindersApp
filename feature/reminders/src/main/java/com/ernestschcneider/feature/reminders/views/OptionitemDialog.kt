@@ -16,6 +16,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import com.ernestschcneider.remindersapp.core.view.R
+import com.ernestschcneider.remindersapp.core.view.theme.AppTheme
+import com.ernestschcneider.remindersapp.core.view.theme.PreviewLightDark
 
 @Composable
 fun OptionItemDialog(
@@ -26,11 +29,12 @@ fun OptionItemDialog(
     @StringRes contentDescriptionIconId: Int
 ) {
     Column(
-        modifier = modifier.clickable(onClick = onClickItem)
+        modifier = modifier
+            .height(24.dp)
+            .clickable(onClick = onClickItem)
     ) {
         Row(
             verticalAlignment = Alignment.CenterVertically,
-            modifier = Modifier.height(16.dp)
         ) {
             Image(
                 modifier = Modifier
@@ -43,9 +47,21 @@ fun OptionItemDialog(
 
             Text(
                 text = stringResource(textResId),
-                modifier = Modifier.padding(start = 24.dp)
+                modifier = Modifier.padding(start = 24.dp),
+                style = AppTheme.typography.labelLarge
             )
         }
         HorizontalDivider(modifier = Modifier.padding(top = 8.dp))
     }
+}
+
+@PreviewLightDark
+@Composable
+fun OptionItemDialogPreview() {
+    OptionItemDialog(
+        onClickItem = {},
+        drawableRes = R.drawable.ic_note_24,
+        textResId = R.string.reminder_note,
+        contentDescriptionIconId = R.string.note_icon
+    )
 }

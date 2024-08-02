@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.BasicAlertDialog
 import androidx.compose.material3.Card
+import androidx.compose.material3.CardColors
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -17,7 +18,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.ernestschcneider.remindersapp.core.view.R
 import com.ernestschcneider.remindersapp.core.view.R.string
-import com.ernestschcneider.remindersapp.core.view.composables.SecondaryButton
+import com.ernestschcneider.remindersapp.core.view.composables.PrimaryButton
 import com.ernestschcneider.remindersapp.core.view.theme.AppTheme
 import com.ernestschcneider.remindersapp.core.view.theme.PreviewLightDark
 
@@ -30,11 +31,11 @@ fun ReminderCreationDialog(
 ) {
     BasicAlertDialog(onDismissRequest = onDismiss) {
         Card(
-            //modifier  = modifier.background(AppTheme.colorScheme.primary),
-//            colors = CardColors(containerColor = AppTheme.colorScheme.primary,
-//                contentColor = AppTheme.colorScheme.onPrimary,
-//                disabledContentColor = AppTheme.colorScheme.primary.copy(alpha = 0.25F),
-//                disabledContainerColor = AppTheme.colorScheme.onPrimary.copy(alpha = 0.25F))
+            modifier  = modifier.padding(16.dp),
+            colors = CardColors(containerColor = AppTheme.colorScheme.secondaryContainer,
+                contentColor = AppTheme.colorScheme.scrim,
+                disabledContentColor = AppTheme.colorScheme.primary.copy(alpha = 0.25F),
+                disabledContainerColor = AppTheme.colorScheme.onPrimary.copy(alpha = 0.25F))
         ) {
             Column(
                 modifier = modifier
@@ -66,14 +67,11 @@ fun ReminderCreationDialog(
                     contentDescriptionIconId = string.list_icon
                 )
 
-                SecondaryButton(
+                PrimaryButton(
                     modifier = Modifier.align(Alignment.End),
-                    label = stringResource(
-                        id = string.cancel
-                    )
-                ) {
-
-                }
+                    label = stringResource(id = string.cancel),
+                    onClick = onDismiss
+                )
             }
         }
     }

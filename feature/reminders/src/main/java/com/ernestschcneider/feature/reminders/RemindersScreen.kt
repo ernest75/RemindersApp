@@ -24,6 +24,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.ernestschcneider.feature.reminders.views.ReminderCreationDialog
 import com.ernestschcneider.feature.reminders.views.ReminderListItem
 import com.ernestschcneider.remindersapp.core.view.R
 import com.ernestschcneider.remindersapp.core.view.composables.FloatingActionExtendedButton
@@ -44,7 +45,9 @@ internal fun RemindersScreen(
         onNavigateUp = onNavigateUp,
         onItemClicked = onItemClicked,
         screenState = state,
-        onDeleteItemClicked = remindersViewModel::removeItem
+        onDeleteItemClicked = remindersViewModel::removeItem,
+        onAddButtonClicked = remindersViewModel::onAddButtonClicked,
+        onDismissDialog = remindersViewModel::onDismissDialog
     )
 }
 
@@ -54,7 +57,9 @@ internal fun RemindersScreenContent(
     screenState: RemindersScreenState,
     onItemClicked: (reminderId: String) -> Unit,
     onNavigateUp: () -> Unit,
-    onDeleteItemClicked: (Reminder) -> Unit
+    onDeleteItemClicked: (Reminder) -> Unit,
+    onAddButtonClicked: () -> Unit,
+    onDismissDialog: () -> Unit
 ) {
     Scaffold(
         modifier = Modifier.fillMaxSize(),
@@ -62,7 +67,7 @@ internal fun RemindersScreenContent(
             modifier = Modifier
                 .padding(bottom = 24.dp),
             label = stringResource(id = R.string.add_reminder),
-            onClick = {}
+            onClick = onAddButtonClicked
         )},
         topBar = {
             CenterAlignedTopAppBar(
@@ -117,6 +122,13 @@ internal fun RemindersScreenContent(
                     }
                 }
             }
+            if (screenState.showCreationDialog){
+                ReminderCreationDialog(
+                    onDismiss = onDismissDialog,
+                    onCreateNote = {},
+                    onCreateListNotes = {}
+                )
+            }
         }
     }
 }
@@ -129,7 +141,9 @@ private fun RemaindersScreenPreview() {
             onNavigateUp = {},
             onItemClicked = {},
             screenState = RemindersScreenState(),
-            onDeleteItemClicked = {}
+            onDeleteItemClicked = {},
+            onAddButtonClicked = {},
+            onDismissDialog = {}
         )
     }
 }
