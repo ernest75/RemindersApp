@@ -2,7 +2,13 @@
 <resources>
     <string name="app_name">RemindersApp</string>
     <string name="note_icon">Note icon</string>
+    <string name="list_icon">List icon</string>
     <string name="delete_icon">"Delete icon"</string>
     <string name="close_icon">"Close icon"</string>
     <string name="add_reminder">"Add reminder"</string>
+    <string name="new_reminder">"New reminder"</string>
+    <string name="new_reminder_explanation">"Choose what type of reminder you want to create"</string>
+    <string name="reminder_note">"Reminder note"</string>
+    <string name="reminder_list">"Reminder list"</string>
+    <string name="cancel">"Cancel"</string>
 </resources>

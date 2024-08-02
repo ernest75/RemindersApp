@@ -1,4 +1,4 @@
-package com.ernestschcneider.feature.reminders
+package com.ernestschcneider.feature.reminders.views
 
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.Image
@@ -18,6 +18,8 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import com.ernestschcneider.feature.reminders.Reminder
+import com.ernestschcneider.feature.reminders.ReminderType
 import com.ernestschcneider.remindersapp.core.view.R
 import com.ernestschcneider.remindersapp.core.view.theme.AppTheme
 import com.ernestschcneider.remindersapp.core.view.theme.PreviewLightDark
