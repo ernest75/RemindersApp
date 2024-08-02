@@ -4,8 +4,12 @@ import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.ExtendedFloatingActionButton
+import androidx.compose.material3.Icon
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -54,6 +58,22 @@ fun SecondaryButton(
     }
 }
 
+@Composable
+    fun FloatingActionExtendedButton(
+    modifier: Modifier = Modifier,
+    label: String,
+    onClick: () -> Unit
+) {
+    ExtendedFloatingActionButton(
+        modifier = modifier,
+        containerColor = AppTheme.colorScheme.surfaceBright,
+        contentColor = AppTheme.colorScheme.onSurfaceBright,
+        text = {  Text(text = label, style = AppTheme.typography.labelLarge) },
+        onClick = onClick,
+        icon ={ Icon(Icons.Filled.Add, label)}
+    )
+}
+
 @PreviewLightDark
 @Composable
 private fun PreviewPrimaryButton() {
@@ -71,6 +91,9 @@ private fun PreviewPrimaryButton() {
                 label = "Secondary",
                 onClick= {}
             )
+            FloatingActionExtendedButton(label = "Add Reminder") {
+                
+            }
         }
     }
 }

@@ -25,6 +25,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.ernestschcneider.remindersapp.core.view.R
+import com.ernestschcneider.remindersapp.core.view.composables.FloatingActionExtendedButton
 import com.ernestschcneider.remindersapp.core.view.theme.AppTheme
 import com.ernestschcneider.remindersapp.core.view.theme.PreviewLightDark
 
@@ -56,6 +57,12 @@ internal fun RemindersScreenContent(
 ) {
     Scaffold(
         modifier = Modifier.fillMaxSize(),
+        floatingActionButton = {FloatingActionExtendedButton(
+            modifier = Modifier
+                .padding(bottom = 24.dp),
+            label = stringResource(id = R.string.add_reminder),
+            onClick = {}
+        )},
         topBar = {
             CenterAlignedTopAppBar(
                 title = {
@@ -107,8 +114,6 @@ internal fun RemindersScreenContent(
                             onDeleteItemClicked = onDeleteItemClicked
                         )
                     }
-
-
                 }
             }
         }

@@ -4,4 +4,5 @@
     <string name="note_icon">Note icon</string>
     <string name="delete_icon">"Delete icon"</string>
     <string name="close_icon">"Close icon"</string>
+    <string name="add_reminder">"Add reminder"</string>
 </resources>
