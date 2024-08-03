@@ -13,6 +13,7 @@
             <option value="$PROJECT_DIR$/core" />
             <option value="$PROJECT_DIR$/core/view" />
             <option value="$PROJECT_DIR$/feature" />
+            <option value="$PROJECT_DIR$/feature/remindercreation" />
             <option value="$PROJECT_DIR$/feature/reminderdetails" />
             <option value="$PROJECT_DIR$/feature/reminders" />
           </set>
