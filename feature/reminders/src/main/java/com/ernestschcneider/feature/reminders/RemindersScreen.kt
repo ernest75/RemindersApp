@@ -36,7 +36,8 @@ import com.ernestschcneider.remindersapp.core.view.theme.PreviewLightDark
 internal fun RemindersScreen(
     remindersViewModel: RemindersViewModel = hiltViewModel(),
     onNavigateUp: () -> Unit,
-    onItemClicked: (reminderId: String) -> Unit
+    onItemClicked: (reminderId: String) -> Unit,
+    onNoteCreationClick: () -> Unit
 ) {
     val state by remindersViewModel.screenState.collectAsStateWithLifecycle()
     LaunchedEffect(Unit) {
@@ -48,7 +49,8 @@ internal fun RemindersScreen(
         screenState = state,
         onDeleteItemClicked = remindersViewModel::removeItem,
         onAddButtonClicked = remindersViewModel::onAddButtonClicked,
-        onDismissDialog = remindersViewModel::onDismissDialog
+        onDismissDialog = remindersViewModel::onDismissDialog,
+        onNoteCreationClick = onNoteCreationClick
     )
 }
 
@@ -60,7 +62,8 @@ internal fun RemindersScreenContent(
     onNavigateUp: () -> Unit,
     onDeleteItemClicked: (Reminder) -> Unit,
     onAddButtonClicked: () -> Unit,
-    onDismissDialog: () -> Unit
+    onDismissDialog: () -> Unit,
+    onNoteCreationClick: () -> Unit
 ) {
     Scaffold(
         modifier = Modifier.fillMaxSize(),
@@ -128,7 +131,7 @@ internal fun RemindersScreenContent(
             if (screenState.showCreationDialog){
                 ReminderCreationDialog(
                     onDismiss = onDismissDialog,
-                    onCreateNote = {},
+                    onCreateNote = onNoteCreationClick,
                     onCreateListNotes = {}
                 )
             }
@@ -146,7 +149,8 @@ private fun RemaindersScreenPreview() {
             screenState = RemindersScreenState(),
             onDeleteItemClicked = {},
             onAddButtonClicked = {},
-            onDismissDialog = {}
+            onDismissDialog = {},
+            onNoteCreationClick = {}
         )
     }
 }

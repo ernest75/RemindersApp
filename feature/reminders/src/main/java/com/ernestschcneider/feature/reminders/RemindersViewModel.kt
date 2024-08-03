@@ -9,7 +9,7 @@ import kotlinx.coroutines.flow.update
 class RemindersViewModel : ViewModel() {
     private val _screenState = MutableStateFlow(RemindersScreenState())
     val screenState: StateFlow<RemindersScreenState> = _screenState.asStateFlow()
-    var items = (1..10).map {
+    private var items = (1..10).map {
         Reminder(
             id = it.toString(), title = "Reminder $it", type = if (it % 3 == 0) {
                 ReminderType.Note

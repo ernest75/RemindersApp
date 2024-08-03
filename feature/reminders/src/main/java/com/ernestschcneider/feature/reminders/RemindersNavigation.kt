@@ -8,12 +8,14 @@ const val REMINDERS_ROUTE = "reminders"
 
 fun NavGraphBuilder.remindersScreen(
     onNavigateUp: () -> Unit,
-    onReminderClick: (reminderId: String) -> Unit
+    onReminderClick: (reminderId: String) -> Unit,
+    onNoteCreationClick: () -> Unit
 ){
     composable(REMINDERS_ROUTE) {
         RemindersScreen(
             onNavigateUp = onNavigateUp,
-            onItemClicked = onReminderClick
+            onItemClicked = onReminderClick,
+            onNoteCreationClick = onNoteCreationClick
         )
     }
 }
