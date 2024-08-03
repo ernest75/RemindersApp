@@ -20,6 +20,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -71,6 +72,7 @@ internal fun RemindersScreenContent(
         )},
         topBar = {
             CenterAlignedTopAppBar(
+                modifier = Modifier.shadow(4.dp),
                 title = {
                     Text(
                         text = stringResource(id = R.string.app_name),
@@ -89,7 +91,8 @@ internal fun RemindersScreenContent(
                             )
                         )
                     }
-                }
+                },
+
             )
         }
     ) { paddingValues ->
