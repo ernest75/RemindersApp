@@ -11,4 +11,6 @@
     <string name="reminder_note">"Reminder note"</string>
     <string name="reminder_list">"Reminder list"</string>
     <string name="cancel">"Cancel"</string>
+    <string name="placeholder_creation_note_title">"Note title"</string>
+    <string name="back_arrow_icon">"Back arrow icon"</string>
 </resources>
