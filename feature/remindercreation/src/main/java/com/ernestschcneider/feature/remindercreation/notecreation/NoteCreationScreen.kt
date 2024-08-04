@@ -3,8 +3,7 @@ package com.ernestschcneider.feature.remindercreation.notecreation
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
+import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
@@ -29,9 +28,14 @@ internal fun NoteCreationScreen(
 @Composable
 fun NoteCreationScreenContent(onNavigateUp: () -> Unit) {
     Column(
-        modifier = Modifier.fillMaxSize().padding(top = 32.dp)
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(top = 48.dp)
     ){
-        RemindersTopAppBar(onNavigateUp = { /*TODO*/ }, onTitleUpdate = {})
+        RemindersTopAppBar(
+            onNavigateUp = onNavigateUp,
+            onTitleUpdate = {}
+        )
     }
 
 }
