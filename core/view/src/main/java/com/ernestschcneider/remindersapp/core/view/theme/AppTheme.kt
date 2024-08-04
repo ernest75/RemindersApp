@@ -21,7 +21,8 @@ private val darkColorScheme = AppColorScheme(
     surfaceBright = surfaceBrightDark,
     onSurfaceBright = onSurfaceDark,
     secondaryContainer = secondaryContainerDark,
-    scrim = scrimDark
+    scrim = scrimDark,
+    surfaceContainerLowest = surfaceContainerLowestDark
 )
 
 private val lightColorScheme = AppColorScheme(
@@ -36,7 +37,8 @@ private val lightColorScheme = AppColorScheme(
     surfaceBright = surfaceBrightLight,
     onSurfaceBright = onSurfaceLight,
     secondaryContainer = secondaryContainerLight,
-    scrim = scrimLight
+    scrim = scrimLight,
+    surfaceContainerLowest = surfaceContainerLowestLight
 )
 
 private val typography = AppTypography(
