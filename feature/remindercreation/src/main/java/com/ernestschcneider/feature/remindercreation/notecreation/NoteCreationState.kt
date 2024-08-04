@@ -1,5 +1,6 @@
 package com.ernestschcneider.feature.remindercreation.notecreation
 
-class NoteCreationState {
-
-}
+data class NoteCreationState(
+    val titleNote: String = "",
+    val noteContent: String = ""
+)

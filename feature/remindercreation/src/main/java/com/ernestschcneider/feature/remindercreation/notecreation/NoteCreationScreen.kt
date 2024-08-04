@@ -3,10 +3,14 @@ package com.ernestschcneider.feature.remindercreation.notecreation
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.text.KeyboardActions
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalFocusManager
+import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -21,12 +25,19 @@ internal fun NoteCreationScreen(
 ) {
     val state by noteCreationViewModel.screenState.collectAsStateWithLifecycle()
     NoteCreationScreenContent(
-        onNavigateUp = onNavigateUp
+        onNavigateUp = onNavigateUp,
+        state = state,
+        onNoteUpdate = noteCreationViewModel::onNoteUpdate
     )
 }
 
 @Composable
-fun NoteCreationScreenContent(onNavigateUp: () -> Unit) {
+fun NoteCreationScreenContent(
+    state: NoteCreationState,
+    onNavigateUp: () -> Unit,
+    onNoteUpdate: (String) -> Unit
+) {
+    val focusManager = LocalFocusManager.current
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -35,6 +46,16 @@ fun NoteCreationScreenContent(onNavigateUp: () -> Unit) {
         RemindersTopAppBar(
             onNavigateUp = onNavigateUp,
             onTitleUpdate = {}
+        )
+
+        TextField(
+            modifier = Modifier.fillMaxSize(),
+            value = state.noteContent,
+            onValueChange = onNoteUpdate,
+            keyboardOptions = KeyboardOptions(
+                imeAction = ImeAction.Done
+            ),
+            keyboardActions = KeyboardActions(onDone = { focusManager.clearFocus() })
         )
     }
 
@@ -45,7 +66,9 @@ fun NoteCreationScreenContent(onNavigateUp: () -> Unit) {
 private fun NoteCreationScreenPreview() {
     AppTheme {
         NoteCreationScreenContent(
-            onNavigateUp = {}
+            onNavigateUp = {},
+            onNoteUpdate = {},
+            state = NoteCreationState()
         )
     }
 }
