@@ -8,9 +8,11 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
@@ -26,10 +28,17 @@ internal fun NoteCreationScreen(
     onNavigateUp: () -> Unit
 ) {
     val state by noteCreationViewModel.screenState.collectAsStateWithLifecycle()
+    val focusRequester = remember { FocusRequester() }
+    LaunchedEffect(Unit) {
+        focusRequester.requestFocus()
+    }
+
     NoteCreationScreenContent(
         onNavigateUp = onNavigateUp,
         state = state,
-        onNoteUpdate = noteCreationViewModel::onNoteUpdate
+        onNoteUpdate = noteCreationViewModel::onNoteUpdate,
+        focusRequester = focusRequester
+
     )
 }
 
@@ -37,7 +46,8 @@ internal fun NoteCreationScreen(
 fun NoteCreationScreenContent(
     state: NoteCreationState,
     onNavigateUp: () -> Unit,
-    onNoteUpdate: (String) -> Unit
+    onNoteUpdate: (String) -> Unit,
+    focusRequester: FocusRequester
 ) {
     val focusManager = LocalFocusManager.current
     Column(
@@ -47,7 +57,8 @@ fun NoteCreationScreenContent(
     ){
         RemindersTopAppBar(
             onNavigateUp = onNavigateUp,
-            onTitleUpdate = {}
+            onTitleUpdate = {},
+            focusRequester = focusRequester
         )
 
         TextField(
@@ -62,7 +73,9 @@ fun NoteCreationScreenContent(
             keyboardOptions = KeyboardOptions(
                 imeAction = ImeAction.Done
             ),
-            keyboardActions = KeyboardActions(onDone = { focusManager.clearFocus() })
+            keyboardActions = KeyboardActions(onDone = {
+                focusManager.clearFocus()
+            })
         )
     }
 
@@ -75,7 +88,8 @@ private fun NoteCreationScreenPreview() {
         NoteCreationScreenContent(
             onNavigateUp = {},
             onNoteUpdate = {},
-            state = NoteCreationState()
+            state = NoteCreationState(),
+            focusRequester = FocusRequester()
         )
     }
 }

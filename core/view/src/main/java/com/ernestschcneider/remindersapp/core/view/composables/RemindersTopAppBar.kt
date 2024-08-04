@@ -22,6 +22,8 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.painterResource
@@ -36,13 +38,14 @@ import com.ernestschcneider.remindersapp.core.view.theme.PreviewLightDark
 fun RemindersTopAppBar(
     modifier: Modifier = Modifier,
     onNavigateUp: () -> Unit,
-    onTitleUpdate: (newValue: String) -> Unit
+    onTitleUpdate: (newValue: String) -> Unit,
+    focusRequester: FocusRequester
 ) {
     val title = remember {
         mutableStateOf("")
     }
     val focusManager = LocalFocusManager.current
-    Column(
+        Column(
         modifier = modifier
             .fillMaxWidth()
             .height(56.dp)
@@ -68,7 +71,8 @@ fun RemindersTopAppBar(
             Spacer(modifier = Modifier.width(12.dp))
             TextField(
                 modifier = Modifier
-                    .fillMaxWidth(),
+                    .fillMaxWidth()
+                    .focusRequester(focusRequester),
                 colors = TextFieldDefaults.colors(
                     focusedContainerColor = Color.Transparent,
                     disabledContainerColor = Color.Transparent,
@@ -81,12 +85,15 @@ fun RemindersTopAppBar(
                 value = title.value,
                 onValueChange = {
                     title.value = it
-                    onTitleUpdate(it)
+                  //  onTitleUpdate(it)
                 },
                 keyboardOptions = KeyboardOptions(
                     imeAction = ImeAction.Done
                 ),
-                keyboardActions = KeyboardActions(onDone = { focusManager.clearFocus() })
+                keyboardActions = KeyboardActions(onDone = {
+                    focusManager.clearFocus()
+                    onTitleUpdate(title.value)
+                })
             )
         }
     }
@@ -97,6 +104,7 @@ fun RemindersTopAppBar(
 private fun ReminderTopAppBar() {
     RemindersTopAppBar(
         onNavigateUp = {},
-        onTitleUpdate = {}
+        onTitleUpdate = {},
+        focusRequester = FocusRequester()
     )
 }
