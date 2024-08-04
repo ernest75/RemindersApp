@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Icon
 import androidx.compose.material3.TextField
@@ -17,6 +18,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
@@ -33,13 +35,14 @@ fun RemindersTopAppBar(
     val title = remember {
         mutableStateOf("")
     }
+    val focusManager = LocalFocusManager.current
     Column(
         modifier = modifier.fillMaxWidth()
     ) {
         Row(
             verticalAlignment = Alignment.CenterVertically,
             modifier = Modifier
-                .padding(vertical = 12.dp, horizontal = 16.dp)
+                .padding(horizontal = 16.dp)
         ) {
             Box(
                 modifier = Modifier
@@ -58,14 +61,14 @@ fun RemindersTopAppBar(
                 modifier = Modifier
                     .fillMaxWidth(),
                 value = title.value,
-                placeholder = {stringResource(id = R.string.note_icon)},
                 onValueChange = {
                     title.value = it
                     onTitleUpdate(it)
                 },
                 keyboardOptions = KeyboardOptions(
                     imeAction = ImeAction.Done
-                )
+                ),
+                keyboardActions = KeyboardActions(onDone = { focusManager.clearFocus() })
             )
         }
     }

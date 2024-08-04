@@ -67,7 +67,7 @@ internal fun RemindersScreenContent(
 ) {
     Scaffold(
         modifier = Modifier.fillMaxSize(),
-        floatingActionButton = {FloatingActionExtendedButton(
+        floatingActionButton = { FloatingActionExtendedButton(
             modifier = Modifier
                 .padding(bottom = 24.dp),
             label = stringResource(id = R.string.add_reminder),
