@@ -45,7 +45,7 @@ fun RemindersTopAppBar(
         mutableStateOf("")
     }
     val focusManager = LocalFocusManager.current
-        Column(
+    Column(
         modifier = modifier
             .fillMaxWidth()
             .height(56.dp)
@@ -81,11 +81,16 @@ fun RemindersTopAppBar(
                     unfocusedIndicatorColor = Color.Transparent,
                     disabledIndicatorColor = Color.Transparent,
                 ),
-                placeholder = { Text("Note title") },
+                placeholder = {
+                    Text(
+                        stringResource(id = R.string.type_note_title),
+                        color = AppTheme.colorScheme.secondary
+                    )
+                },
                 value = title.value,
                 onValueChange = {
                     title.value = it
-                  //  onTitleUpdate(it)
+                    //  onTitleUpdate(it)
                 },
                 keyboardOptions = KeyboardOptions(
                     imeAction = ImeAction.Done

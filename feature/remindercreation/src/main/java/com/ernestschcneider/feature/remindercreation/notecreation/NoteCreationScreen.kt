@@ -1,24 +1,33 @@
 package com.ernestschcneider.feature.remindercreation.notecreation
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalFocusManager
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.ernestschcneider.remindersapp.core.view.R.string
 import com.ernestschcneider.remindersapp.core.view.composables.RemindersTopAppBar
+import com.ernestschcneider.remindersapp.core.view.composables.SecondaryButton
 import com.ernestschcneider.remindersapp.core.view.theme.AppTheme
 import com.ernestschcneider.remindersapp.core.view.theme.PreviewLightDark
 
@@ -52,9 +61,10 @@ fun NoteCreationScreenContent(
     val focusManager = LocalFocusManager.current
     Column(
         modifier = Modifier
-            .fillMaxSize()
             .padding(top = 48.dp)
-    ){
+            .fillMaxSize()
+            .background(AppTheme.colorScheme.secondaryContainer)
+    ) {
         RemindersTopAppBar(
             onNavigateUp = onNavigateUp,
             onTitleUpdate = {},
@@ -62,20 +72,28 @@ fun NoteCreationScreenContent(
         )
 
         TextField(
-            modifier = Modifier.fillMaxSize(),
+            modifier = Modifier.fillMaxWidth(),
             value = state.noteContent,
             onValueChange = onNoteUpdate,
             colors = TextFieldDefaults.colors(
                 focusedContainerColor = AppTheme.colorScheme.secondaryContainer,
                 disabledContainerColor = AppTheme.colorScheme.secondaryContainer,
-                unfocusedContainerColor = AppTheme.colorScheme.secondaryContainer
+                unfocusedContainerColor = AppTheme.colorScheme.secondaryContainer,
+                focusedIndicatorColor = Color.Transparent,
+                unfocusedIndicatorColor = Color.Transparent
             ),
             keyboardOptions = KeyboardOptions(
                 imeAction = ImeAction.Done
             ),
             keyboardActions = KeyboardActions(onDone = {
                 focusManager.clearFocus()
-            })
+            }),
+            placeholder = { Text(stringResource(id = string.type_note_text), color = AppTheme.colorScheme.secondary) }
+        )
+        SecondaryButton(
+            modifier = Modifier.align(Alignment.CenterHorizontally),
+            label = stringResource(id = string.save_note),
+            onClick = {}
         )
     }
 
