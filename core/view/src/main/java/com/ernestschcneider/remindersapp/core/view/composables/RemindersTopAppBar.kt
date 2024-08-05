@@ -52,8 +52,7 @@ fun RemindersTopAppBar(
             .background(AppTheme.colorScheme.surfaceContainerLowest)
     ) {
         Row(
-            verticalAlignment = Alignment.CenterVertically,
-            modifier = Modifier
+            verticalAlignment = Alignment.CenterVertically
         ) {
             Box(
                 modifier = Modifier
