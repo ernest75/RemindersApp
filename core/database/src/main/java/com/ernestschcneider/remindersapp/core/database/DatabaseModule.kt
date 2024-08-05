@@ -26,6 +26,6 @@ object DatabaseModule {
     @Provides
     @Singleton
     fun provideUserDao(database: AppDatabase): NoteDao {
-        return database.userDao()
+        return database.noteDao()
     }
 }
