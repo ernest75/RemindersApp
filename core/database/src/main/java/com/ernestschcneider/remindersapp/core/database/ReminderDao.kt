@@ -7,13 +7,13 @@ import androidx.room.OnConflictStrategy
 import androidx.room.Query
 
 @Dao
-interface NoteDao {
-    @Query("SELECT * FROM note")
-    suspend fun loadAll(): List<NoteEntity>
+interface ReminderDao {
+    @Query("SELECT * FROM reminders")
+    suspend fun loadAll(): List<ReminderEntity>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insert(note: NoteEntity)
+    suspend fun insert(note: ReminderEntity)
 
     @Delete
-    fun delete(note: NoteEntity)
+    fun delete(note: ReminderEntity)
 }

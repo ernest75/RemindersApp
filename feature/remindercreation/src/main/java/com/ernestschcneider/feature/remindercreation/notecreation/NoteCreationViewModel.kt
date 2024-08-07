@@ -3,7 +3,7 @@ package com.ernestschcneider.feature.remindercreation.notecreation
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ernestschcneider.remindersapp.local.LocalRepo
-import com.ernestschcneider.remindersapp.local.Note
+import com.ernestschcneider.remindersapp.local.Reminder
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -17,35 +17,34 @@ class NoteCreationViewModel @Inject constructor(
     private val localRepo: LocalRepo
 ) : ViewModel() {
 
-    private val _screenState = MutableStateFlow(NoteCreationState())
-    val screenState: StateFlow<NoteCreationState> = _screenState.asStateFlow()
+    private val _screenState = MutableStateFlow(ReminderCreationState())
+    val screenState: StateFlow<ReminderCreationState> = _screenState.asStateFlow()
 
-    private var noteTitle: String? = null
-    private var noteContent: String? = null
+    private var reminderTitle: String? = null
+    private var reminderContent: String? = null
 
-    fun onNoteContentUpdate(noteContent: String) {
-        this.noteContent = noteContent
-        _screenState.update { it.copy(noteContent = noteContent) }
+    fun onNoteContentUpdate(reminderContent: String) {
+        this.reminderContent = reminderContent
+        _screenState.update { it.copy(noteContent = reminderContent) }
     }
 
-    fun onNoteTitleUpdate(noteTitle: String) {
-        this.noteTitle = noteTitle
+    fun onNoteTitleUpdate(reminderTitle: String) {
+        this.reminderTitle = reminderTitle
     }
 
     fun onSavedNoteClicked() {
-        // TODO add dialog informing note is empty if titlte and content are?
-        if (!noteContent.isNullOrEmpty() || !noteTitle.isNullOrEmpty().not()) {
-            val note = Note(
-                noteTitle = noteTitle.orEmpty(),
-                noteContent = noteContent.orEmpty()
+        // TODO add dialog informing is empty?
+        if (reminderTitle.isNullOrEmpty().not()) {
+            val reminder = Reminder(
+                reminderTitle = reminderTitle.orEmpty(),
+                reminderContent = reminderContent.orEmpty()
             )
             viewModelScope.launch {
-                localRepo.saveNote(note)
+                localRepo.saveReminder(reminder)
             }
         } else {
             //TODO add dialog??
             println()
         }
-
     }
 }

@@ -30,7 +30,7 @@ object DatabaseModule {
 
     @Provides
     @Singleton
-    fun provideNoteDao(database: AppDatabase): NoteDao {
-        return database.noteDao()
+    fun provideNoteDao(database: AppDatabase): ReminderDao {
+        return database.reminderDao()
     }
 }

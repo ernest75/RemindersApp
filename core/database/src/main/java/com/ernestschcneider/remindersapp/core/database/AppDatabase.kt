@@ -6,12 +6,12 @@ import androidx.room.TypeConverters
 import com.ernestschcneider.remindersapp.core.database.converter.Converters
 
 @Database(
-    entities = [NoteEntity::class],
+    entities = [ReminderEntity::class],
     version = 1,
     exportSchema = false
 )
 @TypeConverters(Converters::class)
 abstract class AppDatabase : RoomDatabase() {
 
-    abstract fun noteDao(): NoteDao
+    abstract fun reminderDao(): ReminderDao
 }

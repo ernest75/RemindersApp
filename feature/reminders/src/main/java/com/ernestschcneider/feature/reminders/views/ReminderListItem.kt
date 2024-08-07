@@ -18,11 +18,11 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import com.ernestschcneider.feature.reminders.Reminder
-import com.ernestschcneider.feature.reminders.ReminderType
+import com.ernestschcneider.feature.reminders.data.models.ReminderType
 import com.ernestschcneider.remindersapp.core.view.R
 import com.ernestschcneider.remindersapp.core.view.theme.AppTheme
 import com.ernestschcneider.remindersapp.core.view.theme.PreviewLightDark
+import com.ernestschcneider.remindersapp.local.Reminder
 
 @Composable
 fun ReminderListItem(
@@ -38,7 +38,7 @@ fun ReminderListItem(
             .fillMaxWidth()
             .height(64.dp)
             .clickable {
-                onItemClicked(item.id)
+                onItemClicked(item.id.toString())
             }
             .background(AppTheme.colorScheme.primaryContainer),
         verticalAlignment = Alignment.CenterVertically,
@@ -54,7 +54,7 @@ fun ReminderListItem(
             )
         )
         Text(
-            text = item.title,
+            text = item.reminderTitle,
             modifier = Modifier.padding(start = 48.dp),
             style = AppTheme.typography.labelLarge,
         )
@@ -72,9 +72,9 @@ fun ReminderListItem(
 }
 
 val reminderNote = Reminder(
-    title = "TitleNote",
-    type = ReminderType.Note,
-    id = "1"
+    reminderTitle = "TitleNote",
+    reminderContent = "content",
+    reminderType = ReminderType.Note
 )
 
 @Composable

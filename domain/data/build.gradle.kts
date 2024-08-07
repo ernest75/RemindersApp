@@ -2,11 +2,10 @@ plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kapt)
-    alias(libs.plugins.compose.compiler)
 }
 
 android {
-    namespace = "com.ernestschcneider.remindersapp.core.database"
+    namespace = "com.ernestschcneider.feature.reminders.data"
     compileSdk = libs.versions.compileSdkVersion.get().toInt()
 
     defaultConfig {
@@ -33,21 +32,10 @@ android {
     kotlinOptions {
         jvmTarget = libs.versions.javaVersion.get()
     }
-
-    buildFeatures {
-        compose = true
-    }
 }
 
 dependencies {
-    implementation(project(":domain:data"))
+
     implementation(libs.bundles.hilt)
-    implementation(libs.bundles.room)
-
-    kapt(libs.room.compiler)
     kapt(libs.hilt.compiler)
-
-    testImplementation(libs.bundles.unit.testing)
-
-    testRuntimeOnly(libs.junit.jupiter.engine)
 }
