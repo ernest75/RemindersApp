@@ -1,20 +1,24 @@
 package com.ernestschcneider.remindersapp.local
 
-import com.ernestschcneider.remindersapp.core.database.NoteDao
+import com.ernestschcneider.remindersapp.core.database.ReminderDao
 import javax.inject.Inject
 
 
 class LocalRepo @Inject constructor(
-    private val noteDao: NoteDao
+    private val reminderDao: ReminderDao
 ): StorageRepo {
 
-    override suspend fun getAllReminders():List<Note>{
-      return noteDao.loadAll().map {
+    override suspend fun getAllReminders():List<Reminder>{
+      return reminderDao.loadAll().map {
            it.toDomain()
        }
     }
 
-    override suspend fun saveNote(note: Note) {
-       noteDao.insert(note.toNoteEntity())
+    override suspend fun saveReminder(reminder: Reminder) {
+       reminderDao.insert(reminder.toReminderEntity())
+    }
+
+    override suspend fun deleteReminder(reminder: Reminder) {
+        reminderDao.delete(reminder.toReminderEntity())
     }
 }

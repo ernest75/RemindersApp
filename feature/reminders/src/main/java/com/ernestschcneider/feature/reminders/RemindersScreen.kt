@@ -25,12 +25,14 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.ernestschcneider.feature.reminders.data.models.ReminderType
 import com.ernestschcneider.feature.reminders.views.ReminderCreationDialog
 import com.ernestschcneider.feature.reminders.views.ReminderListItem
 import com.ernestschcneider.remindersapp.core.view.R
 import com.ernestschcneider.remindersapp.core.view.composables.FloatingActionExtendedButton
 import com.ernestschcneider.remindersapp.core.view.theme.AppTheme
 import com.ernestschcneider.remindersapp.core.view.theme.PreviewLightDark
+import com.ernestschcneider.remindersapp.local.Reminder
 
 @Composable
 internal fun RemindersScreen(
@@ -41,7 +43,7 @@ internal fun RemindersScreen(
 ) {
     val state by remindersViewModel.screenState.collectAsStateWithLifecycle()
     LaunchedEffect(Unit) {
-        remindersViewModel.loadRemindersDetails()
+        remindersViewModel.loadReminders()
     }
     RemindersScreenContent(
         onNavigateUp = onNavigateUp,
@@ -111,7 +113,7 @@ internal fun RemindersScreenContent(
                 verticalArrangement = Arrangement.spacedBy(16.dp)
             ) {
                 items(screenState.reminders) { item ->
-                    when (item.type) {
+                    when (item.reminderType) {
                         ReminderType.Note -> ReminderListItem(
                             item = item,
                             startDrawableRes = R.drawable.ic_note_24,

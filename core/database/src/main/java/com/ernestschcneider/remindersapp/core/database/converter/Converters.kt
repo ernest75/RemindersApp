@@ -1,14 +1,14 @@
 package com.ernestschcneider.remindersapp.core.database.converter
 
 import androidx.room.TypeConverter
-import com.ernestschcneider.remindersapp.core.database.NoteEntity
+import com.ernestschcneider.remindersapp.core.database.ReminderEntity
 import java.util.UUID
 
 class Converters {
 
     @TypeConverter
     fun fromUUID(uuid: UUID): String {
-        if ( uuid.toString() == NoteEntity.DEFAULT_UUID )
+        if ( uuid.toString() == ReminderEntity.DEFAULT_UUID )
             return UUID.randomUUID().toString()
 
         return uuid.toString()
@@ -19,7 +19,7 @@ class Converters {
         string?.let {
             return UUID.fromString(string)
         }
-        return UUID.fromString(NoteEntity.DEFAULT_UUID)
+        return UUID.fromString(ReminderEntity.DEFAULT_UUID)
     }
 
 }

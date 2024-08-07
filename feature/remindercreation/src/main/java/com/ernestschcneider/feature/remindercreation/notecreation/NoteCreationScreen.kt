@@ -54,7 +54,7 @@ internal fun NoteCreationScreen(
 
 @Composable
 fun NoteCreationScreenContent(
-    state: NoteCreationState,
+    state: ReminderCreationState,
     onNavigateUp: () -> Unit,
     onNoteContentUpdate: (String) -> Unit,
     onNoteTitleUpdate: (String) -> Unit,
@@ -112,7 +112,7 @@ private fun NoteCreationScreenPreview() {
         NoteCreationScreenContent(
             onNavigateUp = {},
             onNoteContentUpdate = {},
-            state = NoteCreationState(),
+            state = ReminderCreationState(),
             onNoteSaved = {},
             focusRequester = FocusRequester(),
             onNoteTitleUpdate = {}
