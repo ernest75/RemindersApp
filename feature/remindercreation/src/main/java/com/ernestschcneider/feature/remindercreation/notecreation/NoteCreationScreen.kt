@@ -97,7 +97,7 @@ fun NoteCreationScreenContent(
                 .align(Alignment.CenterHorizontally)
                 .padding(top= 4.dp),
             label = stringResource(id = string.save_note),
-            onClick = {onNoteSaved()}
+            onClick = onNoteSaved
         )
     }
 
