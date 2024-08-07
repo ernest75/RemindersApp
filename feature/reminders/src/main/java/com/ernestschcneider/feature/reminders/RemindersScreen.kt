@@ -52,7 +52,10 @@ internal fun RemindersScreen(
         onDeleteItemClicked = remindersViewModel::removeItem,
         onAddButtonClicked = remindersViewModel::onAddButtonClicked,
         onDismissDialog = remindersViewModel::onDismissDialog,
-        onNoteCreationClick = onNoteCreationClick
+        onNoteCreationClick = {
+            onNoteCreationClick()
+            remindersViewModel.onDismissDialog()
+        }
     )
 }
 
