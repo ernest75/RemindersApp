@@ -4,7 +4,7 @@ import com.ernestschcneider.remindersapp.core.database.NoteEntity
 
 fun Note.toNoteEntity(): NoteEntity {
     return NoteEntity(
-        uid = id,
+        id = id,
         noteTitle = noteTitle,
         noteContent = noteContent
     )
@@ -12,7 +12,7 @@ fun Note.toNoteEntity(): NoteEntity {
 
 fun NoteEntity.toDomain(): Note {
     return Note(
-        id = uid,
+        id = id,
         noteTitle = noteTitle,
         noteContent = noteContent
     )

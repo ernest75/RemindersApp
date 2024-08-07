@@ -89,7 +89,7 @@ fun RemindersTopAppBar(
                 value = title.value,
                 onValueChange = {
                     title.value = it
-                    //  onTitleUpdate(it)
+                    onTitleUpdate(it)
                 },
                 keyboardOptions = KeyboardOptions(
                     imeAction = ImeAction.Done

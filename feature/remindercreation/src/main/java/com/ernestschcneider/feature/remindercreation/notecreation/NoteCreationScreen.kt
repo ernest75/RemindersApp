@@ -45,8 +45,9 @@ internal fun NoteCreationScreen(
     NoteCreationScreenContent(
         onNavigateUp = onNavigateUp,
         state = state,
-        onNoteUpdate = noteCreationViewModel::onNoteUpdate,
+        onNoteContentUpdate = noteCreationViewModel::onNoteContentUpdate,
         onNoteSaved = noteCreationViewModel::onSavedNoteClicked,
+        onNoteTitleUpdate = noteCreationViewModel::onNoteTitleUpdate,
         focusRequester = focusRequester
     )
 }
@@ -55,7 +56,8 @@ internal fun NoteCreationScreen(
 fun NoteCreationScreenContent(
     state: NoteCreationState,
     onNavigateUp: () -> Unit,
-    onNoteUpdate: (String) -> Unit,
+    onNoteContentUpdate: (String) -> Unit,
+    onNoteTitleUpdate: (String) -> Unit,
     onNoteSaved: () -> Unit,
     focusRequester: FocusRequester
 ) {
@@ -68,14 +70,14 @@ fun NoteCreationScreenContent(
     ) {
         RemindersTopAppBar(
             onNavigateUp = onNavigateUp,
-            onTitleUpdate = {},
+            onTitleUpdate = onNoteTitleUpdate,
             focusRequester = focusRequester
         )
 
         TextField(
             modifier = Modifier.fillMaxWidth(),
             value = state.noteContent,
-            onValueChange = onNoteUpdate,
+            onValueChange = onNoteContentUpdate,
             colors = TextFieldDefaults.colors(
                 focusedContainerColor = AppTheme.colorScheme.secondaryContainer,
                 disabledContainerColor = AppTheme.colorScheme.secondaryContainer,
@@ -109,10 +111,11 @@ private fun NoteCreationScreenPreview() {
     AppTheme {
         NoteCreationScreenContent(
             onNavigateUp = {},
-            onNoteUpdate = {},
+            onNoteContentUpdate = {},
             state = NoteCreationState(),
             onNoteSaved = {},
-            focusRequester = FocusRequester()
+            focusRequester = FocusRequester(),
+            onNoteTitleUpdate = {}
         )
     }
 }

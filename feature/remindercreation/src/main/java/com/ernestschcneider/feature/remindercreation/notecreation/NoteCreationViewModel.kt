@@ -15,23 +15,37 @@ import javax.inject.Inject
 @HiltViewModel
 class NoteCreationViewModel @Inject constructor(
     private val localRepo: LocalRepo
-): ViewModel() {
+) : ViewModel() {
 
     private val _screenState = MutableStateFlow(NoteCreationState())
     val screenState: StateFlow<NoteCreationState> = _screenState.asStateFlow()
-    var note = Note(
-        id = "3",
-        noteTitle = "noteTitle3",
-        noteContent = "noteContent3"
-    )
 
-    fun onNoteUpdate(note: String) {
-        _screenState.update { it.copy(noteContent = note) }
+    private var noteTitle: String? = null
+    private var noteContent: String? = null
+
+    fun onNoteContentUpdate(noteContent: String) {
+        this.noteContent = noteContent
+        _screenState.update { it.copy(noteContent = noteContent) }
+    }
+
+    fun onNoteTitleUpdate(noteTitle: String) {
+        this.noteTitle = noteTitle
     }
 
     fun onSavedNoteClicked() {
-        viewModelScope.launch {
-            localRepo.saveNote(note)
+        // TODO add dialog informing note is empty if titlte and content are?
+        if (!noteContent.isNullOrEmpty() || !noteTitle.isNullOrEmpty().not()) {
+            val note = Note(
+                noteTitle = noteTitle.orEmpty(),
+                noteContent = noteContent.orEmpty()
+            )
+            viewModelScope.launch {
+                localRepo.saveNote(note)
+            }
+        } else {
+            //TODO add dialog??
+            println()
         }
+
     }
 }
