@@ -12,8 +12,8 @@ interface NoteDao {
     suspend fun loadAll(): List<NoteEntity>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insert(user: NoteEntity)
+    suspend fun insert(note: NoteEntity)
 
     @Delete
-    fun delete(user: NoteEntity)
+    fun delete(note: NoteEntity)
 }

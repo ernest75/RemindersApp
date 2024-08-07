@@ -46,8 +46,8 @@ internal fun NoteCreationScreen(
         onNavigateUp = onNavigateUp,
         state = state,
         onNoteUpdate = noteCreationViewModel::onNoteUpdate,
+        onNoteSaved = noteCreationViewModel::onSavedNoteClicked,
         focusRequester = focusRequester
-
     )
 }
 
@@ -56,6 +56,7 @@ fun NoteCreationScreenContent(
     state: NoteCreationState,
     onNavigateUp: () -> Unit,
     onNoteUpdate: (String) -> Unit,
+    onNoteSaved: () -> Unit,
     focusRequester: FocusRequester
 ) {
     val focusManager = LocalFocusManager.current
@@ -96,7 +97,7 @@ fun NoteCreationScreenContent(
                 .align(Alignment.CenterHorizontally)
                 .padding(top= 4.dp),
             label = stringResource(id = string.save_note),
-            onClick = {}
+            onClick = onNoteSaved
         )
     }
 
@@ -110,6 +111,7 @@ private fun NoteCreationScreenPreview() {
             onNavigateUp = {},
             onNoteUpdate = {},
             state = NoteCreationState(),
+            onNoteSaved = {},
             focusRequester = FocusRequester()
         )
     }
