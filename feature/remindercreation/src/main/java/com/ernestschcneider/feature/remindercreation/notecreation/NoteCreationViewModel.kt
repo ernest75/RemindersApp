@@ -20,9 +20,9 @@ class NoteCreationViewModel @Inject constructor(
     private val _screenState = MutableStateFlow(NoteCreationState())
     val screenState: StateFlow<NoteCreationState> = _screenState.asStateFlow()
     var note = Note(
-        id = "2",
-        noteTitle = "noteTitle",
-        noteContent = "noteContent"
+        id = "3",
+        noteTitle = "noteTitle3",
+        noteContent = "noteContent3"
     )
 
     fun onNoteUpdate(note: String) {
