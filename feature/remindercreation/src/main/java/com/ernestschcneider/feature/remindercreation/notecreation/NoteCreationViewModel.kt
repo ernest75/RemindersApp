@@ -41,6 +41,7 @@ class NoteCreationViewModel @Inject constructor(
             )
             viewModelScope.launch {
                 localRepo.saveReminder(reminder)
+                _screenState.update { it.copy(backNavigation = true) }
             }
         } else {
             //TODO add dialog??

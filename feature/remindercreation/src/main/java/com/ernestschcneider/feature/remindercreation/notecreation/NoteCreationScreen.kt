@@ -41,6 +41,10 @@ internal fun NoteCreationScreen(
     LaunchedEffect(Unit) {
         focusRequester.requestFocus()
     }
+    if (state.backNavigation) {
+        onNavigateUp()
+    }
+
 
     NoteCreationScreenContent(
         onNavigateUp = onNavigateUp,
@@ -91,13 +95,18 @@ fun NoteCreationScreenContent(
             keyboardActions = KeyboardActions(onDone = {
                 focusManager.clearFocus()
             }),
-            placeholder = { Text(stringResource(id = string.type_note_text), color = AppTheme.colorScheme.secondary) }
+            placeholder = {
+                Text(
+                    stringResource(id = string.type_note_text),
+                    color = AppTheme.colorScheme.secondary
+                )
+            }
         )
         HorizontalDivider()
         SecondaryButton(
             modifier = Modifier
                 .align(Alignment.CenterHorizontally)
-                .padding(top= 4.dp),
+                .padding(top = 4.dp),
             label = stringResource(id = string.save_note),
             onClick = onNoteSaved
         )
