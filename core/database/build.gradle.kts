@@ -3,6 +3,7 @@ plugins {
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kapt)
     alias(libs.plugins.compose.compiler)
+    alias(libs.plugins.kotlin.serialization)
 }
 
 android {
@@ -44,6 +45,7 @@ dependencies {
     implementation(libs.bundles.room)
 
     kapt(libs.room.compiler)
+    kapt(libs.hilt.compiler)
 
     testImplementation(libs.bundles.unit.testing)
 
