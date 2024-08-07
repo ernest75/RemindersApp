@@ -2,7 +2,6 @@ package com.ernestschcneider.feature.reminders
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.ernestschcneider.feature.reminders.data.models.ReminderType
 import com.ernestschcneider.remindersapp.local.LocalRepo
 import com.ernestschcneider.remindersapp.local.Reminder
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -20,15 +19,6 @@ class RemindersViewModel  @Inject constructor(
 ) : ViewModel() {
     private val _screenState = MutableStateFlow(RemindersScreenState())
     val screenState: StateFlow<RemindersScreenState> = _screenState.asStateFlow()
-    private var items = (1..10).map {
-        Reminder(
-            reminderTitle = "Reminder $it",
-            reminderContent = "Content",
-            reminderType = if (it % 3 == 0) {
-                ReminderType.Note
-            } else ReminderType.List
-        )
-    }
 
     fun loadReminders() {
         viewModelScope.launch(Dispatchers.IO) {
@@ -42,7 +32,6 @@ class RemindersViewModel  @Inject constructor(
            localRepo.deleteReminder(item)
            loadReminders()
         }
-        _screenState.update { it.copy(reminders = items) }
     }
 
     fun onAddButtonClicked() {
