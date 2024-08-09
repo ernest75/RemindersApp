@@ -1,6 +1,5 @@
-package com.ernestschcneider.remindersapp.local
+package com.ernestschcneider.feature.reminders.data.models
 
-import com.ernestschcneider.feature.reminders.data.models.ReminderType
 import java.util.UUID
 
 data class Reminder(

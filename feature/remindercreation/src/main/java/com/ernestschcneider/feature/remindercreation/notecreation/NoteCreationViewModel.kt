@@ -2,8 +2,8 @@ package com.ernestschcneider.feature.remindercreation.notecreation
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.ernestschcneider.feature.reminders.data.models.Reminder
 import com.ernestschcneider.remindersapp.local.LocalRepo
-import com.ernestschcneider.remindersapp.local.Reminder
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
