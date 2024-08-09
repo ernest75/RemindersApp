@@ -1,13 +1,12 @@
 plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.android)
-    alias(libs.plugins.compose.compiler)
     alias(libs.plugins.hilt.android)
     alias(libs.plugins.kapt)
 }
 
 android {
-    namespace = "com.ernestschcneider.feature.reminders"
+    namespace = "com.ernestschneider.testutils"
     compileSdk = libs.versions.compileSdkVersion.get().toInt()
 
     defaultConfig {
@@ -34,28 +33,13 @@ android {
     kotlinOptions {
         jvmTarget = libs.versions.javaVersion.get()
     }
-
-    buildFeatures {
-        compose = true
-    }
-
-    testOptions.unitTests {
-        isReturnDefaultValues = true
-        all { tests ->
-            tests.useJUnitPlatform()
-            tests.testLogging {
-                events("passed", "failed", "skipped")
-            }
-        }
-    }
 }
 
 dependencies {
-    implementation(project(":core:view"))
+
     implementation(project(":domain:local"))
     implementation(project(":domain:data"))
     implementation(libs.bundles.hilt)
-    testImplementation(project(":testutils"))
     kapt(libs.hilt.compiler)
 
     testImplementation(libs.junit.jupiter)

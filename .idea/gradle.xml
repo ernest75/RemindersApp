@@ -20,6 +20,7 @@
             <option value="$PROJECT_DIR$/feature/remindercreation" />
             <option value="$PROJECT_DIR$/feature/reminderdetails" />
             <option value="$PROJECT_DIR$/feature/reminders" />
+            <option value="$PROJECT_DIR$/testutils" />
           </set>
         </option>
         <option name="resolveExternalAnnotations" value="false" />

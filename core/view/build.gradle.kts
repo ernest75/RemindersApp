@@ -2,6 +2,7 @@ plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.compose.compiler)
+    alias(libs.plugins.kapt)
 }
 
 android {
@@ -42,6 +43,12 @@ android {
 dependencies {
     api(platform(libs.compose.bom))
     api(libs.bundles.compose)
+    api(libs.bundles.unit.testing)
+    implementation(libs.bundles.hilt)
+    kapt(libs.hilt.compiler)
+
+    testImplementation(libs.junit.jupiter)
+    testRuntimeOnly(libs.junit.jupiter.engine)
 
     debugImplementation(libs.bundles.compose.debug)
 }
