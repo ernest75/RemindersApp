@@ -42,9 +42,9 @@ android {
 dependencies {
     implementation(project(":domain:data"))
     implementation(libs.bundles.hilt)
-    kapt(libs.hilt.compiler)
     implementation(libs.bundles.room)
 
+    kapt(libs.hilt.compiler)
     kapt(libs.room.compiler)
 
 
