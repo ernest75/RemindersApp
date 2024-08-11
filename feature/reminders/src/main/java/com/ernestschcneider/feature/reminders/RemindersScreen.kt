@@ -109,7 +109,7 @@ internal fun RemindersScreenContent(
                 .fillMaxSize()
                 .background(AppTheme.colorScheme.surfaceContainerHigh)
                 .padding(paddingValues)
-        ) {
+            ) {
 
             LazyColumn(
                 modifier = Modifier.fillMaxSize(),
