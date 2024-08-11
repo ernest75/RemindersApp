@@ -1,7 +1,7 @@
 package com.ernestschneider.testutils
 
-import com.ernestschcneider.feature.reminders.data.models.Reminder
-import com.ernestschcneider.feature.reminders.data.models.ReminderType
+import com.ernestschcneider.models.Reminder
+import com.ernestschcneider.models.ReminderType
 import com.ernestschcneider.remindersapp.local.StorageRepo
 
 class InMemoryLocalRepo : StorageRepo {

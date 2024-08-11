@@ -18,8 +18,8 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import com.ernestschcneider.feature.reminders.data.models.Reminder
-import com.ernestschcneider.feature.reminders.data.models.ReminderType
+import com.ernestschcneider.models.Reminder
+import com.ernestschcneider.models.ReminderType
 import com.ernestschcneider.remindersapp.core.view.R
 import com.ernestschcneider.remindersapp.core.view.theme.AppTheme
 import com.ernestschcneider.remindersapp.core.view.theme.PreviewLightDark

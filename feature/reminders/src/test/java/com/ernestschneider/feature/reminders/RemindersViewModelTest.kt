@@ -1,7 +1,7 @@
 package com.ernestschneider.feature.reminders
 
 import com.ernestschcneider.feature.reminders.RemindersViewModel
-import com.ernestschcneider.feature.reminders.data.models.Reminder
+import com.ernestschcneider.models.Reminder
 import com.ernestschcneider.remindersapp.core.dispatchers.CoroutineTestExtension
 import com.ernestschneider.testutils.InMemoryLocalRepo
 import com.google.common.truth.Truth.assertThat

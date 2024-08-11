@@ -2,7 +2,7 @@ package com.ernestschcneider.feature.reminders
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.ernestschcneider.feature.reminders.data.models.Reminder
+import com.ernestschcneider.models.Reminder
 import com.ernestschcneider.remindersapp.local.StorageRepo
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher

@@ -1,6 +1,6 @@
 package com.ernestschcneider.remindersapp.local
 
-import com.ernestschcneider.feature.reminders.data.models.Reminder
+import com.ernestschcneider.models.Reminder
 import com.ernestschcneider.remindersapp.core.database.ReminderDao
 import java.util.UUID
 import javax.inject.Inject

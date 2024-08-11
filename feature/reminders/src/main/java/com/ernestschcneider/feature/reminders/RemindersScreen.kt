@@ -25,8 +25,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.ernestschcneider.feature.reminders.data.models.Reminder
-import com.ernestschcneider.feature.reminders.data.models.ReminderType
+import com.ernestschcneider.models.Reminder
+import com.ernestschcneider.models.ReminderType
 import com.ernestschcneider.feature.reminders.views.ReminderCreationDialog
 import com.ernestschcneider.feature.reminders.views.ReminderListItem
 import com.ernestschcneider.remindersapp.core.view.R

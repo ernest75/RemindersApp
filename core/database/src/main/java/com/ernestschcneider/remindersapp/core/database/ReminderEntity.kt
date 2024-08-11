@@ -3,7 +3,7 @@ package com.ernestschcneider.remindersapp.core.database
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.ernestschcneider.feature.reminders.data.models.ReminderType
+import com.ernestschcneider.models.ReminderType
 import java.util.UUID
 
 @Entity(tableName = "reminders")

@@ -3,7 +3,8 @@ package com.ernestschcneider.feature.remindernote
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.ernestschcneider.feature.reminders.data.models.Reminder
+import com.ernestschcneider.EMPTY_REMINDER_ID
+import com.ernestschcneider.models.Reminder
 import com.ernestschcneider.remindersapp.local.StorageRepo
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
@@ -77,7 +78,4 @@ class ReminderNoteViewModel @Inject constructor(
         _screenState.update { it.copy(showEmptyTitleDialog = false) }
     }
 
-    companion object {
-        const val EMPTY_REMINDER_ID = " "
-    }
 }

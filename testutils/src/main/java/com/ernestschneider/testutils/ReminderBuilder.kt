@@ -1,8 +1,8 @@
 package com.ernestschneider.testutils
 
-import com.ernestschcneider.feature.reminders.data.models.DEFAULT_UUID
-import com.ernestschcneider.feature.reminders.data.models.Reminder
-import com.ernestschcneider.feature.reminders.data.models.ReminderType
+import com.ernestschcneider.models.DEFAULT_UUID
+import com.ernestschcneider.models.Reminder
+import com.ernestschcneider.models.ReminderType
 import java.util.UUID
 
 class ReminderBuilder {

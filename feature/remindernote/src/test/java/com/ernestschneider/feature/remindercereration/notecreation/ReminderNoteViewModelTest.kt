@@ -1,6 +1,7 @@
 package com.ernestschneider.feature.remindercereration.notecreation
 
 import androidx.lifecycle.SavedStateHandle
+import com.ernestschcneider.EMPTY_REMINDER_ID
 import com.ernestschcneider.feature.remindernote.REMINDER_ID_ARG
 import com.ernestschcneider.feature.remindernote.ReminderNoteViewModel
 import com.ernestschcneider.remindersapp.core.dispatchers.CoroutineTestExtension
@@ -123,9 +124,5 @@ class ReminderNoteViewModelTest {
         return SavedStateHandle().apply {
             set(REMINDER_ID_ARG, reminderId)
         }
-    }
-
-    companion object {
-        const val EMPTY_REMINDER_ID = " "
     }
 }

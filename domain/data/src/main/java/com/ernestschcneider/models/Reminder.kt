@@ -1,4 +1,4 @@
-package com.ernestschcneider.feature.reminders.data.models
+package com.ernestschcneider.models
 
 data class Reminder(
     val id: String = DEFAULT_UUID,
