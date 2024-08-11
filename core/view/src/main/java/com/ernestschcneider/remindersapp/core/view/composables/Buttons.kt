@@ -23,18 +23,21 @@ import com.ernestschcneider.remindersapp.core.view.theme.PreviewLightDark
 fun PrimaryButton(
     modifier: Modifier = Modifier,
     label: String,
-    onClick: () -> Unit
+    onClick: () -> Unit,
+    isVisible: Boolean = true
 ) {
-    Button(
-        onClick = onClick,
-        modifier = modifier,
-        colors = ButtonDefaults.buttonColors(
-            containerColor = AppTheme.colorScheme.primary,
-            contentColor = AppTheme.colorScheme.onPrimary
-        ),
-        shape = AppTheme.shape.button
-    ) {
-        Text(text = label, style = AppTheme.typography.labelLarge)
+    if (isVisible) {
+        Button(
+            onClick = onClick,
+            modifier = modifier,
+            colors = ButtonDefaults.buttonColors(
+                containerColor = AppTheme.colorScheme.primary,
+                contentColor = AppTheme.colorScheme.onPrimary
+            ),
+            shape = AppTheme.shape.button
+        ) {
+            Text(text = label, style = AppTheme.typography.labelLarge)
+        }
     }
 }
 

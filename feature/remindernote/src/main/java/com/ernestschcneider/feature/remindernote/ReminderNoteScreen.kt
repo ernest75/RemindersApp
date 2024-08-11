@@ -27,8 +27,8 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.ernestschcneider.remindersapp.core.view.R.string
 import com.ernestschcneider.remindersapp.core.view.composables.InformativeDialog
+import com.ernestschcneider.remindersapp.core.view.composables.PrimaryButton
 import com.ernestschcneider.remindersapp.core.view.composables.RemindersTopAppBar
-import com.ernestschcneider.remindersapp.core.view.composables.SecondaryButton
 import com.ernestschcneider.remindersapp.core.view.theme.AppTheme
 import com.ernestschcneider.remindersapp.core.view.theme.PreviewLightDark
 
@@ -110,7 +110,7 @@ fun ReminderNoteScreenContent(
             }
         )
         HorizontalDivider()
-        SecondaryButton(
+        PrimaryButton(
             modifier = Modifier
                 .align(Alignment.CenterHorizontally)
                 .padding(top = 4.dp),
