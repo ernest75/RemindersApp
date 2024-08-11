@@ -28,11 +28,23 @@ class ReminderNoteViewModel @Inject constructor(
     private val reminderNoteArgs = ReminderNoteArgs(savedStateHandle)
 
     fun onNoteContentUpdate(reminderContent: String) {
-        _screenState.update { it.copy(reminderContent = reminderContent, showSaveButton = true) }
+        _screenState.update {
+            it.copy(
+                reminderContent = reminderContent,
+                showSaveButton = true,
+                requestFocus = false
+            )
+        }
     }
 
     fun onNoteTitleUpdate(reminderTitle: String) {
-        _screenState.update { it.copy(reminderTitle = reminderTitle, showSaveButton = true) }
+        _screenState.update {
+            it.copy(
+                reminderTitle = reminderTitle,
+                showSaveButton = true,
+                requestFocus = false
+            )
+        }
     }
 
     fun onSavedNoteClicked() {

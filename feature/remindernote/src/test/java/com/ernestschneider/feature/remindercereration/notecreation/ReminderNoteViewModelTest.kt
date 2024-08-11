@@ -31,6 +31,8 @@ class ReminderNoteViewModelTest {
         viewModel.onNoteContentUpdate(reminderContent)
 
         assertEquals(reminderContent, viewModel.screenState.value.reminderContent)
+        assertEquals(true, viewModel.screenState.value.showSaveButton)
+        assertEquals(false, viewModel.screenState.value.requestFocus)
     }
     
     @Test
@@ -40,6 +42,8 @@ class ReminderNoteViewModelTest {
         viewModel.onNoteTitleUpdate(reminderTitle)
 
         assertEquals(reminderTitle, viewModel.screenState.value.reminderTitle)
+        assertEquals(true, viewModel.screenState.value.showSaveButton)
+        assertEquals(false, viewModel.screenState.value.requestFocus)
     }
     
     @Test
