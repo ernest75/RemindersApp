@@ -75,7 +75,8 @@ fun NoteCreationScreenContent(
         RemindersTopAppBar(
             onNavigateUp = onNavigateUp,
             onTitleUpdate = onNoteTitleUpdate,
-            focusRequester = focusRequester
+            focusRequester = focusRequester,
+            value = state.noteTitle
         )
 
         TextField(

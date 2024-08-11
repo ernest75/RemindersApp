@@ -13,6 +13,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 @HiltViewModel
@@ -24,34 +25,30 @@ class NoteCreationViewModel @Inject constructor(
     private val _screenState = MutableStateFlow(ReminderCreationState())
     val screenState: StateFlow<ReminderCreationState> = _screenState.asStateFlow()
 
-    @VisibleForTesting
-    private var reminderTitle: String? = null
-    @VisibleForTesting
-    private var reminderContent: String? = null
-
     fun onNoteContentUpdate(reminderContent: String) {
-        this.reminderContent = reminderContent
         _screenState.update { it.copy(noteContent = reminderContent) }
     }
 
     fun onNoteTitleUpdate(reminderTitle: String) {
-        this.reminderTitle = reminderTitle
+        _screenState.update { it.copy(noteTitle = reminderTitle) }
     }
 
     fun onSavedNoteClicked() {
-        // TODO add dialog informing is empty?
-        if (reminderTitle.isNullOrEmpty().not()) {
+        if (_screenState.value.noteTitle.isNotEmpty()) {
             val reminder = Reminder(
-                reminderTitle = reminderTitle.orEmpty(),
-                reminderContent = reminderContent.orEmpty()
+                reminderTitle = _screenState.value.noteTitle,
+                reminderContent = _screenState.value.noteContent
             )
             viewModelScope.launch {
-                localRepo.saveReminder(reminder)
-                _screenState.update { it.copy(backNavigation = true) }
+                withContext(backgroundDispatcher) {
+                    localRepo.saveReminder(reminder)
+                    _screenState.update { it.copy(backNavigation = true) }
+                }
             }
         } else {
-            //TODO add dialog??
-            println()
+            //TODO add dialog in screen
+            _screenState.update { it.copy(showEmptyTitleDialog = true) }
+
         }
     }
 }

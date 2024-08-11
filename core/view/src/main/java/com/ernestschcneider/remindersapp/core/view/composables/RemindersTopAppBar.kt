@@ -39,11 +39,9 @@ fun RemindersTopAppBar(
     modifier: Modifier = Modifier,
     onNavigateUp: () -> Unit,
     onTitleUpdate: (newValue: String) -> Unit,
-    focusRequester: FocusRequester
+    focusRequester: FocusRequester,
+    value: String
 ) {
-    val title = remember {
-        mutableStateOf("")
-    }
     val focusManager = LocalFocusManager.current
     Column(
         modifier = modifier
@@ -86,9 +84,8 @@ fun RemindersTopAppBar(
                         color = AppTheme.colorScheme.secondary
                     )
                 },
-                value = title.value,
+                value = value,
                 onValueChange = {
-                    title.value = it
                     onTitleUpdate(it)
                 },
                 keyboardOptions = KeyboardOptions(
@@ -96,7 +93,7 @@ fun RemindersTopAppBar(
                 ),
                 keyboardActions = KeyboardActions(onDone = {
                     focusManager.clearFocus()
-                    onTitleUpdate(title.value)
+                    onTitleUpdate(value)
                 })
             )
         }
@@ -109,6 +106,7 @@ private fun ReminderTopAppBar() {
     RemindersTopAppBar(
         onNavigateUp = {},
         onTitleUpdate = {},
-        focusRequester = FocusRequester()
+        focusRequester = FocusRequester(),
+        value = "Title"
     )
 }
