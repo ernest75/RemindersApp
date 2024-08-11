@@ -35,6 +35,16 @@ android {
         jvmTarget = libs.versions.javaVersion.get()
     }
 
+    testOptions.unitTests {
+        isReturnDefaultValues = true
+        all { tests ->
+            tests.useJUnitPlatform()
+            tests.testLogging {
+                events("passed", "failed", "skipped")
+            }
+        }
+    }
+
     buildFeatures {
         compose = true
     }
@@ -48,4 +58,7 @@ dependencies {
 
     kapt(libs.hilt.compiler)
 
+    testImplementation(project(":testutils"))
+    testImplementation(libs.junit.jupiter)
+    testRuntimeOnly(libs.junit.jupiter.engine)
 }

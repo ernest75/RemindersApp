@@ -1,10 +1,13 @@
 package com.ernestschcneider.feature.remindercreation.notecreation
 
+import androidx.annotation.VisibleForTesting
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ernestschcneider.feature.reminders.data.models.Reminder
 import com.ernestschcneider.remindersapp.local.LocalRepo
+import com.ernestschcneider.remindersapp.local.StorageRepo
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -14,13 +17,16 @@ import javax.inject.Inject
 
 @HiltViewModel
 class NoteCreationViewModel @Inject constructor(
-    private val localRepo: LocalRepo
+    private val localRepo: StorageRepo,
+    private val backgroundDispatcher: CoroutineDispatcher
 ) : ViewModel() {
 
     private val _screenState = MutableStateFlow(ReminderCreationState())
     val screenState: StateFlow<ReminderCreationState> = _screenState.asStateFlow()
 
+    @VisibleForTesting
     private var reminderTitle: String? = null
+    @VisibleForTesting
     private var reminderContent: String? = null
 
     fun onNoteContentUpdate(reminderContent: String) {

@@ -4,7 +4,7 @@ import com.ernestschcneider.feature.reminders.data.models.Reminder
 import com.ernestschcneider.feature.reminders.data.models.ReminderType
 import com.ernestschcneider.remindersapp.local.StorageRepo
 
-class LocalRepoDouble : StorageRepo {
+class InMemoryLocalRepo : StorageRepo {
 
     override suspend fun getAllReminders(): List<Reminder> {
         return reminders
