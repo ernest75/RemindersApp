@@ -7,7 +7,7 @@ plugins {
 }
 
 android {
-    namespace = "com.ernestschcneider.feature.remindercreation"
+    namespace = "com.ernestschcneider.feature.remindernote"
     compileSdk = libs.versions.compileSdkVersion.get().toInt()
 
     defaultConfig {

@@ -1,4 +1,4 @@
-package com.ernestschcneider.feature.remindercreation.notecreation
+package com.ernestschcneider.feature.remindernote
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -15,13 +15,13 @@ import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 @HiltViewModel
-class NoteCreationViewModel @Inject constructor(
+class ReminderNoteViewModel @Inject constructor(
     private val localRepo: StorageRepo,
     private val backgroundDispatcher: CoroutineDispatcher
 ) : ViewModel() {
 
-    private val _screenState = MutableStateFlow(ReminderCreationState())
-    val screenState: StateFlow<ReminderCreationState> = _screenState.asStateFlow()
+    private val _screenState = MutableStateFlow(ReminderNoteState())
+    val screenState: StateFlow<ReminderNoteState> = _screenState.asStateFlow()
 
     fun onNoteContentUpdate(reminderContent: String) {
         _screenState.update { it.copy(noteContent = reminderContent) }
@@ -48,5 +48,17 @@ class NoteCreationViewModel @Inject constructor(
             _screenState.update { it.copy(showEmptyTitleDialog = true) }
 
         }
+    }
+
+    fun onLoadNoteReminder(reminderId: String) {
+        if (reminderId == EMPTY_REMINDER_ID ) {
+            _screenState.update { it.copy(requestFocus = true) }
+        } else {
+           println()
+        }
+    }
+
+    companion object {
+        const val EMPTY_REMINDER_ID = " "
     }
 }

@@ -1,4 +1,4 @@
-package com.ernestschcneider.feature.remindercreation.notecreation
+package com.ernestschcneider.feature.remindernote
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
@@ -32,39 +32,40 @@ import com.ernestschcneider.remindersapp.core.view.theme.AppTheme
 import com.ernestschcneider.remindersapp.core.view.theme.PreviewLightDark
 
 @Composable
-internal fun NoteCreationScreen(
-    noteCreationViewModel: NoteCreationViewModel = hiltViewModel(),
+internal fun ReminderNoteScreen(
+    reminderNoteViewModel: ReminderNoteViewModel = hiltViewModel(),
     onNavigateUp: () -> Unit
 ) {
-    val state by noteCreationViewModel.screenState.collectAsStateWithLifecycle()
-    val focusRequester = remember { FocusRequester() }
-    LaunchedEffect(Unit) {
-        focusRequester.requestFocus()
-    }
+    val state by reminderNoteViewModel.screenState.collectAsStateWithLifecycle()
+
     if (state.backNavigation) {
         onNavigateUp()
     }
 
 
-    NoteCreationScreenContent(
+    ReminderNoteScreenContent(
         onNavigateUp = onNavigateUp,
         state = state,
-        onNoteContentUpdate = noteCreationViewModel::onNoteContentUpdate,
-        onNoteSaved = noteCreationViewModel::onSavedNoteClicked,
-        onNoteTitleUpdate = noteCreationViewModel::onNoteTitleUpdate,
-        focusRequester = focusRequester
+        onNoteContentUpdate = reminderNoteViewModel::onNoteContentUpdate,
+        onNoteSaved = reminderNoteViewModel::onSavedNoteClicked,
+        onNoteTitleUpdate = reminderNoteViewModel::onNoteTitleUpdate,
+        //focusRequester = focusRequester
     )
 }
 
 @Composable
-fun NoteCreationScreenContent(
-    state: ReminderCreationState,
+fun ReminderNoteScreenContent(
+    state: ReminderNoteState,
     onNavigateUp: () -> Unit,
     onNoteContentUpdate: (String) -> Unit,
     onNoteTitleUpdate: (String) -> Unit,
     onNoteSaved: () -> Unit,
-    focusRequester: FocusRequester
+   //focusRequester: FocusRequester
 ) {
+    val focusRequester = remember { FocusRequester() }
+    LaunchedEffect(Unit) {
+        focusRequester.requestFocus()
+    }
     val focusManager = LocalFocusManager.current
     Column(
         modifier = Modifier
@@ -119,12 +120,12 @@ fun NoteCreationScreenContent(
 @Composable
 private fun NoteCreationScreenPreview() {
     AppTheme {
-        NoteCreationScreenContent(
+        ReminderNoteScreenContent(
             onNavigateUp = {},
             onNoteContentUpdate = {},
-            state = ReminderCreationState(),
+            state = ReminderNoteState(),
             onNoteSaved = {},
-            focusRequester = FocusRequester(),
+           // focusRequester = FocusRequester(),
             onNoteTitleUpdate = {}
         )
     }

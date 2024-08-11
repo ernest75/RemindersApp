@@ -1,6 +1,6 @@
 package com.ernestschneider.feature.remindercereration.notecreation
 
-import com.ernestschcneider.feature.remindercreation.notecreation.NoteCreationViewModel
+import com.ernestschcneider.feature.remindernote.ReminderNoteViewModel
 import com.ernestschcneider.remindersapp.core.dispatchers.CoroutineTestExtension
 import com.ernestschneider.testutils.InMemoryLocalRepo
 import kotlinx.coroutines.Dispatchers
@@ -9,10 +9,10 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
 
 @ExtendWith(CoroutineTestExtension::class)
-class NoteCreationViewModelTest {
+class ReminderNoteViewModelTest {
     private val localRepo = InMemoryLocalRepo()
     private val backgroundDispatcher = Dispatchers.Unconfined
-    private val viewModel = NoteCreationViewModel(
+    private val viewModel = ReminderNoteViewModel(
         localRepo = localRepo,
         backgroundDispatcher= backgroundDispatcher
     )
@@ -75,5 +75,20 @@ class NoteCreationViewModelTest {
         assertEquals(noteContent, viewModel.screenState.value.noteContent)
         assertEquals(backNavigation, viewModel.screenState.value.backNavigation)
         assertEquals(showEmptyTitleDialog, viewModel.screenState.value.showEmptyTitleDialog)
+    }
+
+    @Test
+    fun onLoadNoteReminderEmptyReminderId() {
+        val requestFocus = true
+
+
+        val reminderId = EMPTY_REMINDER_ID
+        viewModel.onLoadNoteReminder(reminderId)
+
+        assertEquals(requestFocus,viewModel.screenState.value.requestFocus)
+    }
+
+    companion object {
+        const val EMPTY_REMINDER_ID = " "
     }
 }
