@@ -1,10 +1,8 @@
 package com.ernestschcneider.feature.remindercreation.notecreation
 
-import androidx.annotation.VisibleForTesting
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ernestschcneider.feature.reminders.data.models.Reminder
-import com.ernestschcneider.remindersapp.local.LocalRepo
 import com.ernestschcneider.remindersapp.local.StorageRepo
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
