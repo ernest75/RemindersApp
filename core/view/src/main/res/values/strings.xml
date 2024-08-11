@@ -11,9 +11,12 @@
     <string name="reminder_note">"Reminder note"</string>
     <string name="reminder_list">"Reminder list"</string>
     <string name="cancel">"Cancel"</string>
+    <string name="ok">"OK"</string>
     <string name="placeholder_creation_note_title">"Note title"</string>
     <string name="back_arrow_icon">"Back arrow icon"</string>
     <string name="save_note">"Save note"</string>
     <string name="type_note_text">"Type note text here"</string>
     <string name="type_note_title">"Type note title"</string>
+    <string name="warning">"Warning"</string>
+    <string name="empty_title_explanation">"You must type at least a title"</string>
 </resources>

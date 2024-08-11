@@ -110,6 +110,15 @@ class ReminderNoteViewModelTest {
         assertEquals(false, viewModel2.screenState.value.showSaveButton)
     }
 
+    @Test
+    fun onDismissEmptyTitleDialog() {
+        viewModel.onSavedNoteClicked()
+
+        viewModel.onDismissEmptyTitleDialog()
+
+        assertEquals(false, viewModel.screenState.value.showEmptyTitleDialog )
+    }
+
     private fun getSavedStateHandle(reminderId: String = EMPTY_REMINDER_ID): SavedStateHandle {
         return SavedStateHandle().apply {
             set(REMINDER_ID_ARG, reminderId)

@@ -73,6 +73,10 @@ class ReminderNoteViewModel @Inject constructor(
         }
     }
 
+    fun onDismissEmptyTitleDialog() {
+        _screenState.update { it.copy(showEmptyTitleDialog = false) }
+    }
+
     companion object {
         const val EMPTY_REMINDER_ID = " "
     }
