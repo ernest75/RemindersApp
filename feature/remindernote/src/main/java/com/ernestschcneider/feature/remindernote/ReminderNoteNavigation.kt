@@ -1,5 +1,6 @@
 package com.ernestschcneider.feature.remindernote
 
+import androidx.lifecycle.SavedStateHandle
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
@@ -19,4 +20,9 @@ fun NavGraphBuilder.noteCreationScreen(
 
 fun NavController.navigateToNoteCreation(reminderId: String) {
     navigate("reminderNote/$REMINDER_ID_ARG=$reminderId")
+}
+
+internal class ReminderNoteArgs(val reminderId: String) {
+    constructor(savedStateHandle: SavedStateHandle) :
+            this(requireNotNull(savedStateHandle.get<String>(REMINDER_ID_ARG)))
 }

@@ -1,5 +1,7 @@
 package com.ernestschneider.feature.remindercereration.notecreation
 
+import androidx.lifecycle.SavedStateHandle
+import com.ernestschcneider.feature.remindernote.REMINDER_ID_ARG
 import com.ernestschcneider.feature.remindernote.ReminderNoteViewModel
 import com.ernestschcneider.remindersapp.core.dispatchers.CoroutineTestExtension
 import com.ernestschneider.testutils.InMemoryLocalRepo
@@ -12,9 +14,13 @@ import org.junit.jupiter.api.extension.ExtendWith
 class ReminderNoteViewModelTest {
     private val localRepo = InMemoryLocalRepo()
     private val backgroundDispatcher = Dispatchers.Unconfined
+    private val savedStateHandle = SavedStateHandle().apply {
+        set(REMINDER_ID_ARG, EMPTY_REMINDER_ID)
+    }
     private val viewModel = ReminderNoteViewModel(
         localRepo = localRepo,
-        backgroundDispatcher= backgroundDispatcher
+        backgroundDispatcher= backgroundDispatcher,
+        savedStateHandle = savedStateHandle
     )
 
     @Test
@@ -81,9 +87,7 @@ class ReminderNoteViewModelTest {
     fun onLoadNoteReminderEmptyReminderId() {
         val requestFocus = true
 
-
-        val reminderId = EMPTY_REMINDER_ID
-        viewModel.onLoadNoteReminder(reminderId)
+        viewModel.loadNoteReminder()
 
         assertEquals(requestFocus,viewModel.screenState.value.requestFocus)
     }

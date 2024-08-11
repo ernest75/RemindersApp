@@ -1,5 +1,6 @@
 package com.ernestschcneider.feature.remindernote
 
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ernestschcneider.feature.reminders.data.models.Reminder
@@ -16,12 +17,14 @@ import javax.inject.Inject
 
 @HiltViewModel
 class ReminderNoteViewModel @Inject constructor(
+    private val savedStateHandle: SavedStateHandle,
     private val localRepo: StorageRepo,
     private val backgroundDispatcher: CoroutineDispatcher
 ) : ViewModel() {
 
     private val _screenState = MutableStateFlow(ReminderNoteState())
     val screenState: StateFlow<ReminderNoteState> = _screenState.asStateFlow()
+    private val reminderNoteArgs = ReminderNoteArgs(savedStateHandle)
 
     fun onNoteContentUpdate(reminderContent: String) {
         _screenState.update { it.copy(noteContent = reminderContent) }
@@ -50,8 +53,8 @@ class ReminderNoteViewModel @Inject constructor(
         }
     }
 
-    fun onLoadNoteReminder(reminderId: String) {
-        if (reminderId == EMPTY_REMINDER_ID ) {
+    fun loadNoteReminder() {
+        if (reminderNoteArgs.reminderId == EMPTY_REMINDER_ID ) {
             _screenState.update { it.copy(requestFocus = true) }
         } else {
            println()

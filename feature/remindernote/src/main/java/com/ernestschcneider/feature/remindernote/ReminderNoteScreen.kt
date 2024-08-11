@@ -42,14 +42,15 @@ internal fun ReminderNoteScreen(
         onNavigateUp()
     }
 
-
+    LaunchedEffect(Unit) {
+        reminderNoteViewModel.loadNoteReminder()
+    }
     ReminderNoteScreenContent(
         onNavigateUp = onNavigateUp,
         state = state,
         onNoteContentUpdate = reminderNoteViewModel::onNoteContentUpdate,
         onNoteSaved = reminderNoteViewModel::onSavedNoteClicked,
-        onNoteTitleUpdate = reminderNoteViewModel::onNoteTitleUpdate,
-        //focusRequester = focusRequester
+        onNoteTitleUpdate = reminderNoteViewModel::onNoteTitleUpdate
     )
 }
 
@@ -60,12 +61,12 @@ fun ReminderNoteScreenContent(
     onNoteContentUpdate: (String) -> Unit,
     onNoteTitleUpdate: (String) -> Unit,
     onNoteSaved: () -> Unit,
-   //focusRequester: FocusRequester
 ) {
     val focusRequester = remember { FocusRequester() }
-    LaunchedEffect(Unit) {
+    if (state.requestFocus) {
         focusRequester.requestFocus()
     }
+
     val focusManager = LocalFocusManager.current
     Column(
         modifier = Modifier
@@ -125,7 +126,7 @@ private fun NoteCreationScreenPreview() {
             onNoteContentUpdate = {},
             state = ReminderNoteState(),
             onNoteSaved = {},
-           // focusRequester = FocusRequester(),
+            // focusRequester = FocusRequester(),
             onNoteTitleUpdate = {}
         )
     }
