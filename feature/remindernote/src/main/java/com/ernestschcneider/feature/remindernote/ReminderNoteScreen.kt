@@ -78,12 +78,12 @@ fun ReminderNoteScreenContent(
             onNavigateUp = onNavigateUp,
             onTitleUpdate = onNoteTitleUpdate,
             focusRequester = focusRequester,
-            value = state.noteTitle
+            value = state.reminderTitle
         )
 
         TextField(
             modifier = Modifier.fillMaxWidth(),
-            value = state.noteContent,
+            value = state.reminderContent,
             onValueChange = onNoteContentUpdate,
             colors = TextFieldDefaults.colors(
                 focusedContainerColor = AppTheme.colorScheme.secondaryContainer,
@@ -111,7 +111,8 @@ fun ReminderNoteScreenContent(
                 .align(Alignment.CenterHorizontally)
                 .padding(top = 4.dp),
             label = stringResource(id = string.save_note),
-            onClick = onNoteSaved
+            onClick = onNoteSaved,
+            isVisible = state.showSaveButton
         )
     }
 
@@ -124,9 +125,8 @@ private fun NoteCreationScreenPreview() {
         ReminderNoteScreenContent(
             onNavigateUp = {},
             onNoteContentUpdate = {},
-            state = ReminderNoteState(),
+            state = ReminderNoteState(showSaveButton = true),
             onNoteSaved = {},
-            // focusRequester = FocusRequester(),
             onNoteTitleUpdate = {}
         )
     }

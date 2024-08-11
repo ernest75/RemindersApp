@@ -2,6 +2,7 @@ package com.ernestschcneider.remindersapp.local
 
 import com.ernestschcneider.feature.reminders.data.models.Reminder
 import com.ernestschcneider.remindersapp.core.database.ReminderDao
+import java.util.UUID
 import javax.inject.Inject
 
 
@@ -21,5 +22,9 @@ class LocalRepo @Inject constructor(
 
     override suspend fun deleteReminder(reminder: Reminder) {
         reminderDao.delete(reminder.toReminderEntity())
+    }
+
+    override suspend fun getReminder(reminderId: String ): Reminder {
+       return reminderDao.getReminderById(UUID.fromString(reminderId)).toDomain()
     }
 }

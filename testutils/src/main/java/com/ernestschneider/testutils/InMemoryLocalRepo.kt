@@ -18,6 +18,10 @@ class InMemoryLocalRepo : StorageRepo {
         reminders.remove(reminder)
     }
 
+    override suspend fun getReminder(reminderId: String): Reminder {
+        return reminders[reminderId.toInt()]
+    }
+
     fun getReminders(): List<Reminder> {
         return reminders
     }
@@ -28,6 +32,7 @@ class InMemoryLocalRepo : StorageRepo {
     private val reminders = (1..10).map {
         ReminderBuilder
             .aReminder()
+            .withId(it.toString())
             .withReminderTitle("Title$it")
             .withReminderContent("Content$it")
             .withReminderType(

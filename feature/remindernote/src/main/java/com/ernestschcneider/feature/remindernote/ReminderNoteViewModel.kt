@@ -22,23 +22,23 @@ class ReminderNoteViewModel @Inject constructor(
     private val backgroundDispatcher: CoroutineDispatcher
 ) : ViewModel() {
 
-    private val _screenState = MutableStateFlow(ReminderNoteState())
+    private val _screenState = MutableStateFlow(ReminderNoteState(showSaveButton = true))
     val screenState: StateFlow<ReminderNoteState> = _screenState.asStateFlow()
     private val reminderNoteArgs = ReminderNoteArgs(savedStateHandle)
 
     fun onNoteContentUpdate(reminderContent: String) {
-        _screenState.update { it.copy(noteContent = reminderContent) }
+        _screenState.update { it.copy(reminderContent = reminderContent) }
     }
 
     fun onNoteTitleUpdate(reminderTitle: String) {
-        _screenState.update { it.copy(noteTitle = reminderTitle) }
+        _screenState.update { it.copy(reminderTitle = reminderTitle) }
     }
 
     fun onSavedNoteClicked() {
-        if (_screenState.value.noteTitle.isNotEmpty()) {
+        if (_screenState.value.reminderTitle.isNotEmpty()) {
             val reminder = Reminder(
-                reminderTitle = _screenState.value.noteTitle,
-                reminderContent = _screenState.value.noteContent
+                reminderTitle = _screenState.value.reminderTitle,
+                reminderContent = _screenState.value.reminderContent
             )
             viewModelScope.launch {
                 withContext(backgroundDispatcher) {
@@ -54,10 +54,22 @@ class ReminderNoteViewModel @Inject constructor(
     }
 
     fun loadNoteReminder() {
-        if (reminderNoteArgs.reminderId == EMPTY_REMINDER_ID ) {
+        val reminderId = reminderNoteArgs.reminderId
+        if (reminderId == EMPTY_REMINDER_ID) {
             _screenState.update { it.copy(requestFocus = true) }
         } else {
-           println()
+            viewModelScope.launch {
+                withContext(backgroundDispatcher) {
+                    val reminder = localRepo.getReminder(reminderId)
+                    _screenState.update {
+                        it.copy(
+                            reminderTitle = reminder.reminderTitle,
+                            reminderContent = reminder.reminderContent,
+                            showSaveButton = false
+                        )
+                    }
+                }
+            }
         }
     }
 

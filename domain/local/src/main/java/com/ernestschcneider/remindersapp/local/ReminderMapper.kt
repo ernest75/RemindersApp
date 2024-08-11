@@ -2,10 +2,12 @@ package com.ernestschcneider.remindersapp.local
 
 import com.ernestschcneider.feature.reminders.data.models.Reminder
 import com.ernestschcneider.remindersapp.core.database.ReminderEntity
+import com.ernestschcneider.remindersapp.core.database.ReminderEntity.Companion.DEFAULT_UUID
+import java.util.UUID
 
 fun Reminder.toReminderEntity(): ReminderEntity {
     return ReminderEntity(
-        id = id,
+        id = UUID.fromString(DEFAULT_UUID),
         reminderTitle = reminderTitle,
         reminderContent = reminderContent,
         reminderType = reminderType
@@ -14,7 +16,7 @@ fun Reminder.toReminderEntity(): ReminderEntity {
 
 fun ReminderEntity.toDomain(): Reminder {
     return Reminder(
-        id = id,
+        id = id.toString(),
         reminderTitle = reminderTitle,
         reminderContent = reminderContent,
         reminderType = reminderType

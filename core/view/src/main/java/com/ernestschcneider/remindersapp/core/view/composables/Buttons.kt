@@ -24,7 +24,7 @@ fun PrimaryButton(
     modifier: Modifier = Modifier,
     label: String,
     onClick: () -> Unit
-){
+) {
     Button(
         onClick = onClick,
         modifier = modifier,
@@ -42,24 +42,28 @@ fun PrimaryButton(
 fun SecondaryButton(
     modifier: Modifier = Modifier,
     label: String,
-    onClick: () -> Unit
+    onClick: () -> Unit,
+    isVisible: Boolean = true
 ) {
-    OutlinedButton(
-        modifier = modifier,
-        onClick = onClick,
-        colors = ButtonDefaults.outlinedButtonColors(
-            containerColor = AppTheme.colorScheme.secondary,
-            contentColor = AppTheme.colorScheme.onSecondary
-        ),
-        shape = AppTheme.shape.button,
-        border = BorderStroke(1.dp, AppTheme.colorScheme.onSecondary )
-    ) {
-        Text(text = label, style = AppTheme.typography.labelLarge)
+    if (isVisible) {
+        OutlinedButton(
+            modifier = modifier,
+            onClick = onClick,
+            colors = ButtonDefaults.outlinedButtonColors(
+                containerColor = AppTheme.colorScheme.secondary,
+                contentColor = AppTheme.colorScheme.onSecondary
+            ),
+            shape = AppTheme.shape.button,
+            border = BorderStroke(1.dp, AppTheme.colorScheme.onSecondary)
+        ) {
+            Text(text = label, style = AppTheme.typography.labelLarge)
+        }
     }
+
 }
 
 @Composable
-    fun FloatingActionExtendedButton(
+fun FloatingActionExtendedButton(
     modifier: Modifier = Modifier,
     label: String,
     onClick: () -> Unit
@@ -68,9 +72,9 @@ fun SecondaryButton(
         modifier = modifier,
         containerColor = AppTheme.colorScheme.surfaceBright,
         contentColor = AppTheme.colorScheme.onSurfaceBright,
-        text = {  Text(text = label, style = AppTheme.typography.labelLarge) },
+        text = { Text(text = label, style = AppTheme.typography.labelLarge) },
         onClick = onClick,
-        icon ={ Icon(Icons.Filled.Add, label)}
+        icon = { Icon(Icons.Filled.Add, label) }
     )
 }
 
@@ -89,10 +93,10 @@ private fun PreviewPrimaryButton() {
             )
             SecondaryButton(
                 label = "Secondary",
-                onClick= {}
+                onClick = {}
             )
             FloatingActionExtendedButton(label = "Add Reminder") {
-                
+
             }
         }
     }

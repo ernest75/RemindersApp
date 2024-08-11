@@ -6,10 +6,14 @@ import com.ernestschcneider.feature.reminders.data.models.ReminderType
 import java.util.UUID
 
 class ReminderBuilder {
-    private var id: UUID = UUID.fromString(DEFAULT_UUID)
+    private var id: String = ""
     private var reminderTitle: String = ""
     private var reminderContent: String = ""
     private var reminderType = ReminderType.Note
+
+    fun withId(id: String) = apply {
+        this.id = id
+    }
 
     fun withReminderTitle(reminderTitle: String) = apply {
         this.reminderTitle = reminderTitle

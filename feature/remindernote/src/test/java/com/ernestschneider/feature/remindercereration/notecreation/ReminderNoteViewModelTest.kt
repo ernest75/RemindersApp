@@ -6,6 +6,7 @@ import com.ernestschcneider.feature.remindernote.ReminderNoteViewModel
 import com.ernestschcneider.remindersapp.core.dispatchers.CoroutineTestExtension
 import com.ernestschneider.testutils.InMemoryLocalRepo
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
@@ -14,9 +15,8 @@ import org.junit.jupiter.api.extension.ExtendWith
 class ReminderNoteViewModelTest {
     private val localRepo = InMemoryLocalRepo()
     private val backgroundDispatcher = Dispatchers.Unconfined
-    private val savedStateHandle = SavedStateHandle().apply {
-        set(REMINDER_ID_ARG, EMPTY_REMINDER_ID)
-    }
+    private val savedStateHandle = getSavedStateHandle()
+
     private val viewModel = ReminderNoteViewModel(
         localRepo = localRepo,
         backgroundDispatcher= backgroundDispatcher,
@@ -29,7 +29,7 @@ class ReminderNoteViewModelTest {
 
         viewModel.onNoteContentUpdate(reminderContent)
 
-        assertEquals(reminderContent, viewModel.screenState.value.noteContent)
+        assertEquals(reminderContent, viewModel.screenState.value.reminderContent)
     }
     
     @Test
@@ -38,7 +38,7 @@ class ReminderNoteViewModelTest {
 
         viewModel.onNoteTitleUpdate(reminderTitle)
 
-        assertEquals(reminderTitle, viewModel.screenState.value.noteTitle)
+        assertEquals(reminderTitle, viewModel.screenState.value.reminderTitle)
     }
     
     @Test
@@ -50,8 +50,8 @@ class ReminderNoteViewModelTest {
 
         viewModel.onSavedNoteClicked()
 
-        assertEquals(noteTitle, viewModel.screenState.value.noteTitle)
-        assertEquals(noteContent, viewModel.screenState.value.noteContent)
+        assertEquals(noteTitle, viewModel.screenState.value.reminderTitle)
+        assertEquals(noteContent, viewModel.screenState.value.reminderContent)
         assertEquals(true, viewModel.screenState.value.backNavigation)
     }
 
@@ -64,8 +64,8 @@ class ReminderNoteViewModelTest {
 
         viewModel.onSavedNoteClicked()
 
-        assertEquals(noteTitle, viewModel.screenState.value.noteTitle)
-        assertEquals(noteContent, viewModel.screenState.value.noteContent)
+        assertEquals(noteTitle, viewModel.screenState.value.reminderTitle)
+        assertEquals(noteContent, viewModel.screenState.value.reminderContent)
         assertEquals(backNavigation, viewModel.screenState.value.backNavigation)
     }
 
@@ -78,7 +78,7 @@ class ReminderNoteViewModelTest {
 
         viewModel.onSavedNoteClicked()
 
-        assertEquals(noteContent, viewModel.screenState.value.noteContent)
+        assertEquals(noteContent, viewModel.screenState.value.reminderContent)
         assertEquals(backNavigation, viewModel.screenState.value.backNavigation)
         assertEquals(showEmptyTitleDialog, viewModel.screenState.value.showEmptyTitleDialog)
     }
@@ -89,7 +89,31 @@ class ReminderNoteViewModelTest {
 
         viewModel.loadNoteReminder()
 
-        assertEquals(requestFocus,viewModel.screenState.value.requestFocus)
+        assertEquals(requestFocus, viewModel.screenState.value.requestFocus)
+    }
+
+    @Test
+    fun onLoadNoteReminderNotEmptyReminderId() = runTest {
+        val reminderId = "1"
+        // TODO improve this
+        val viewModel2 = ReminderNoteViewModel(
+            savedStateHandle = getSavedStateHandle(reminderId = reminderId),
+            localRepo = localRepo,
+            backgroundDispatcher = backgroundDispatcher
+        )
+        val reminder = localRepo.getReminder(reminderId)
+
+        viewModel2.loadNoteReminder()
+
+        assertEquals(reminder.reminderTitle, viewModel2.screenState.value.reminderTitle)
+        assertEquals(reminder.reminderContent, viewModel2.screenState.value.reminderContent)
+        assertEquals(false, viewModel2.screenState.value.showSaveButton)
+    }
+
+    private fun getSavedStateHandle(reminderId: String = EMPTY_REMINDER_ID): SavedStateHandle {
+        return SavedStateHandle().apply {
+            set(REMINDER_ID_ARG, reminderId)
+        }
     }
 
     companion object {

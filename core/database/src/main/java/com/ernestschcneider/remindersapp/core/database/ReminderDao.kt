@@ -5,6 +5,7 @@ import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
+import java.util.UUID
 
 @Dao
 interface ReminderDao {
@@ -16,4 +17,7 @@ interface ReminderDao {
 
     @Delete
     fun delete(note: ReminderEntity)
+
+    @Query("SELECT * FROM reminders WHERE id= :id")
+    fun getReminderById(id: UUID): ReminderEntity
 }
