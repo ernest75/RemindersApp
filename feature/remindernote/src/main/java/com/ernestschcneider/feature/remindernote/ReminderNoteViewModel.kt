@@ -22,16 +22,16 @@ class ReminderNoteViewModel @Inject constructor(
     private val backgroundDispatcher: CoroutineDispatcher
 ) : ViewModel() {
 
-    private val _screenState = MutableStateFlow(ReminderNoteState(showSaveButton = true))
+    private val _screenState = MutableStateFlow(ReminderNoteState())
     val screenState: StateFlow<ReminderNoteState> = _screenState.asStateFlow()
     private val reminderNoteArgs = ReminderNoteArgs(savedStateHandle)
 
     fun onNoteContentUpdate(reminderContent: String) {
-        _screenState.update { it.copy(reminderContent = reminderContent) }
+        _screenState.update { it.copy(reminderContent = reminderContent, showSaveButton = true) }
     }
 
     fun onNoteTitleUpdate(reminderTitle: String) {
-        _screenState.update { it.copy(reminderTitle = reminderTitle) }
+        _screenState.update { it.copy(reminderTitle = reminderTitle, showSaveButton = true) }
     }
 
     fun onSavedNoteClicked() {

@@ -6,5 +6,5 @@ data class ReminderNoteState(
     val backNavigation: Boolean = false,
     val showEmptyTitleDialog: Boolean = false,
     val requestFocus: Boolean = false,
-    val showSaveButton: Boolean
+    val showSaveButton: Boolean = true
 )
