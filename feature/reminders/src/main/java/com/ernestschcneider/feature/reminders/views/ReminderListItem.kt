@@ -38,7 +38,7 @@ fun ReminderListItem(
             .fillMaxWidth()
             .height(64.dp)
             .clickable {
-                onItemClicked(item.id.toString())
+                onItemClicked(item.id)
             }
             .background(AppTheme.colorScheme.primaryContainer),
         verticalAlignment = Alignment.CenterVertically,

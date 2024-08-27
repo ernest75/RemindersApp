@@ -77,6 +77,7 @@ android {
 
 dependencies {
     implementation(project(":core:view"))
+    implementation(project(":domain:data"))
     implementation(project(":feature:reminders"))
     implementation(project(":feature:reminderdetails"))
     implementation(project(":feature:remindernote"))

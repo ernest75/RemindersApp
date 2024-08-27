@@ -26,8 +26,8 @@ import com.ernestschcneider.remindersapp.core.view.theme.PreviewLightDark
 fun ReminderCreationDialog(
     modifier: Modifier = Modifier,
     onDismiss: () -> Unit,
-    onCreateNote: () -> Unit,
-    onCreateListNotes: () -> Unit
+    onCreateReminder: () -> Unit,
+    onCreateListReminder: () -> Unit
 ) {
     BasicAlertDialog(onDismissRequest = onDismiss) {
         Card(
@@ -55,13 +55,13 @@ fun ReminderCreationDialog(
                 )
                 OptionItemDialog(
                     modifier = Modifier.padding(top = 16.dp),
-                    onClickItem = onCreateNote,
+                    onClickItem = onCreateReminder,
                     drawableRes = R.drawable.ic_note_24,
                     textResId = string.reminder_note,
                     contentDescriptionIconId = string.note_icon
                 )
                 OptionItemDialog(
-                    onClickItem = onCreateListNotes,
+                    onClickItem = onCreateListReminder,
                     drawableRes = R.drawable.ic_list_bulleted_24,
                     textResId = string.reminder_list,
                     contentDescriptionIconId = string.list_icon
@@ -81,7 +81,7 @@ fun ReminderCreationDialog(
 fun PreviewDialog() {
     ReminderCreationDialog(
         onDismiss = {},
-        onCreateNote = {},
-        onCreateListNotes = {}
+        onCreateReminder = {},
+        onCreateListReminder = {}
     )
 }

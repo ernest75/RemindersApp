@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ernestschcneider.EMPTY_REMINDER_ID
 import com.ernestschcneider.models.Reminder
+import com.ernestschcneider.models.ReminderType
 import com.ernestschcneider.remindersapp.local.StorageRepo
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
@@ -89,5 +90,4 @@ class ReminderNoteViewModel @Inject constructor(
     fun onDismissEmptyTitleDialog() {
         _screenState.update { it.copy(showEmptyTitleDialog = false) }
     }
-
 }
