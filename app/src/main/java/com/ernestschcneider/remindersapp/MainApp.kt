@@ -33,7 +33,8 @@ fun MainApp() {
             },
             onListReminderCreationClick = {
                 // TODO change for new navigation fun
-                navController.navigateToReminderNoteDetail(noReminderId)
+                //navController.navigateToReminderNoteDetail(noReminderId)
+                println("List reminder creation clicked")
             },
             onListReminderClick = {
                 println("List reminder clicked")
