@@ -18,6 +18,7 @@
             <option value="$PROJECT_DIR$/domain/local" />
             <option value="$PROJECT_DIR$/feature" />
             <option value="$PROJECT_DIR$/feature/reminderdetails" />
+            <option value="$PROJECT_DIR$/feature/reminderlist" />
             <option value="$PROJECT_DIR$/feature/remindernote" />
             <option value="$PROJECT_DIR$/feature/reminders" />
             <option value="$PROJECT_DIR$/testutils" />
