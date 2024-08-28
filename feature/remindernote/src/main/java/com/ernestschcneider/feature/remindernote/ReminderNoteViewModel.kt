@@ -19,7 +19,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class ReminderNoteViewModel @Inject constructor(
-    private val savedStateHandle: SavedStateHandle,
+    savedStateHandle: SavedStateHandle,
     private val localRepo: StorageRepo,
     private val backgroundDispatcher: CoroutineDispatcher
 ) : ViewModel() {

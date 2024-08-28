@@ -81,6 +81,7 @@ dependencies {
     implementation(project(":feature:reminders"))
     implementation(project(":feature:reminderdetails"))
     implementation(project(":feature:remindernote"))
+    implementation(project(":feature:reminderlist"))
     implementation(libs.bundles.hilt)
     api(platform(libs.compose.bom))
     api(libs.bundles.compose)

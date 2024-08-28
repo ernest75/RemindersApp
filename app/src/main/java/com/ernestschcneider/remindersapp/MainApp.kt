@@ -8,10 +8,11 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.rememberNavController
 import com.ernestschcneider.feature.remiderdetails.remindersDetailScreen
-import com.ernestschcneider.feature.remindernote.navigateToReminderNoteDetail
-import com.ernestschcneider.feature.remindernote.noteCreationScreen
+import com.ernestschcneider.feature.reminderlist.navigateToReminderList
+import com.ernestschcneider.feature.reminderlist.reminderListScreen
+import com.ernestschcneider.feature.remindernote.navigateToReminderNote
+import com.ernestschcneider.feature.remindernote.reminderNoteScreen
 import com.ernestschcneider.feature.reminders.remindersScreen
-import com.ernestschcneider.models.ReminderType
 
 @Composable
 fun MainApp() {
@@ -26,14 +27,13 @@ fun MainApp() {
         remindersScreen(
             onNavigateUp = { activity.finish() },
             onReminderClick = { reminderId ->
-                navController.navigateToReminderNoteDetail(reminderId)
+                navController.navigateToReminderNote(reminderId)
             },
             onReminderCreationClick = { ->
-                navController.navigateToReminderNoteDetail(noReminderId)
+                navController.navigateToReminderNote(noReminderId)
             },
             onListReminderCreationClick = {
-                // TODO change for new navigation fun
-                //navController.navigateToReminderNoteDetail(noReminderId)
+                navController.navigateToReminderList(noReminderId)
                 println("List reminder creation clicked")
             },
             onListReminderClick = {
@@ -45,8 +45,12 @@ fun MainApp() {
             onNavigateUp = { navController.navigateUp() }
         )
 
-        noteCreationScreen(
+        reminderNoteScreen(
             onNavigateUp = { navController.navigateUp() }
+        )
+
+        reminderListScreen(
+            onNavigateUp = { navController.navigateUp()}
         )
     }
 }

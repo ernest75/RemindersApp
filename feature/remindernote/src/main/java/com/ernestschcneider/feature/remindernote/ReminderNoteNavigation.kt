@@ -4,22 +4,21 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
-import com.ernestschcneider.models.ReminderType
 
 const val REMINDER_ID_ARG = "reminderId"
-const val REMINDER_NOTE_DETAILS_ROUTE = "reminderNote/$REMINDER_ID_ARG={$REMINDER_ID_ARG}"
+const val REMINDER_NOTE_ROUTE = "reminderNote/$REMINDER_ID_ARG={$REMINDER_ID_ARG}"
 
-fun NavGraphBuilder.noteCreationScreen(
+fun NavGraphBuilder.reminderNoteScreen(
     onNavigateUp: () -> Unit
 ) {
-    composable(REMINDER_NOTE_DETAILS_ROUTE) {
+    composable(REMINDER_NOTE_ROUTE) {
         ReminderNoteScreen(
             onNavigateUp = onNavigateUp
         )
     }
 }
 
-fun NavController.navigateToReminderNoteDetail(reminderId: String) {
+fun NavController.navigateToReminderNote(reminderId: String) {
     navigate("reminderNote/$REMINDER_ID_ARG=$reminderId")
 }
 
