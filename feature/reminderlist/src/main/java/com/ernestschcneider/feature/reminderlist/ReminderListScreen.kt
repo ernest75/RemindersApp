@@ -4,6 +4,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -17,6 +18,8 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.ernestschcneider.feature.reminderlist.views.AddReminder
+import com.ernestschcneider.feature.reminderlist.views.RemindersListItem
+import com.ernestschcneider.models.RemindersListItemModel
 import com.ernestschcneider.remindersapp.core.view.R
 import com.ernestschcneider.remindersapp.core.view.composables.RemindersTopAppBar
 import com.ernestschcneider.remindersapp.core.view.theme.AppTheme
@@ -62,17 +65,23 @@ fun ReminderListScreenContent(
         )
         HorizontalDivider(
             modifier = Modifier.padding(top = 24.dp),
-            thickness = 1.dp,
             color = AppTheme.colorScheme.scrim
         )
         LazyColumn(
-            modifier = Modifier.fillMaxSize(),
+            modifier = Modifier.fillMaxWidth(),
             verticalArrangement = Arrangement.spacedBy(16.dp)
-        ){
-         items(screenState.remindersList){
-
-         }
+        ) {
+            items(screenState.remindersList) {
+                RemindersListItem(
+                    item = it,
+                    editReminder = { },
+                    deleteReminder = {}
+                )
+            }
         }
+        AddReminder(
+            onAddReminderClicked = {}
+        )
     }
 }
 
@@ -82,7 +91,16 @@ private fun NoteCreationScreenPreview() {
     AppTheme {
         ReminderListScreenContent(
             onNavigateUp = {},
-            screenState = ReminderListState()
+            screenState = ReminderListState(
+                remindersList = listOf(
+                    RemindersListItemModel(
+                        reminderContent = "Hello"
+                    ),
+                    RemindersListItemModel(
+                        reminderContent = "Hello2"
+                    )
+                )
+            )
         )
     }
 }

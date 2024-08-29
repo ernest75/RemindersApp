@@ -2,6 +2,7 @@ package com.ernestschcneider.feature.reminderlist.views
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
@@ -10,6 +11,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -31,36 +33,47 @@ fun RemindersListItem(
     editReminder: () -> Unit,
     deleteReminder: () -> Unit
 ) {
-    Row(
-        modifier = modifier
-            .clip(RoundedCornerShape(12.dp))
-            .fillMaxWidth()
-            .height(64.dp)
-            .background(AppTheme.colorScheme.primaryContainer),
-        verticalAlignment = Alignment.CenterVertically,
-    ) {
-        Text(
-            modifier = Modifier.padding(start = 16.dp),
-            text = item.reminderContent
-        )
-        Spacer(Modifier.weight(1f).fillMaxHeight())
-        Icon(
-            painter = painterResource(id = R.drawable.ic_pencil_24),
-            contentDescription = stringResource(id = R.string.edit_reminder),
-            modifier = Modifier
-                .align(Alignment.CenterVertically)
-                .padding(end = 16.dp)
-                .size(16.dp)
-                .clickable { editReminder() }
-        )
-        Icon(
-            painter = painterResource(id = R.drawable.ic_delete_outline_24),
-            contentDescription = stringResource(id = R.string.delete_reminder),
-            modifier = Modifier
-                .align(Alignment.CenterVertically)
-                .padding(end = 16.dp)
-                .size(16.dp)
-                .clickable { deleteReminder() }
+    Column {
+        Row(
+            modifier = modifier
+                .clip(RoundedCornerShape(12.dp))
+                .fillMaxWidth()
+                .height(64.dp)
+                .background(AppTheme.colorScheme.primaryContainer),
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
+            Text(
+                modifier = Modifier.padding(start = 16.dp),
+                text = item.reminderContent,
+                style = AppTheme.typography.labelLarge
+            )
+            Spacer(
+                Modifier
+                    .weight(1f)
+                    .fillMaxHeight()
+            )
+            Icon(
+                painter = painterResource(id = R.drawable.ic_pencil_24),
+                contentDescription = stringResource(id = R.string.edit_reminder),
+                modifier = Modifier
+                    .align(Alignment.CenterVertically)
+                    .padding(end = 16.dp)
+                    .size(16.dp)
+                    .clickable { editReminder() }
+            )
+            Icon(
+                painter = painterResource(id = R.drawable.ic_delete_outline_24),
+                contentDescription = stringResource(id = R.string.delete_reminder),
+                modifier = Modifier
+                    .align(Alignment.CenterVertically)
+                    .padding(end = 16.dp)
+                    .size(16.dp)
+                    .clickable { deleteReminder() }
+            )
+        }
+
+        HorizontalDivider(
+            color = AppTheme.colorScheme.scrim
         )
     }
 
