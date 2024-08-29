@@ -8,7 +8,9 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material3.FabPosition
 import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
@@ -49,49 +51,58 @@ fun ReminderListScreenContent(
     if (screenState.requestFocus) {
         focusRequester.requestFocus()
     }
-    Column(
+    Scaffold(
         modifier = Modifier
-            .fillMaxSize()
             .padding(top = 48.dp)
-            .background(AppTheme.colorScheme.secondaryContainer)
-    ) {
-        RemindersTopAppBar(
-            onNavigateUp = onNavigateUp,
-            onTitleUpdate = {},
-            focusRequester = focusRequester,
-            value = screenState.reminderListTitle,
-            titlePlaceHolderId = R.string.type_reminder_title
-        )
-        AddReminder(
-            onAddReminderClicked = {}
-        )
-        HorizontalDivider(
-            modifier = Modifier.padding(top = 24.dp),
-            color = AppTheme.colorScheme.scrim
-        )
-        LazyColumn(
-            modifier = Modifier.fillMaxWidth(),
-            verticalArrangement = Arrangement.spacedBy(16.dp)
-        ) {
-            items(screenState.remindersList) {
-                RemindersListItem(
-                    item = it,
-                    editReminder = { },
-                    deleteReminder = {}
-                )
-            }
+            .fillMaxSize(),
+        floatingActionButtonPosition = FabPosition.Center,
+        floatingActionButton = {
+            PrimaryButton(
+                modifier = Modifier.fillMaxWidth(),
+                label = stringResource(id = R.string.save_reminder_list),
+                onClick = { },
+                isVisible = screenState.showSaveButton
+            )
+        },
+        topBar = {
+            RemindersTopAppBar(
+                onNavigateUp = onNavigateUp,
+                onTitleUpdate = {},
+                focusRequester = focusRequester,
+                value = screenState.reminderListTitle,
+                titlePlaceHolderId = R.string.type_reminder_title
+            )
         }
-        AddReminder(
-            onAddReminderClicked = {}
-        )
-        PrimaryButton(
+    ) { paddingValues ->
+        Column(
             modifier = Modifier
-                .padding(top = 4.dp)
-                .fillMaxWidth(),
-            label = stringResource(id = R.string.save_reminder_list),
-            onClick = { },
-            isVisible = screenState.showSaveButton
-        )
+                .fillMaxSize()
+                .background(AppTheme.colorScheme.primaryContainer)
+                .padding(paddingValues)
+        ) {
+            AddReminder(
+                onAddReminderClicked = {}
+            )
+            HorizontalDivider(
+                modifier = Modifier.padding(top = 24.dp),
+                color = AppTheme.colorScheme.scrim
+            )
+            LazyColumn(
+                modifier = Modifier.fillMaxWidth(),
+                verticalArrangement = Arrangement.spacedBy(16.dp)
+            ) {
+                items(screenState.remindersList) {
+                    RemindersListItem(
+                        item = it,
+                        editReminder = { },
+                        deleteReminder = {}
+                    )
+                }
+            }
+            AddReminder(
+                onAddReminderClicked = {}
+            )
+        }
     }
 }
 
