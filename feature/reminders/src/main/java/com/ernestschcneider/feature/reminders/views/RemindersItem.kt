@@ -25,7 +25,7 @@ import com.ernestschcneider.remindersapp.core.view.theme.AppTheme
 import com.ernestschcneider.remindersapp.core.view.theme.PreviewLightDark
 
 @Composable
-fun ReminderListItem(
+fun RemindersItem(
     modifier: Modifier = Modifier,
     item: Reminder,
     onItemClicked: (reminderId: String) -> Unit,
@@ -81,7 +81,7 @@ val reminderNote = Reminder(
 @PreviewLightDark
 private fun ReminderListItemPreview() {
     AppTheme {
-        ReminderListItem(
+        RemindersItem(
             item = reminderNote,
             onItemClicked = {},
             onDeleteItemClicked = {}

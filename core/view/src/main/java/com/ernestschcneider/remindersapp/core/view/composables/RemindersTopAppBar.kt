@@ -78,7 +78,7 @@ fun RemindersTopAppBar(
                 ),
                 placeholder = {
                     Text(
-                        stringResource(id = R.string.type_note_title),
+                        stringResource(id = R.string.type_reminder_title),
                         color = AppTheme.colorScheme.secondary
                     )
                 },

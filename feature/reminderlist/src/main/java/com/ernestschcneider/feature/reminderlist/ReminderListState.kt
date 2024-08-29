@@ -1,4 +1,6 @@
 package com.ernestschcneider.feature.reminderlist
 
-class ReminderListState {
-}
+data class ReminderListState(
+    val requestFocus: Boolean = false,
+    val reminderListTitle: String = ""
+)

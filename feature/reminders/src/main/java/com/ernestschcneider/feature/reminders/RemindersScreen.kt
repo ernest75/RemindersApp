@@ -28,7 +28,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.ernestschcneider.models.Reminder
 import com.ernestschcneider.models.ReminderType
 import com.ernestschcneider.feature.reminders.views.ReminderCreationDialog
-import com.ernestschcneider.feature.reminders.views.ReminderListItem
+import com.ernestschcneider.feature.reminders.views.RemindersItem
 import com.ernestschcneider.remindersapp.core.view.R
 import com.ernestschcneider.remindersapp.core.view.composables.FloatingActionExtendedButton
 import com.ernestschcneider.remindersapp.core.view.theme.AppTheme
@@ -126,14 +126,14 @@ internal fun RemindersScreenContent(
             ) {
                 items(screenState.reminders) { item ->
                     when (item.reminderType) {
-                        ReminderType.Note -> ReminderListItem(
+                        ReminderType.Note -> RemindersItem(
                             item = item,
                             startDrawableRes = R.drawable.ic_note_24,
                             onItemClicked = onReminderClicked,
                             onDeleteItemClicked = onDeleteItemClicked
                         )
 
-                        ReminderType.List -> ReminderListItem(
+                        ReminderType.List -> RemindersItem(
                             item = item,
                             onItemClicked = onListReminderClick,
                             startDrawableRes = R.drawable.ic_list_bulleted_24,

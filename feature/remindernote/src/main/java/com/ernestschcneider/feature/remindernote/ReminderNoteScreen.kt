@@ -104,7 +104,7 @@ fun ReminderNoteScreenContent(
             }),
             placeholder = {
                 Text(
-                    stringResource(id = string.type_note_text),
+                    stringResource(id = string.type_reminder_text),
                     color = AppTheme.colorScheme.secondary
                 )
             }
@@ -114,7 +114,7 @@ fun ReminderNoteScreenContent(
             modifier = Modifier
                 .align(Alignment.CenterHorizontally)
                 .padding(top = 4.dp),
-            label = stringResource(id = string.save_note),
+            label = stringResource(id = string.save_reminder),
             onClick = onNoteSaved,
             isVisible = state.showSaveButton
         )
