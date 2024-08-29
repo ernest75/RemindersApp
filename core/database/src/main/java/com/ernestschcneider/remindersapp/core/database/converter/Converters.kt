@@ -1,14 +1,17 @@
 package com.ernestschcneider.remindersapp.core.database.converter
 
 import androidx.room.TypeConverter
+import com.ernestschcneider.DEFAULT_UUID
 import com.ernestschcneider.remindersapp.core.database.ReminderEntity
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 import java.util.UUID
 
 class Converters {
 
     @TypeConverter
     fun fromUUID(uuid: UUID): String {
-        if ( uuid.toString() == ReminderEntity.DEFAULT_UUID )
+        if ( uuid.toString() == DEFAULT_UUID )
             return UUID.randomUUID().toString()
 
         return uuid.toString()
@@ -19,7 +22,24 @@ class Converters {
         string?.let {
             return UUID.fromString(string)
         }
-        return UUID.fromString(ReminderEntity.DEFAULT_UUID)
+        return UUID.fromString(DEFAULT_UUID)
     }
 
+    @TypeConverter
+    fun fromStringArrayList(value: ArrayList<String>): String {
+
+        return Gson().toJson(value)
+    }
+
+    @TypeConverter
+    fun toStringArrayList(value: String): ArrayList<String> {
+        return try {
+            Gson().fromJson<ArrayList<String>>(value) //using extension function
+        } catch (e: Exception) {
+            arrayListOf()
+        }
+    }
 }
+
+inline fun <reified T> Gson.fromJson(json: String) =
+    fromJson<T>(json, object : TypeToken<T>() {}.type)

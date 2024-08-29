@@ -43,6 +43,7 @@ dependencies {
     implementation(project(":domain:data"))
     implementation(libs.bundles.hilt)
     implementation(libs.bundles.room)
+    implementation(libs.gson)
 
     kapt(libs.hilt.compiler)
     kapt(libs.room.compiler)
