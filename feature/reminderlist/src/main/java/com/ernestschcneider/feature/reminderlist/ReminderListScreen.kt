@@ -14,6 +14,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -21,6 +22,7 @@ import com.ernestschcneider.feature.reminderlist.views.AddReminder
 import com.ernestschcneider.feature.reminderlist.views.RemindersListItem
 import com.ernestschcneider.models.RemindersListItemModel
 import com.ernestschcneider.remindersapp.core.view.R
+import com.ernestschcneider.remindersapp.core.view.composables.PrimaryButton
 import com.ernestschcneider.remindersapp.core.view.composables.RemindersTopAppBar
 import com.ernestschcneider.remindersapp.core.view.theme.AppTheme
 import com.ernestschcneider.remindersapp.core.view.theme.PreviewLightDark
@@ -81,6 +83,14 @@ fun ReminderListScreenContent(
         }
         AddReminder(
             onAddReminderClicked = {}
+        )
+        PrimaryButton(
+            modifier = Modifier
+                .padding(top = 4.dp)
+                .fillMaxWidth(),
+            label = stringResource(id = R.string.save_reminder_list),
+            onClick = { },
+            isVisible = screenState.showSaveButton
         )
     }
 }

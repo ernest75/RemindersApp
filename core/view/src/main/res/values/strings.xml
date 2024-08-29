@@ -23,4 +23,5 @@
     <string name="add_reminder_first_in_list_icon">"Add reminder first in list icon"</string>
     <string name="edit_reminder">"Edit reminder"</string>
     <string name="delete_reminder">"Delete reminder"</string>
+    <string name="save_reminder_list">"Save reminder list"</string>
 </resources>
