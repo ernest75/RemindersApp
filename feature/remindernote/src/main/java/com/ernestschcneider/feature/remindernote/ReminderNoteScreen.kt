@@ -7,7 +7,9 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material3.FabPosition
 import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
@@ -72,62 +74,64 @@ fun ReminderNoteScreenContent(
     }
 
     val focusManager = LocalFocusManager.current
-    Column(
+    Scaffold(
         modifier = Modifier
             .padding(top = 48.dp)
-            .fillMaxSize()
-            .background(AppTheme.colorScheme.secondaryContainer)
-    ) {
-        RemindersTopAppBar(
-            onNavigateUp = onNavigateUp,
-            onTitleUpdate = onNoteTitleUpdate,
-            focusRequester = focusRequester,
-            value = state.reminderTitle,
-            titlePlaceHolderId = string.type_reminder_title
-        )
-
-        TextField(
-            modifier = Modifier.fillMaxWidth(),
-            value = state.reminderContent,
-            onValueChange = onNoteContentUpdate,
-            colors = TextFieldDefaults.colors(
-                focusedContainerColor = AppTheme.colorScheme.secondaryContainer,
-                disabledContainerColor = AppTheme.colorScheme.secondaryContainer,
-                unfocusedContainerColor = AppTheme.colorScheme.secondaryContainer,
-                focusedIndicatorColor = Color.Transparent,
-                unfocusedIndicatorColor = Color.Transparent
-            ),
-            keyboardOptions = KeyboardOptions(
-                imeAction = ImeAction.Done
-            ),
-            keyboardActions = KeyboardActions(onDone = {
-                focusManager.clearFocus()
-            }),
-            placeholder = {
-                Text(
-                    stringResource(id = string.type_reminder_text),
-                    color = AppTheme.colorScheme.secondary
-                )
-            }
-        )
-        HorizontalDivider()
-        PrimaryButton(
-            modifier = Modifier
-                .align(Alignment.CenterHorizontally)
-                .padding(top = 4.dp),
-            label = stringResource(id = string.save_reminder),
-            onClick = onNoteSaved,
-            isVisible = state.showSaveButton
-        )
-        if (state.showEmptyTitleDialog) {
-            InformativeDialog(
-                titleId = string.warning,
-                explanationId = string.empty_title_explanation,
-                onDismiss = onDismissEmptyTitleDialog
+            .fillMaxSize(),
+        floatingActionButtonPosition = FabPosition.Center,
+        floatingActionButton = {
+            PrimaryButton(
+                modifier = Modifier
+                    .padding(top = 48.dp)
+                    .fillMaxWidth(),
+                label = stringResource(id = string.save_reminder),
+                onClick = onNoteSaved,
+                isVisible = state.showSaveButton
+            )
+        },
+        topBar = {
+            RemindersTopAppBar(
+                onNavigateUp = onNavigateUp,
+                onTitleUpdate = onNoteTitleUpdate,
+                focusRequester = focusRequester,
+                value = state.reminderTitle,
+                titlePlaceHolderId = string.type_reminder_title
             )
         }
-    }
+    ) { paddingValues ->
+        Column(
+            modifier = Modifier
+                .padding(paddingValues)
+                .fillMaxSize()
+                .background(AppTheme.colorScheme.secondaryContainer)
+        ) {
+            TextField(
+                modifier = Modifier.fillMaxWidth(),
+                value = state.reminderContent,
+                onValueChange = onNoteContentUpdate,
+                colors = TextFieldDefaults.colors(
+                    focusedContainerColor = AppTheme.colorScheme.secondaryContainer,
+                    disabledContainerColor = AppTheme.colorScheme.secondaryContainer,
+                    unfocusedContainerColor = AppTheme.colorScheme.secondaryContainer,
+                    focusedIndicatorColor = Color.Transparent,
+                    unfocusedIndicatorColor = Color.Transparent
+                ),
+                keyboardOptions = KeyboardOptions(
+                    imeAction = ImeAction.Done
+                ),
+                keyboardActions = KeyboardActions(onDone = {
+                    focusManager.clearFocus()
+                }),
+                placeholder = {
+                    Text(
+                        stringResource(id = string.type_reminder_text),
+                        color = AppTheme.colorScheme.secondary
+                    )
+                }
+            )
 
+        }
+    }
 }
 
 @PreviewLightDark
