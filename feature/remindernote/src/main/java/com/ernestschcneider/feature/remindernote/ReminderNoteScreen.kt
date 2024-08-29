@@ -82,7 +82,8 @@ fun ReminderNoteScreenContent(
             onNavigateUp = onNavigateUp,
             onTitleUpdate = onNoteTitleUpdate,
             focusRequester = focusRequester,
-            value = state.reminderTitle
+            value = state.reminderTitle,
+            titlePlaceHolderId = string.type_reminder_title
         )
 
         TextField(

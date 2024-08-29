@@ -1,5 +1,6 @@
 package com.ernestschcneider.remindersapp.core.view.composables
 
+import androidx.annotation.StringRes
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
@@ -38,7 +39,8 @@ fun RemindersTopAppBar(
     onNavigateUp: () -> Unit,
     onTitleUpdate: (newValue: String) -> Unit,
     focusRequester: FocusRequester,
-    value: String
+    value: String,
+    @StringRes titlePlaceHolderId: Int
 ) {
     val focusManager = LocalFocusManager.current
     Column(
@@ -78,7 +80,7 @@ fun RemindersTopAppBar(
                 ),
                 placeholder = {
                     Text(
-                        stringResource(id = R.string.type_reminder_title),
+                        stringResource(id = titlePlaceHolderId),
                         color = AppTheme.colorScheme.secondary
                     )
                 },
@@ -105,6 +107,7 @@ private fun ReminderTopAppBar() {
         onNavigateUp = {},
         onTitleUpdate = {},
         focusRequester = FocusRequester(),
-        value = "Title"
+        value = "Title",
+        titlePlaceHolderId = R.string.type_reminder_title
     )
 }

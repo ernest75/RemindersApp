@@ -1,6 +1,11 @@
 package com.ernestschcneider.feature.reminderlist
 
+import com.ernestschcneider.models.RemindersListItemModel
+
 data class ReminderListState(
     val requestFocus: Boolean = false,
-    val reminderListTitle: String = ""
-)
+    val reminderListTitle: String = "",
+    val remindersList: List<RemindersListItemModel> = emptyList()
+) {
+
+}

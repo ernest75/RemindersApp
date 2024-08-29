@@ -2,6 +2,8 @@ package com.ernestschcneider.feature.reminderlist.views
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Icon
@@ -21,8 +23,9 @@ fun AddReminder(
     onAddReminderClicked: ()-> Unit
 ) {
     Row(modifier = modifier
+        .fillMaxWidth()
         .padding(top = 32.dp)
-        .clickable {}
+        .clickable { onAddReminderClicked()}
     ) {
         Icon(
             painter = painterResource(id = R.drawable.icc_add_circle_24),
