@@ -81,12 +81,14 @@ internal fun RemindersScreenContent(
 ) {
     Scaffold(
         modifier = Modifier.fillMaxSize(),
-        floatingActionButton = { FloatingActionExtendedButton(
-            modifier = Modifier
-                .padding(bottom = 24.dp),
-            label = stringResource(id = R.string.add_reminder),
-            onClick = onAddButtonClicked
-        )},
+        floatingActionButton = {
+            FloatingActionExtendedButton(
+                modifier = Modifier
+                    .padding(bottom = 24.dp),
+                label = stringResource(id = R.string.add_reminder),
+                onClick = onAddButtonClicked
+            )
+        },
         topBar = {
             CenterAlignedTopAppBar(
                 modifier = Modifier.shadow(4.dp),
@@ -110,7 +112,7 @@ internal fun RemindersScreenContent(
                     }
                 },
 
-            )
+                )
         }
     ) { paddingValues ->
         Box(
@@ -118,7 +120,7 @@ internal fun RemindersScreenContent(
                 .fillMaxSize()
                 .background(AppTheme.colorScheme.surfaceContainerHigh)
                 .padding(paddingValues)
-            ) {
+        ) {
 
             LazyColumn(
                 modifier = Modifier.fillMaxSize(),
@@ -142,7 +144,7 @@ internal fun RemindersScreenContent(
                     }
                 }
             }
-            if (screenState.showCreationDialog){
+            if (screenState.showCreationDialog) {
                 ReminderCreationDialog(
                     onDismiss = onDismissDialog,
                     onCreateReminder = onReminderCreationClick,
