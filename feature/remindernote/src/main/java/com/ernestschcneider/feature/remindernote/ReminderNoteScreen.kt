@@ -8,7 +8,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.FabPosition
-import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
@@ -17,7 +16,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.graphics.Color
@@ -28,7 +26,6 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.ernestschcneider.remindersapp.core.view.R.string
-import com.ernestschcneider.remindersapp.core.view.composables.InformativeDialog
 import com.ernestschcneider.remindersapp.core.view.composables.PrimaryButton
 import com.ernestschcneider.remindersapp.core.view.composables.RemindersTopAppBar
 import com.ernestschcneider.remindersapp.core.view.theme.AppTheme
@@ -46,14 +43,14 @@ internal fun ReminderNoteScreen(
     }
 
     LaunchedEffect(Unit) {
-        reminderNoteViewModel.loadNoteReminder()
+        reminderNoteViewModel.loadReminder()
     }
     ReminderNoteScreenContent(
         onNavigateUp = onNavigateUp,
         state = state,
-        onNoteContentUpdate = reminderNoteViewModel::onNoteContentUpdate,
-        onNoteSaved = reminderNoteViewModel::onSavedNoteClicked,
-        onNoteTitleUpdate = reminderNoteViewModel::onNoteTitleUpdate,
+        onNoteContentUpdate = reminderNoteViewModel::onReminderContentUpdate,
+        onNoteSaved = reminderNoteViewModel::onSavedReminderClicked,
+        onNoteTitleUpdate = reminderNoteViewModel::onReminderTitleUpdate,
         onDismissEmptyTitleDialog = reminderNoteViewModel::onDismissEmptyTitleDialog
 
     )

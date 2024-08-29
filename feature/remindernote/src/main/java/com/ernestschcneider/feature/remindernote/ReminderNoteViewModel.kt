@@ -5,7 +5,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ernestschcneider.EMPTY_REMINDER_ID
 import com.ernestschcneider.models.Reminder
-import com.ernestschcneider.models.ReminderType
 import com.ernestschcneider.remindersapp.local.StorageRepo
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
@@ -28,7 +27,7 @@ class ReminderNoteViewModel @Inject constructor(
     val screenState: StateFlow<ReminderNoteState> = _screenState.asStateFlow()
     private val reminderNoteArgs = ReminderNoteArgs(savedStateHandle)
 
-    fun onNoteContentUpdate(reminderContent: String) {
+    fun onReminderContentUpdate(reminderContent: String) {
         _screenState.update {
             it.copy(
                 reminderContent = reminderContent,
@@ -38,7 +37,7 @@ class ReminderNoteViewModel @Inject constructor(
         }
     }
 
-    fun onNoteTitleUpdate(reminderTitle: String) {
+    fun onReminderTitleUpdate(reminderTitle: String) {
         _screenState.update {
             it.copy(
                 reminderTitle = reminderTitle,
@@ -48,7 +47,7 @@ class ReminderNoteViewModel @Inject constructor(
         }
     }
 
-    fun onSavedNoteClicked() {
+    fun onSavedReminderClicked() {
         if (_screenState.value.reminderTitle.isNotEmpty()) {
             val reminder = Reminder(
                 reminderTitle = _screenState.value.reminderTitle,
@@ -67,7 +66,7 @@ class ReminderNoteViewModel @Inject constructor(
         }
     }
 
-    fun loadNoteReminder() {
+    fun loadReminder() {
         val reminderId = reminderNoteArgs.reminderId
         if (reminderId == EMPTY_REMINDER_ID) {
             _screenState.update { it.copy(requestFocus = true) }

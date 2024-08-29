@@ -8,6 +8,7 @@ import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.update
 import javax.inject.Inject
 
 @HiltViewModel
@@ -16,9 +17,16 @@ class ReminderListViewModel @Inject constructor(
     private val localRepo: StorageRepo,
     private val backgroundDispatcher: CoroutineDispatcher
 ) : ViewModel() {
-
     private val _screenState = MutableStateFlow(ReminderListState())
     val screenState: StateFlow<ReminderListState> = _screenState.asStateFlow()
     private val reminderNoteArgs = ReminderListArgs(savedStateHandle)
 
+    fun onReminderListTitleUpdate(reminderListTitle: String) {
+        _screenState.update {
+            it.copy(
+                reminderListTitle = reminderListTitle,
+                showSaveButton = true
+            )
+        }
+    }
 }

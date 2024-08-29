@@ -1,9 +1,7 @@
 package com.ernestschneider.testutils
 
-import com.ernestschcneider.models.DEFAULT_UUID
 import com.ernestschcneider.models.Reminder
 import com.ernestschcneider.models.ReminderType
-import java.util.UUID
 
 class ReminderBuilder {
     private var id: String = ""

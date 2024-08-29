@@ -25,10 +25,10 @@ class ReminderNoteViewModelTest {
     )
 
     @Test
-    fun onNoteContentUpdate() {
+    fun onReminderContentUpdate() {
         val reminderContent = "reminderContent"
 
-        viewModel.onNoteContentUpdate(reminderContent)
+        viewModel.onReminderContentUpdate(reminderContent)
 
         assertEquals(reminderContent, viewModel.screenState.value.reminderContent)
         assertEquals(true, viewModel.screenState.value.showSaveButton)
@@ -36,10 +36,10 @@ class ReminderNoteViewModelTest {
     }
     
     @Test
-    fun onNoteTitleUpdate() {
+    fun onReminderTitleUpdate() {
         val reminderTitle = "reminderTitle"
 
-        viewModel.onNoteTitleUpdate(reminderTitle)
+        viewModel.onReminderTitleUpdate(reminderTitle)
 
         assertEquals(reminderTitle, viewModel.screenState.value.reminderTitle)
         assertEquals(true, viewModel.screenState.value.showSaveButton)
@@ -47,77 +47,77 @@ class ReminderNoteViewModelTest {
     }
     
     @Test
-    fun onSavedNoteClickedNotEmptyTitle() {
-        val noteTitle = "noteTitle"
-        val noteContent = "noteContent"
-        viewModel.onNoteTitleUpdate(noteTitle)
-        viewModel.onNoteContentUpdate(noteContent)
+    fun onSavedReminderClickedNotEmptyTitle() {
+        val reminderTitle = "reminderTitle"
+        val reminderContent = "reminderContent"
+        viewModel.onReminderTitleUpdate(reminderTitle)
+        viewModel.onReminderContentUpdate(reminderContent)
 
-        viewModel.onSavedNoteClicked()
+        viewModel.onSavedReminderClicked()
 
-        assertEquals(noteTitle, viewModel.screenState.value.reminderTitle)
-        assertEquals(noteContent, viewModel.screenState.value.reminderContent)
+        assertEquals(reminderTitle, viewModel.screenState.value.reminderTitle)
+        assertEquals(reminderContent, viewModel.screenState.value.reminderContent)
         assertEquals(true, viewModel.screenState.value.backNavigation)
     }
 
     @Test
-    fun onSavedNoteClickedEmptyContent() {
-        val noteTitle = "noteTitle"
-        val noteContent = ""
+    fun onSavedReminderClickedEmptyContent() {
+        val reminderTitle = "noteTitle"
+        val reminderContent = ""
         val backNavigation = true
-        viewModel.onNoteTitleUpdate(noteTitle)
+        viewModel.onReminderTitleUpdate(reminderTitle)
 
-        viewModel.onSavedNoteClicked()
+        viewModel.onSavedReminderClicked()
 
-        assertEquals(noteTitle, viewModel.screenState.value.reminderTitle)
-        assertEquals(noteContent, viewModel.screenState.value.reminderContent)
+        assertEquals(reminderTitle, viewModel.screenState.value.reminderTitle)
+        assertEquals(reminderContent, viewModel.screenState.value.reminderContent)
         assertEquals(backNavigation, viewModel.screenState.value.backNavigation)
     }
 
     @Test
-    fun onSavedNoteClickedEmptyTitle() {
-        val noteContent = "noteContent"
-        viewModel.onNoteContentUpdate(noteContent)
+    fun onSavedReminderClickedEmptyTitle() {
+        val reminderContent = "reminderContent"
+        viewModel.onReminderContentUpdate(reminderContent)
         val showEmptyTitleDialog = true
         val backNavigation = false
 
-        viewModel.onSavedNoteClicked()
+        viewModel.onSavedReminderClicked()
 
-        assertEquals(noteContent, viewModel.screenState.value.reminderContent)
+        assertEquals(reminderContent, viewModel.screenState.value.reminderContent)
         assertEquals(backNavigation, viewModel.screenState.value.backNavigation)
         assertEquals(showEmptyTitleDialog, viewModel.screenState.value.showEmptyTitleDialog)
     }
 
     @Test
-    fun onLoadNoteReminderEmptyReminderId() {
+    fun onLoadReminderEmptyReminderId() {
         val requestFocus = true
 
-        viewModel.loadNoteReminder()
+        viewModel.loadReminder()
 
         assertEquals(requestFocus, viewModel.screenState.value.requestFocus)
     }
 
     @Test
-    fun onLoadNoteReminderNotEmptyReminderId() = runTest {
+    fun onLoadReminderNotEmptyReminderId() = runTest {
         val reminderId = "1"
-        // TODO improve this
-        val viewModel2 = ReminderNoteViewModel(
+        // TODO improve this??
+        val viewModel = ReminderNoteViewModel(
             savedStateHandle = getSavedStateHandle(reminderId = reminderId),
             localRepo = localRepo,
             backgroundDispatcher = backgroundDispatcher
         )
         val reminder = localRepo.getReminder(reminderId)
 
-        viewModel2.loadNoteReminder()
+        viewModel.loadReminder()
 
-        assertEquals(reminder.reminderTitle, viewModel2.screenState.value.reminderTitle)
-        assertEquals(reminder.reminderContent, viewModel2.screenState.value.reminderContent)
-        assertEquals(false, viewModel2.screenState.value.showSaveButton)
+        assertEquals(reminder.reminderTitle, viewModel.screenState.value.reminderTitle)
+        assertEquals(reminder.reminderContent, viewModel.screenState.value.reminderContent)
+        assertEquals(false, viewModel.screenState.value.showSaveButton)
     }
 
     @Test
     fun onDismissEmptyTitleDialog() {
-        viewModel.onSavedNoteClicked()
+        viewModel.onSavedReminderClicked()
 
         viewModel.onDismissEmptyTitleDialog()
 
