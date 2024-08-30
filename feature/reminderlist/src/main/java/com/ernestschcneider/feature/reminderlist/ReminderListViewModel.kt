@@ -29,4 +29,16 @@ class ReminderListViewModel @Inject constructor(
             )
         }
     }
+
+    fun onFirstReminderListItemAdded(reminderText: String) {
+        val firstIndex = 0
+        val mutableList = _screenState.value.remindersList.toMutableList().apply {
+            add(firstIndex, reminderText) }
+        _screenState.update {
+            it.copy(
+                remindersList = mutableList,
+                showSaveButton = true
+            )
+        }
+    }
 }

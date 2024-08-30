@@ -38,7 +38,8 @@ internal fun ReminderListScreen(
     ReminderListScreenContent(
         onNavigateUp = onNavigateUp,
         screenState = state,
-        onReminderListTitleUpdate = reminderListViewModel::onReminderListTitleUpdate
+        onReminderListTitleUpdate = reminderListViewModel::onReminderListTitleUpdate,
+        onAddFirstReminder = reminderListViewModel::onFirstReminderListItemAdded
     )
 }
 
@@ -46,7 +47,8 @@ internal fun ReminderListScreen(
 fun ReminderListScreenContent(
     onNavigateUp: () -> Unit,
     screenState: ReminderListState,
-    onReminderListTitleUpdate: (String) -> Unit
+    onReminderListTitleUpdate: (String) -> Unit,
+    onAddFirstReminder :(String) -> Unit
 ) {
     val focusRequester = remember { FocusRequester() }
     if (screenState.requestFocus) {
@@ -82,7 +84,7 @@ fun ReminderListScreenContent(
                 .padding(paddingValues)
         ) {
             AddReminder(
-                onAddReminderClicked = {}
+                onAddReminderClicked = onAddFirstReminder
             )
             HorizontalDivider(
                 modifier = Modifier.padding(top = 24.dp),
@@ -119,7 +121,8 @@ private fun NoteCreationScreenPreview() {
                     "Hello2"
                 )
             ),
-            onReminderListTitleUpdate = {}
+            onReminderListTitleUpdate = {},
+            onAddFirstReminder = {}
         )
     }
 }

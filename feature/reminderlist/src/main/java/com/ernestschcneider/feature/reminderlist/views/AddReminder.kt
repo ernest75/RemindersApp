@@ -20,12 +20,12 @@ import com.ernestschcneider.remindersapp.core.view.theme.AppTheme
 @Composable
 fun AddReminder(
     modifier: Modifier = Modifier,
-    onAddReminderClicked: ()-> Unit
+    onAddReminderClicked: (String)-> Unit
 ) {
     Row(modifier = modifier
         .fillMaxWidth()
         .padding(top = 32.dp)
-        .clickable { onAddReminderClicked()}
+        .clickable { onAddReminderClicked("it")}
     ) {
         Icon(
             painter = painterResource(id = R.drawable.icc_add_circle_24),
