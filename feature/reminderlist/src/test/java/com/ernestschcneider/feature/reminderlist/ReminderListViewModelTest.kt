@@ -10,8 +10,7 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
 
 @ExtendWith(CoroutineTestExtension::class)
-class ReminderListViewModelTest {
-    private val localRepo = InMemoryLocalRepo()
+class ReminderListViewModelTest { private val localRepo = InMemoryLocalRepo()
     private val backgroundDispatcher = Dispatchers.Unconfined
     private val savedStateHandle = getSavedStateHandle()
 

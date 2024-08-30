@@ -48,9 +48,9 @@ internal fun ReminderNoteScreen(
     ReminderNoteScreenContent(
         onNavigateUp = onNavigateUp,
         state = state,
-        onNoteContentUpdate = reminderNoteViewModel::onReminderContentUpdate,
-        onNoteSaved = reminderNoteViewModel::onSavedReminderClicked,
-        onNoteTitleUpdate = reminderNoteViewModel::onReminderTitleUpdate,
+        onReminderNoteContentUpdate = reminderNoteViewModel::onReminderContentUpdate,
+        onReminderNoteSaved = reminderNoteViewModel::onSavedReminderClicked,
+        onReminderNoteTitleUpdate = reminderNoteViewModel::onReminderTitleUpdate,
         onDismissEmptyTitleDialog = reminderNoteViewModel::onDismissEmptyTitleDialog
 
     )
@@ -60,9 +60,9 @@ internal fun ReminderNoteScreen(
 fun ReminderNoteScreenContent(
     state: ReminderNoteState,
     onNavigateUp: () -> Unit,
-    onNoteContentUpdate: (String) -> Unit,
-    onNoteTitleUpdate: (String) -> Unit,
-    onNoteSaved: () -> Unit,
+    onReminderNoteContentUpdate: (String) -> Unit,
+    onReminderNoteTitleUpdate: (String) -> Unit,
+    onReminderNoteSaved: () -> Unit,
     onDismissEmptyTitleDialog: () -> Unit
 ) {
     val focusRequester = remember { FocusRequester() }
@@ -82,14 +82,14 @@ fun ReminderNoteScreenContent(
                     .padding(top = 48.dp)
                     .fillMaxWidth(),
                 label = stringResource(id = string.save_reminder),
-                onClick = onNoteSaved,
+                onClick = onReminderNoteSaved,
                 isVisible = state.showSaveButton
             )
         },
         topBar = {
             RemindersTopAppBar(
                 onNavigateUp = onNavigateUp,
-                onTitleUpdate = onNoteTitleUpdate,
+                onTitleUpdate = onReminderNoteTitleUpdate,
                 focusRequester = focusRequester,
                 value = state.reminderTitle,
                 titlePlaceHolderId = string.type_reminder_title
@@ -105,7 +105,7 @@ fun ReminderNoteScreenContent(
             TextField(
                 modifier = Modifier.fillMaxWidth(),
                 value = state.reminderContent,
-                onValueChange = onNoteContentUpdate,
+                onValueChange = onReminderNoteContentUpdate,
                 colors = TextFieldDefaults.colors(
                     focusedContainerColor = AppTheme.colorScheme.secondaryContainer,
                     disabledContainerColor = AppTheme.colorScheme.secondaryContainer,
@@ -137,10 +137,10 @@ private fun NoteCreationScreenPreview() {
     AppTheme {
         ReminderNoteScreenContent(
             onNavigateUp = {},
-            onNoteContentUpdate = {},
+            onReminderNoteContentUpdate = {},
             state = ReminderNoteState(showSaveButton = true),
-            onNoteSaved = {},
-            onNoteTitleUpdate = {},
+            onReminderNoteSaved = {},
+            onReminderNoteTitleUpdate = {},
             onDismissEmptyTitleDialog = {}
         )
     }

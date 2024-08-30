@@ -22,7 +22,6 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.ernestschcneider.feature.reminderlist.views.AddReminder
 import com.ernestschcneider.feature.reminderlist.views.RemindersListItem
-import com.ernestschcneider.models.RemindersListItemModel
 import com.ernestschcneider.remindersapp.core.view.R
 import com.ernestschcneider.remindersapp.core.view.composables.PrimaryButton
 import com.ernestschcneider.remindersapp.core.view.composables.RemindersTopAppBar
@@ -38,14 +37,16 @@ internal fun ReminderListScreen(
 
     ReminderListScreenContent(
         onNavigateUp = onNavigateUp,
-        screenState = state
+        screenState = state,
+        onReminderListTitleUpdate = reminderListViewModel::onReminderListTitleUpdate
     )
 }
 
 @Composable
 fun ReminderListScreenContent(
     onNavigateUp: () -> Unit,
-    screenState: ReminderListState
+    screenState: ReminderListState,
+    onReminderListTitleUpdate: (String) -> Unit
 ) {
     val focusRequester = remember { FocusRequester() }
     if (screenState.requestFocus) {
@@ -67,7 +68,7 @@ fun ReminderListScreenContent(
         topBar = {
             RemindersTopAppBar(
                 onNavigateUp = onNavigateUp,
-                onTitleUpdate = {},
+                onTitleUpdate = onReminderListTitleUpdate,
                 focusRequester = focusRequester,
                 value = screenState.reminderListTitle,
                 titlePlaceHolderId = R.string.type_reminder_title
@@ -94,7 +95,7 @@ fun ReminderListScreenContent(
                 items(screenState.remindersList) {
                     RemindersListItem(
                         item = it,
-                        editReminder = { },
+                        editReminder = {},
                         deleteReminder = {}
                     )
                 }
@@ -114,14 +115,11 @@ private fun NoteCreationScreenPreview() {
             onNavigateUp = {},
             screenState = ReminderListState(
                 remindersList = listOf(
-                    RemindersListItemModel(
-                        reminderContent = "Hello"
-                    ),
-                    RemindersListItemModel(
-                        reminderContent = "Hello2"
-                    )
+                    "Hello",
+                    "Hello2"
                 )
-            )
+            ),
+            onReminderListTitleUpdate = {}
         )
     }
 }

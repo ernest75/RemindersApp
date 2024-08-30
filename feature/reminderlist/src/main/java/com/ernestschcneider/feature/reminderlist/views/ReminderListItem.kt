@@ -21,7 +21,6 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import com.ernestschcneider.models.RemindersListItemModel
 import com.ernestschcneider.remindersapp.core.view.R
 import com.ernestschcneider.remindersapp.core.view.theme.AppTheme
 import com.ernestschcneider.remindersapp.core.view.theme.PreviewLightDark
@@ -29,7 +28,7 @@ import com.ernestschcneider.remindersapp.core.view.theme.PreviewLightDark
 @Composable
 fun RemindersListItem(
     modifier: Modifier = Modifier,
-    item: RemindersListItemModel,
+    item: String,
     editReminder: () -> Unit,
     deleteReminder: () -> Unit
 ) {
@@ -44,7 +43,7 @@ fun RemindersListItem(
         ) {
             Text(
                 modifier = Modifier.padding(start = 16.dp),
-                text = item.reminderContent,
+                text = item,
                 style = AppTheme.typography.labelLarge
             )
             Spacer(
@@ -84,7 +83,7 @@ fun RemindersListItem(
 private fun ReminderListItemPreview() {
     AppTheme {
         RemindersListItem(
-            item = RemindersListItemModel(reminderContent = "ReminderContentText"),
+            item = "ReminderContentText",
             editReminder = {},
             deleteReminder = {}
         )
