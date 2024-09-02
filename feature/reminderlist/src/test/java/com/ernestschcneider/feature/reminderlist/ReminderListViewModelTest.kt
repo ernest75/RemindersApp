@@ -56,10 +56,8 @@ class ReminderListViewModelTest { private val localRepo = InMemoryLocalRepo()
         viewModel.onFirstReminderListItemAdded(reminderText)
 
         viewModel.onFirstReminderListItemAdded(reminderText2)
+
         Assertions.assertEquals(reminderList,viewModel.screenState.value.remindersList)
-
-
-        Assertions.assertTrue(viewModel.screenState.value.showSaveButton)
     }
 
     @Test

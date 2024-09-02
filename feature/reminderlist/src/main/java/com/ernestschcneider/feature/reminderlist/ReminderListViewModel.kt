@@ -51,8 +51,7 @@ class ReminderListViewModel @Inject constructor(
             add(firstIndex, reminderText) }
         _screenState.update {
             it.copy(
-                remindersList = _screenState.value.remindersList,
-                showSaveButton = true
+                remindersList = _screenState.value.remindersList
             )
         }
     }
@@ -81,7 +80,6 @@ class ReminderListViewModel @Inject constructor(
         _screenState.update {
             it.copy(
                 remindersList = _screenState.value.remindersList,
-                showSaveButton = true
             )
         }
     }
