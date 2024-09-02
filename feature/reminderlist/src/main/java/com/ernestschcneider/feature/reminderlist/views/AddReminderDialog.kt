@@ -53,7 +53,7 @@ fun AddReminderDialog(
             )
         ) {
             // WorkAround remove when https://issuetracker.google.com/issues/204502668?pli=1 is fixed
-            // Update should be fixed in compose 1.7 
+            // Update should be fixed in compose 1.7
             val windowInfo = LocalWindowInfo.current
             LaunchedEffect(windowInfo) {
                 snapshotFlow { windowInfo.isWindowFocused }.collect { isWindowFocused ->
