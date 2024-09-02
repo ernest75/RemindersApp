@@ -39,11 +39,11 @@ class ReminderListViewModelTest { private val localRepo = InMemoryLocalRepo()
     }
 
     @Test
-    fun onDismissDialogClicked() {
+    fun onDismissCreateDialogClicked() {
         // to force showing dialog on screen
         viewModel.onAddFirstReminderListClicked()
 
-        viewModel.onDismissDialogClicked()
+        viewModel.onDismissCreateDialogClicked()
 
         Assertions.assertFalse(viewModel.screenState.value.showCreateReminderDialog)
     }
@@ -79,7 +79,46 @@ class ReminderListViewModelTest { private val localRepo = InMemoryLocalRepo()
 
         viewModel.onLastReminderListItemAdded(reminderText2)
 
-        Assertions.assertEquals(reminderList,viewModel.screenState.value.remindersList )
+        Assertions.assertEquals(reminderList,viewModel.screenState.value.remindersList)
+    }
+
+    @Test
+    fun onSaveReminderListNotEmptyTitle() {
+        val reminderListTitle = "title"
+        val firstReminder = "1"
+        val lastReminder = "2"
+        val reminderList = listOf(firstReminder, lastReminder)
+        val backNavigation = true
+        viewModel.onFirstReminderListItemAdded(firstReminder)
+        viewModel.onLastReminderListItemAdded(lastReminder)
+        viewModel.onReminderListTitleUpdate(reminderListTitle)
+
+        viewModel.onSaveListReminderClicked()
+
+        Assertions.assertEquals(reminderListTitle, viewModel.screenState.value.reminderListTitle)
+        Assertions.assertEquals(reminderList, viewModel.screenState.value.remindersList)
+        Assertions.assertTrue(backNavigation)
+    }
+
+    @Test
+    fun onSaveReminderListEmptyTitle() {
+        val firstReminder = "1"
+        val lastReminder = "2"
+        viewModel.onFirstReminderListItemAdded(firstReminder)
+        viewModel.onLastReminderListItemAdded(lastReminder)
+
+        viewModel.onSaveListReminderClicked()
+
+        Assertions.assertTrue(viewModel.screenState.value.showEmptyTitleDialog)
+    }
+
+    @Test
+    fun onDismissEmptyTitleDialogClicked() {
+        viewModel.onSaveListReminderClicked()
+
+        viewModel.onDismissEmptyTitleDialogClicked()
+
+        Assertions.assertFalse(viewModel.screenState.value.showEmptyTitleDialog)
     }
 
     private fun getSavedStateHandle(reminderListId: String = EMPTY_REMINDER_ID): SavedStateHandle {

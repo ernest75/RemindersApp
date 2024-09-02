@@ -24,6 +24,7 @@ import com.ernestschcneider.feature.reminderlist.views.AddReminder
 import com.ernestschcneider.feature.reminderlist.views.AddReminderDialog
 import com.ernestschcneider.feature.reminderlist.views.RemindersListItem
 import com.ernestschcneider.remindersapp.core.view.R
+import com.ernestschcneider.remindersapp.core.view.composables.InformativeDialog
 import com.ernestschcneider.remindersapp.core.view.composables.PrimaryButton
 import com.ernestschcneider.remindersapp.core.view.composables.RemindersTopAppBar
 import com.ernestschcneider.remindersapp.core.view.theme.AppTheme
@@ -35,6 +36,9 @@ internal fun ReminderListScreen(
     onNavigateUp: () -> Unit
 ) {
     val state by reminderListViewModel.screenState.collectAsStateWithLifecycle()
+    if (state.backNavigation) {
+        onNavigateUp()
+    }
 
     ReminderListScreenContent(
         onNavigateUp = onNavigateUp,
@@ -43,8 +47,10 @@ internal fun ReminderListScreen(
         onAddFirstReminder = reminderListViewModel::onAddFirstReminderListClicked,
         onFirstReminderAdded = reminderListViewModel::onFirstReminderListItemAdded,
         onAddLastReminder = reminderListViewModel::onAddLastReminderListClicked,
-        onDismissDialogClicked = reminderListViewModel::onDismissDialogClicked,
-        onLastReminderAdded = reminderListViewModel::onLastReminderListItemAdded
+        onDismissCreateDialogClicked = reminderListViewModel::onDismissCreateDialogClicked,
+        onLastReminderAdded = reminderListViewModel::onLastReminderListItemAdded,
+        onSaveReminderClicked = reminderListViewModel::onSaveListReminderClicked,
+        onDismissEmptyTitleClicked = reminderListViewModel::onDismissEmptyTitleDialogClicked
     )
 }
 
@@ -57,7 +63,9 @@ fun ReminderListScreenContent(
     onFirstReminderAdded: (String) -> Unit,
     onAddLastReminder: () -> Unit,
     onLastReminderAdded: (String) -> Unit,
-    onDismissDialogClicked: () -> Unit
+    onDismissCreateDialogClicked: () -> Unit,
+    onDismissEmptyTitleClicked: () -> Unit,
+    onSaveReminderClicked: () -> Unit,
 ) {
     val focusRequester = remember { FocusRequester() }
     if (screenState.requestFocus) {
@@ -72,7 +80,7 @@ fun ReminderListScreenContent(
             PrimaryButton(
                 modifier = Modifier.fillMaxWidth(),
                 label = stringResource(id = R.string.save_reminder_list),
-                onClick = { },
+                onClick = onSaveReminderClicked,
                 isVisible = screenState.showSaveButton
             )
         },
@@ -116,12 +124,18 @@ fun ReminderListScreenContent(
             )
             if (screenState.showCreateReminderDialog) {
                 AddReminderDialog(
-                    onDismiss = onDismissDialogClicked,
+                    onDismiss = onDismissCreateDialogClicked,
                     focusRequester = FocusRequester(),
                     onFirsReminderAdded = onFirstReminderAdded,
                     onLastReminderAdded = onLastReminderAdded,
                     isFirstReminder = screenState.isFirstReminder
                 )
+            }
+            if (screenState.showEmptyTitleDialog){
+                InformativeDialog(
+                    onDismiss = onDismissEmptyTitleClicked,
+                    titleId = R.string.warning,
+                    explanationId = R.string.empty_title_explanation)
             }
         }
     }
@@ -141,10 +155,12 @@ private fun NoteCreationScreenPreview() {
             ),
             onReminderListTitleUpdate = {},
             onAddFirstReminder = {},
-            onDismissDialogClicked = {},
+            onDismissCreateDialogClicked = {},
             onFirstReminderAdded = {},
             onAddLastReminder = {},
-            onLastReminderAdded = {}
+            onLastReminderAdded = {},
+            onSaveReminderClicked = {},
+            onDismissEmptyTitleClicked = {}
         )
     }
 }

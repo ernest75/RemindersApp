@@ -6,5 +6,7 @@ data class ReminderListState(
     val remindersList: MutableList<String> = mutableListOf(),
     val showSaveButton: Boolean = false,
     val showCreateReminderDialog: Boolean = false,
-    val isFirstReminder: Boolean = false
+    val isFirstReminder: Boolean = false,
+    val backNavigation: Boolean = false,
+    val showEmptyTitleDialog: Boolean = false
 )

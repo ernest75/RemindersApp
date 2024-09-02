@@ -20,9 +20,10 @@
     <string name="type_reminder_title">"Type reminder title"</string>
     <string name="type_reminders_list_title">"Type reminders list title"</string>
     <string name="warning">"Warning"</string>
-    <string name="empty_title_explanation">"You must type at least a title"</string>
+    <string name="empty_title_explanation">"You must add a title to proceed"</string>
     <string name="add_reminder_first_in_list_icon">"Add reminder first in list icon"</string>
     <string name="edit_reminder">"Edit reminder"</string>
     <string name="delete_reminder">"Delete reminder"</string>
     <string name="save_reminder_list">"Save reminder list"</string>
+    <string name="waring">"Warning"</string>
 </resources>
