@@ -7,7 +7,6 @@ import com.ernestschcneider.remindersapp.core.dispatchers.CoroutineTestExtension
 import com.ernestschneider.testutils.InMemoryLocalRepo
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.test.runTest
-import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
@@ -138,6 +137,15 @@ class ReminderListViewModelTest { private val localRepo = InMemoryLocalRepo()
         assertEquals(reminder.remindersList, viewModel.screenState.value.remindersList)
         assertEquals(reminder.reminderType, ReminderType.List)
         assertEquals(false, viewModel.screenState.value.showSaveButton)
+    }
+
+    @Test
+    fun onLoadEmptyIdListReminder() {
+        val requestFocus = true
+
+        viewModel.loadReminderList()
+
+        assertEquals(requestFocus,viewModel.screenState.value.requestFocus )
     }
 
     private fun getSavedStateHandle(reminderListId: String = EMPTY_REMINDER_ID): SavedStateHandle {

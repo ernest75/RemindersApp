@@ -4,6 +4,7 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.ernestschcneider.EMPTY_REMINDER_ID
 import com.ernestschcneider.models.Reminder
 import com.ernestschcneider.models.ReminderType
 import com.ernestschcneider.remindersapp.local.StorageRepo
@@ -49,7 +50,8 @@ class ReminderListViewModel @Inject constructor(
     fun onFirstReminderListItemAdded(reminderText: String) {
         val firstIndex = 0
         _screenState.value.remindersList.apply {
-            add(firstIndex, reminderText) }
+            add(firstIndex, reminderText)
+        }
         _screenState.update {
             it.copy(
                 remindersList = _screenState.value.remindersList,
@@ -78,7 +80,8 @@ class ReminderListViewModel @Inject constructor(
 
     fun onLastReminderListItemAdded(reminderText: String) {
         _screenState.value.remindersList.apply {
-            add(reminderText) }
+            add(reminderText)
+        }
         _screenState.update {
             it.copy(
                 remindersList = _screenState.value.remindersList,
@@ -119,15 +122,21 @@ class ReminderListViewModel @Inject constructor(
 
     fun loadReminderList() {
         val reminderId = reminderListArgs.reminderListId
-        viewModelScope.launch {
-            withContext(backgroundDispatcher) {
-                val reminder = localRepo.getReminder(reminderId)
-                _screenState.update {
-                    it.copy(
-                        reminderListTitle = reminder.reminderTitle,
-                        remindersList = reminder.remindersList,
-                        showSaveButton = false
-                    )
+        if (reminderId == EMPTY_REMINDER_ID) {
+            _screenState.update {
+                it.copy(requestFocus = true)
+            }
+        } else {
+            viewModelScope.launch {
+                withContext(backgroundDispatcher) {
+                    val reminder = localRepo.getReminder(reminderId)
+                    _screenState.update {
+                        it.copy(
+                            reminderListTitle = reminder.reminderTitle,
+                            remindersList = reminder.remindersList,
+                            showSaveButton = false
+                        )
+                    }
                 }
             }
         }
