@@ -41,7 +41,8 @@ internal fun ReminderListScreen(
         screenState = state,
         onReminderListTitleUpdate = reminderListViewModel::onReminderListTitleUpdate,
         onAddFirstReminder = reminderListViewModel::onFirstReminderListClicked,
-        onDismissDialogClicked = reminderListViewModel::onDismissDialogClicked
+        onDismissDialogClicked = reminderListViewModel::onDismissDialogClicked,
+        onFirstReminderAdded = reminderListViewModel::onFirstReminderListItemAdded
     )
 }
 
@@ -51,6 +52,7 @@ fun ReminderListScreenContent(
     screenState: ReminderListState,
     onReminderListTitleUpdate: (String) -> Unit,
     onAddFirstReminder: () -> Unit,
+    onFirstReminderAdded: (String) -> Unit,
     onDismissDialogClicked: () -> Unit
 ) {
     val focusRequester = remember { FocusRequester() }
@@ -111,10 +113,10 @@ fun ReminderListScreenContent(
             if (screenState.showCreateReminderDialog) {
                 AddReminderDialog(
                     onDismiss = onDismissDialogClicked,
-                    focusRequester = FocusRequester()
-                ) {
-
-                }
+                    focusRequester = FocusRequester(),
+                    onFirsReminderAdded = onFirstReminderAdded,
+                    isFirstReminder = screenState.isFirstReminder
+                )
             }
         }
     }
@@ -127,14 +129,15 @@ private fun NoteCreationScreenPreview() {
         ReminderListScreenContent(
             onNavigateUp = {},
             screenState = ReminderListState(
-                remindersList = listOf(
+                remindersList = mutableListOf(
                     "Hello",
                     "Hello2"
                 )
             ),
             onReminderListTitleUpdate = {},
             onAddFirstReminder = {},
-            onDismissDialogClicked = {}
+            onDismissDialogClicked = {},
+            onFirstReminderAdded = {}
         )
     }
 }

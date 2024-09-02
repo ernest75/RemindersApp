@@ -84,6 +84,7 @@ fun RemindersTopAppBar(
                         color = AppTheme.colorScheme.secondary
                     )
                 },
+                textStyle = AppTheme.typography.labelLarge,
                 value = value,
                 onValueChange = {
                     onTitleUpdate(it)

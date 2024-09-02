@@ -40,7 +40,8 @@ fun AddReminderDialog(
     modifier: Modifier = Modifier,
     focusRequester: FocusRequester,
     onDismiss: () -> Unit,
-    onCreateItemReminder: () -> Unit
+    onFirsReminderAdded: (String) -> Unit,
+    isFirstReminder: Boolean
 ) {
     BasicAlertDialog(onDismissRequest = onDismiss) {
         Card(
@@ -104,7 +105,6 @@ fun AddReminderDialog(
                     keyboardActions = KeyboardActions(onDone = {
                         focusManager.clearFocus()
                         // TODO hide keyboard??
-                        //onTitleUpdate(value)
                     })
                 )
                 Row(modifier = Modifier.fillMaxWidth()) {
@@ -112,7 +112,14 @@ fun AddReminderDialog(
                     PrimaryButton(
                         modifier = Modifier.padding(end = 4.dp),
                         label = stringResource(id = R.string.save),
-                        onClick = onCreateItemReminder
+                        onClick = {
+                            if (isFirstReminder) {
+                                onFirsReminderAdded(text.value)
+                            } else {
+                                onFirsReminderAdded(text.value)
+                            }
+                            onDismiss()
+                        }
                     )
                     PrimaryButton(
                         label = stringResource(id = R.string.cancel),
@@ -129,7 +136,8 @@ fun AddReminderDialog(
 fun PreviewDialog() {
     AddReminderDialog(
         onDismiss = {},
-        onCreateItemReminder = {},
-        focusRequester = FocusRequester()
+        focusRequester = FocusRequester(),
+        onFirsReminderAdded = {},
+        isFirstReminder = false
     )
 }

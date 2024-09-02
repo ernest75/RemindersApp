@@ -34,7 +34,20 @@ class ReminderListViewModel @Inject constructor(
         _screenState.update {
             it.copy(
                 showCreateReminderDialog = true,
-                requestFocus = true
+                requestFocus = true,
+                isFirstReminder = true
+            )
+        }
+    }
+
+    fun onFirstReminderListItemAdded(reminderText: String) {
+        val firstIndex = 0
+        _screenState.value.remindersList.apply {
+            add(firstIndex, reminderText) }
+        _screenState.update {
+            it.copy(
+                remindersList = _screenState.value.remindersList,
+                showSaveButton = true
             )
         }
     }

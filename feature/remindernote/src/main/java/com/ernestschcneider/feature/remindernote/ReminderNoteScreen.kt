@@ -119,6 +119,7 @@ fun ReminderNoteScreenContent(
                 keyboardActions = KeyboardActions(onDone = {
                     focusManager.clearFocus()
                 }),
+                textStyle = AppTheme.typography.labelLarge,
                 placeholder = {
                     Text(
                         stringResource(id = string.type_reminder_text),
