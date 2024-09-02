@@ -60,7 +60,6 @@ class ReminderNoteViewModel @Inject constructor(
                 }
             }
         } else {
-            //TODO add dialog in screen
             _screenState.update { it.copy(showEmptyTitleDialog = true) }
 
         }
