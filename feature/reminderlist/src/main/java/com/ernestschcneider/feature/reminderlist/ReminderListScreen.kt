@@ -110,8 +110,8 @@ fun ReminderListScreenContent(
             )
             if (screenState.showCreateReminderDialog) {
                 AddReminderDialog(
-                    focusRequester = focusRequester,
-                    onDismiss = onDismissDialogClicked
+                    onDismiss = onDismissDialogClicked,
+                    focusRequester = FocusRequester()
                 ) {
 
                 }

@@ -44,7 +44,7 @@ class ReminderListViewModelTest { private val localRepo = InMemoryLocalRepo()
 
         viewModel.onDismissDialogClicked()
 
-        Assertions.assertEquals(false,viewModel.screenState.value.showCreateReminderDialog )
+        Assertions.assertFalse(viewModel.screenState.value.showCreateReminderDialog)
     }
 
     private fun getSavedStateHandle(reminderListId: String = EMPTY_REMINDER_ID): SavedStateHandle {

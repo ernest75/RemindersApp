@@ -33,7 +33,8 @@ class ReminderListViewModel @Inject constructor(
     fun onFirstReminderListClicked() {
         _screenState.update {
             it.copy(
-                showCreateReminderDialog = true
+                showCreateReminderDialog = true,
+                requestFocus = true
             )
         }
     }
