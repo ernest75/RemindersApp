@@ -29,6 +29,7 @@ class InMemoryLocalRepo : StorageRepo {
     fun getReminderAt(position: Int): Reminder {
         return reminders[position]
     }
+
     private val reminders = (1..10).map {
         ReminderBuilder
             .aReminder()
@@ -40,6 +41,13 @@ class InMemoryLocalRepo : StorageRepo {
                     ReminderType.Note
                 } else {
                     ReminderType.List
+                }
+            )
+            .withReminderList(
+                if (it % 3 != 0) {
+                    arrayListOf("Element1", "Element2")
+                } else {
+                    arrayListOf()
                 }
             )
             .build()

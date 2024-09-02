@@ -12,6 +12,7 @@ import androidx.compose.material3.FabPosition
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
@@ -38,6 +39,9 @@ internal fun ReminderListScreen(
     val state by reminderListViewModel.screenState.collectAsStateWithLifecycle()
     if (state.backNavigation) {
         onNavigateUp()
+    }
+    LaunchedEffect(Unit) {
+        reminderListViewModel.loadReminderList()
     }
 
     ReminderListScreenContent(

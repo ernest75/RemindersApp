@@ -2,10 +2,13 @@ package com.ernestschcneider.feature.reminderlist
 
 import androidx.lifecycle.SavedStateHandle
 import com.ernestschcneider.EMPTY_REMINDER_ID
+import com.ernestschcneider.models.ReminderType
 import com.ernestschcneider.remindersapp.core.dispatchers.CoroutineTestExtension
 import com.ernestschneider.testutils.InMemoryLocalRepo
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Assertions
+import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
 
@@ -26,16 +29,16 @@ class ReminderListViewModelTest { private val localRepo = InMemoryLocalRepo()
 
         viewModel.onReminderListTitleUpdate(reminderListTitle)
 
-        Assertions.assertEquals(reminderListTitle, viewModel.screenState.value.reminderListTitle)
-        Assertions.assertTrue(viewModel.screenState.value.showSaveButton)
+        assertEquals(reminderListTitle, viewModel.screenState.value.reminderListTitle)
+        assertTrue(viewModel.screenState.value.showSaveButton)
     }
 
     @Test
     fun onAddFirstReminderListClicked() {
         viewModel.onAddFirstReminderListClicked()
 
-        Assertions.assertTrue(viewModel.screenState.value.showCreateReminderDialog)
-        Assertions.assertTrue(viewModel.screenState.value.isFirstReminder)
+        assertTrue(viewModel.screenState.value.showCreateReminderDialog)
+        assertTrue(viewModel.screenState.value.isFirstReminder)
     }
 
     @Test
@@ -45,7 +48,7 @@ class ReminderListViewModelTest { private val localRepo = InMemoryLocalRepo()
 
         viewModel.onDismissCreateDialogClicked()
 
-        Assertions.assertFalse(viewModel.screenState.value.showCreateReminderDialog)
+        assertFalse(viewModel.screenState.value.showCreateReminderDialog)
     }
     
     @Test
@@ -57,15 +60,15 @@ class ReminderListViewModelTest { private val localRepo = InMemoryLocalRepo()
 
         viewModel.onFirstReminderListItemAdded(reminderText2)
 
-        Assertions.assertEquals(reminderList,viewModel.screenState.value.remindersList)
+        assertEquals(reminderList,viewModel.screenState.value.remindersList)
     }
 
     @Test
     fun onAddLastReminderClicked() {
         viewModel.onAddLastReminderListClicked()
 
-        Assertions.assertTrue(viewModel.screenState.value.showCreateReminderDialog)
-        Assertions.assertFalse(viewModel.screenState.value.isFirstReminder)
+        assertTrue(viewModel.screenState.value.showCreateReminderDialog)
+        assertFalse(viewModel.screenState.value.isFirstReminder)
     }
 
     @Test
@@ -77,7 +80,7 @@ class ReminderListViewModelTest { private val localRepo = InMemoryLocalRepo()
 
         viewModel.onLastReminderListItemAdded(reminderText2)
 
-        Assertions.assertEquals(reminderList,viewModel.screenState.value.remindersList)
+        assertEquals(reminderList,viewModel.screenState.value.remindersList)
     }
 
     @Test
@@ -93,9 +96,9 @@ class ReminderListViewModelTest { private val localRepo = InMemoryLocalRepo()
 
         viewModel.onSaveListReminderClicked()
 
-        Assertions.assertEquals(reminderListTitle, viewModel.screenState.value.reminderListTitle)
-        Assertions.assertEquals(reminderList, viewModel.screenState.value.remindersList)
-        Assertions.assertTrue(backNavigation)
+        assertEquals(reminderListTitle, viewModel.screenState.value.reminderListTitle)
+        assertEquals(reminderList, viewModel.screenState.value.remindersList)
+        assertTrue(backNavigation)
     }
 
     @Test
@@ -107,7 +110,7 @@ class ReminderListViewModelTest { private val localRepo = InMemoryLocalRepo()
 
         viewModel.onSaveListReminderClicked()
 
-        Assertions.assertTrue(viewModel.screenState.value.showEmptyTitleDialog)
+        assertTrue(viewModel.screenState.value.showEmptyTitleDialog)
     }
 
     @Test
@@ -116,7 +119,25 @@ class ReminderListViewModelTest { private val localRepo = InMemoryLocalRepo()
 
         viewModel.onDismissEmptyTitleDialogClicked()
 
-        Assertions.assertFalse(viewModel.screenState.value.showEmptyTitleDialog)
+        assertFalse(viewModel.screenState.value.showEmptyTitleDialog)
+    }
+
+    @Test
+    fun onLoadReminderNotEmptyId() = runTest {
+        val reminderId = "1"
+        val viewModel = ReminderListViewModel(
+            savedStateHandle = getSavedStateHandle(reminderListId = reminderId),
+            localRepo = localRepo,
+            backgroundDispatcher = backgroundDispatcher
+        )
+        val reminder = localRepo.getReminder(reminderId)
+
+        viewModel.loadReminderList()
+
+        assertEquals(reminder.reminderTitle, viewModel.screenState.value.reminderListTitle)
+        assertEquals(reminder.remindersList, viewModel.screenState.value.remindersList)
+        assertEquals(reminder.reminderType, ReminderType.List)
+        assertEquals(false, viewModel.screenState.value.showSaveButton)
     }
 
     private fun getSavedStateHandle(reminderListId: String = EMPTY_REMINDER_ID): SavedStateHandle {

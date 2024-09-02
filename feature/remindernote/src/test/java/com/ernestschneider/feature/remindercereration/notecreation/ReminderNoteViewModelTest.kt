@@ -4,6 +4,8 @@ import androidx.lifecycle.SavedStateHandle
 import com.ernestschcneider.EMPTY_REMINDER_ID
 import com.ernestschcneider.feature.remindernote.REMINDER_ID_ARG
 import com.ernestschcneider.feature.remindernote.ReminderNoteViewModel
+import com.ernestschcneider.models.Reminder
+import com.ernestschcneider.models.ReminderType
 import com.ernestschcneider.remindersapp.core.dispatchers.CoroutineTestExtension
 import com.ernestschneider.testutils.InMemoryLocalRepo
 import kotlinx.coroutines.Dispatchers
@@ -99,7 +101,7 @@ class ReminderNoteViewModelTest {
 
     @Test
     fun onLoadReminderNotEmptyReminderId() = runTest {
-        val reminderId = "1"
+        val reminderId = "2"
         // TODO improve this??
         val viewModel = ReminderNoteViewModel(
             savedStateHandle = getSavedStateHandle(reminderId = reminderId),
@@ -112,6 +114,7 @@ class ReminderNoteViewModelTest {
 
         assertEquals(reminder.reminderTitle, viewModel.screenState.value.reminderTitle)
         assertEquals(reminder.reminderContent, viewModel.screenState.value.reminderContent)
+        assertEquals(reminder.reminderType, ReminderType.Note)
         assertEquals(false, viewModel.screenState.value.showSaveButton)
     }
 

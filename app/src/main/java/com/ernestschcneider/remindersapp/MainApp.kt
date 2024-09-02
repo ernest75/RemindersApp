@@ -34,10 +34,9 @@ fun MainApp() {
             },
             onListReminderCreationClick = {
                 navController.navigateToReminderList(noReminderId)
-                println("List reminder creation clicked")
             },
-            onListReminderClick = {
-                println("List reminder clicked")
+            onListReminderClick = { reminderListId ->
+                navController.navigateToReminderList(reminderListId)
             }
         )
 

@@ -3,6 +3,7 @@ package com.ernestschcneider.feature.reminderlist
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.ernestschcneider.models.Reminder
 import com.ernestschcneider.models.ReminderType
 import com.ernestschcneider.remindersapp.local.StorageRepo
@@ -24,7 +25,7 @@ class ReminderListViewModel @Inject constructor(
 ) : ViewModel() {
     private val _screenState = MutableStateFlow(ReminderListState())
     val screenState: StateFlow<ReminderListState> = _screenState.asStateFlow()
-    private val reminderNoteArgs = ReminderListArgs(savedStateHandle)
+    private val reminderListArgs = ReminderListArgs(savedStateHandle)
 
     fun onReminderListTitleUpdate(reminderListTitle: String) {
         _screenState.update {
@@ -51,7 +52,8 @@ class ReminderListViewModel @Inject constructor(
             add(firstIndex, reminderText) }
         _screenState.update {
             it.copy(
-                remindersList = _screenState.value.remindersList
+                remindersList = _screenState.value.remindersList,
+                showSaveButton = true
             )
         }
     }
@@ -80,6 +82,7 @@ class ReminderListViewModel @Inject constructor(
         _screenState.update {
             it.copy(
                 remindersList = _screenState.value.remindersList,
+                showSaveButton = true
             )
         }
     }
@@ -111,6 +114,22 @@ class ReminderListViewModel @Inject constructor(
             it.copy(
                 showEmptyTitleDialog = false
             )
+        }
+    }
+
+    fun loadReminderList() {
+        val reminderId = reminderListArgs.reminderListId
+        viewModelScope.launch {
+            withContext(backgroundDispatcher) {
+                val reminder = localRepo.getReminder(reminderId)
+                _screenState.update {
+                    it.copy(
+                        reminderListTitle = reminder.reminderTitle,
+                        remindersList = reminder.remindersList,
+                        showSaveButton = false
+                    )
+                }
+            }
         }
     }
 }
