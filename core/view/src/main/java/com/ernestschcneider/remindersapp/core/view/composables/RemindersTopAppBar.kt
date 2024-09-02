@@ -80,7 +80,7 @@ fun RemindersTopAppBar(
                 ),
                 placeholder = {
                     Text(
-                        stringResource(id = titlePlaceHolderId),
+                        text = stringResource(id = titlePlaceHolderId),
                         color = AppTheme.colorScheme.secondary
                     )
                 },

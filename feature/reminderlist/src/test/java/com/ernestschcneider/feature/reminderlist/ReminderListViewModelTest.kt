@@ -31,16 +31,20 @@ class ReminderListViewModelTest { private val localRepo = InMemoryLocalRepo()
     }
 
     @Test
-    fun onFirstReminderListItemAdded() {
-        val reminderText = "reminderText"
-        val reminderText2 = "reminderText2"
-        // Called here to have more than 1 item later
-        viewModel.onFirstReminderListItemAdded(reminderText)
+    fun onFirstReminderListClicked() {
+        viewModel.onFirstReminderListClicked()
 
-        viewModel.onFirstReminderListItemAdded(reminderText2)
+        Assertions.assertTrue(viewModel.screenState.value.showCreateReminderDialog)
+    }
 
-        Assertions.assertEquals(reminderText2, viewModel.screenState.value.remindersList.first())
-        Assertions.assertTrue(viewModel.screenState.value.showSaveButton)
+    @Test
+    fun onDismissDialogClicked() {
+        // to force showing dialog on screen
+        viewModel.onFirstReminderListClicked()
+
+        viewModel.onDismissDialogClicked()
+
+        Assertions.assertEquals(false,viewModel.screenState.value.showCreateReminderDialog )
     }
 
     private fun getSavedStateHandle(reminderListId: String = EMPTY_REMINDER_ID): SavedStateHandle {

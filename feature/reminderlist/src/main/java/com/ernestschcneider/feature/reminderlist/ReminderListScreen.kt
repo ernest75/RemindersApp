@@ -21,6 +21,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.ernestschcneider.feature.reminderlist.views.AddReminder
+import com.ernestschcneider.feature.reminderlist.views.AddReminderDialog
 import com.ernestschcneider.feature.reminderlist.views.RemindersListItem
 import com.ernestschcneider.remindersapp.core.view.R
 import com.ernestschcneider.remindersapp.core.view.composables.PrimaryButton
@@ -39,7 +40,8 @@ internal fun ReminderListScreen(
         onNavigateUp = onNavigateUp,
         screenState = state,
         onReminderListTitleUpdate = reminderListViewModel::onReminderListTitleUpdate,
-        onAddFirstReminder = reminderListViewModel::onFirstReminderListItemAdded
+        onAddFirstReminder = reminderListViewModel::onFirstReminderListClicked,
+        onDismissDialogClicked = reminderListViewModel::onDismissDialogClicked
     )
 }
 
@@ -48,7 +50,8 @@ fun ReminderListScreenContent(
     onNavigateUp: () -> Unit,
     screenState: ReminderListState,
     onReminderListTitleUpdate: (String) -> Unit,
-    onAddFirstReminder :(String) -> Unit
+    onAddFirstReminder: () -> Unit,
+    onDismissDialogClicked: () -> Unit
 ) {
     val focusRequester = remember { FocusRequester() }
     if (screenState.requestFocus) {
@@ -105,6 +108,14 @@ fun ReminderListScreenContent(
             AddReminder(
                 onAddReminderClicked = {}
             )
+            if (screenState.showCreateReminderDialog) {
+                AddReminderDialog(
+                    focusRequester = focusRequester,
+                    onDismiss = onDismissDialogClicked
+                ) {
+
+                }
+            }
         }
     }
 }
@@ -122,7 +133,8 @@ private fun NoteCreationScreenPreview() {
                 )
             ),
             onReminderListTitleUpdate = {},
-            onAddFirstReminder = {}
+            onAddFirstReminder = {},
+            onDismissDialogClicked = {}
         )
     }
 }
