@@ -41,6 +41,7 @@ fun AddReminderDialog(
     focusRequester: FocusRequester,
     onDismiss: () -> Unit,
     onFirsReminderAdded: (String) -> Unit,
+    onLastReminderAdded: (String) -> Unit,
     isFirstReminder: Boolean
 ) {
     BasicAlertDialog(onDismissRequest = onDismiss) {
@@ -116,7 +117,7 @@ fun AddReminderDialog(
                             if (isFirstReminder) {
                                 onFirsReminderAdded(text.value)
                             } else {
-                                onFirsReminderAdded(text.value)
+                                onLastReminderAdded(text.value)
                             }
                             onDismiss()
                         }
@@ -138,6 +139,7 @@ fun PreviewDialog() {
         onDismiss = {},
         focusRequester = FocusRequester(),
         onFirsReminderAdded = {},
+        onLastReminderAdded = {},
         isFirstReminder = false
     )
 }

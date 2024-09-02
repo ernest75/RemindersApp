@@ -30,7 +30,7 @@ class ReminderListViewModel @Inject constructor(
         }
     }
 
-    fun onFirstReminderListClicked() {
+    fun onAddFirstReminderListClicked() {
         _screenState.update {
             it.copy(
                 showCreateReminderDialog = true,
@@ -56,6 +56,27 @@ class ReminderListViewModel @Inject constructor(
         _screenState.update {
             it.copy(
                 showCreateReminderDialog = false
+            )
+        }
+    }
+
+    fun onAddLastReminderListClicked() {
+        _screenState.update {
+            it.copy(
+                showCreateReminderDialog = true,
+                requestFocus = true,
+                isFirstReminder = false
+            )
+        }
+    }
+
+    fun onLastReminderListItemAdded(reminderText: String) {
+        _screenState.value.remindersList.apply {
+            add(reminderText) }
+        _screenState.update {
+            it.copy(
+                remindersList = _screenState.value.remindersList,
+                showSaveButton = true
             )
         }
     }

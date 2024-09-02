@@ -31,8 +31,8 @@ class ReminderListViewModelTest { private val localRepo = InMemoryLocalRepo()
     }
 
     @Test
-    fun onFirstReminderListClicked() {
-        viewModel.onFirstReminderListClicked()
+    fun onAddFirstReminderListClicked() {
+        viewModel.onAddFirstReminderListClicked()
 
         Assertions.assertTrue(viewModel.screenState.value.showCreateReminderDialog)
         Assertions.assertTrue(viewModel.screenState.value.isFirstReminder)
@@ -41,7 +41,7 @@ class ReminderListViewModelTest { private val localRepo = InMemoryLocalRepo()
     @Test
     fun onDismissDialogClicked() {
         // to force showing dialog on screen
-        viewModel.onFirstReminderListClicked()
+        viewModel.onAddFirstReminderListClicked()
 
         viewModel.onDismissDialogClicked()
 
@@ -57,7 +57,29 @@ class ReminderListViewModelTest { private val localRepo = InMemoryLocalRepo()
 
         viewModel.onFirstReminderListItemAdded(reminderText2)
         Assertions.assertEquals(reminderList,viewModel.screenState.value.remindersList)
+
+
         Assertions.assertTrue(viewModel.screenState.value.showSaveButton)
+    }
+
+    @Test
+    fun onAddLastReminderClicked() {
+        viewModel.onAddLastReminderListClicked()
+
+        Assertions.assertTrue(viewModel.screenState.value.showCreateReminderDialog)
+        Assertions.assertFalse(viewModel.screenState.value.isFirstReminder)
+    }
+
+    @Test
+    fun onLastReminderListItemAdded() {
+        val reminderText = "reminderText"
+        val reminderText2 = "reminderText2"
+        val reminderList = listOf(reminderText, reminderText2)
+        viewModel.onLastReminderListItemAdded(reminderText)
+
+        viewModel.onLastReminderListItemAdded(reminderText2)
+
+        Assertions.assertEquals(reminderList,viewModel.screenState.value.remindersList )
     }
 
     private fun getSavedStateHandle(reminderListId: String = EMPTY_REMINDER_ID): SavedStateHandle {

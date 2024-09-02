@@ -40,9 +40,11 @@ internal fun ReminderListScreen(
         onNavigateUp = onNavigateUp,
         screenState = state,
         onReminderListTitleUpdate = reminderListViewModel::onReminderListTitleUpdate,
-        onAddFirstReminder = reminderListViewModel::onFirstReminderListClicked,
+        onAddFirstReminder = reminderListViewModel::onAddFirstReminderListClicked,
+        onFirstReminderAdded = reminderListViewModel::onFirstReminderListItemAdded,
+        onAddLastReminder = reminderListViewModel::onAddLastReminderListClicked,
         onDismissDialogClicked = reminderListViewModel::onDismissDialogClicked,
-        onFirstReminderAdded = reminderListViewModel::onFirstReminderListItemAdded
+        onLastReminderAdded = reminderListViewModel::onLastReminderListItemAdded
     )
 }
 
@@ -53,6 +55,8 @@ fun ReminderListScreenContent(
     onReminderListTitleUpdate: (String) -> Unit,
     onAddFirstReminder: () -> Unit,
     onFirstReminderAdded: (String) -> Unit,
+    onAddLastReminder: () -> Unit,
+    onLastReminderAdded: (String) -> Unit,
     onDismissDialogClicked: () -> Unit
 ) {
     val focusRequester = remember { FocusRequester() }
@@ -108,13 +112,14 @@ fun ReminderListScreenContent(
                 }
             }
             AddReminder(
-                onAddReminderClicked = {}
+                onAddReminderClicked = onAddLastReminder
             )
             if (screenState.showCreateReminderDialog) {
                 AddReminderDialog(
                     onDismiss = onDismissDialogClicked,
                     focusRequester = FocusRequester(),
                     onFirsReminderAdded = onFirstReminderAdded,
+                    onLastReminderAdded = onLastReminderAdded,
                     isFirstReminder = screenState.isFirstReminder
                 )
             }
@@ -137,7 +142,9 @@ private fun NoteCreationScreenPreview() {
             onReminderListTitleUpdate = {},
             onAddFirstReminder = {},
             onDismissDialogClicked = {},
-            onFirstReminderAdded = {}
+            onFirstReminderAdded = {},
+            onAddLastReminder = {},
+            onLastReminderAdded = {}
         )
     }
 }
