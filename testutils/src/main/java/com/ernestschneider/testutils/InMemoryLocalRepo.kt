@@ -22,6 +22,12 @@ class InMemoryLocalRepo : StorageRepo {
         return reminders[reminderId.toInt()]
     }
 
+    override suspend fun updateReminder(reminder: Reminder) {
+        val index = reminders.indexOf(reminder)
+        reminders.removeAt(index)
+        reminders.add(index, reminder)
+    }
+
     fun getReminders(): List<Reminder> {
         return reminders
     }

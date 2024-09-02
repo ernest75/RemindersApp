@@ -49,13 +49,23 @@ class ReminderNoteViewModel @Inject constructor(
 
     fun onSavedReminderClicked() {
         if (_screenState.value.reminderTitle.isNotEmpty()) {
-            val reminder = Reminder(
-                reminderTitle = _screenState.value.reminderTitle,
-                reminderContent = _screenState.value.reminderContent
-            )
             viewModelScope.launch {
                 withContext(backgroundDispatcher) {
-                    localRepo.saveReminder(reminder)
+                    if (reminderNoteArgs.reminderId == EMPTY_REMINDER_ID){
+                        val reminder = Reminder(
+                            reminderTitle = _screenState.value.reminderTitle,
+                            reminderContent = _screenState.value.reminderContent
+                        )
+                        localRepo.saveReminder(reminder)
+                    } else {
+                        val reminderId = reminderNoteArgs.reminderId
+                        val reminder = Reminder(
+                            id = reminderId,
+                            reminderTitle = _screenState.value.reminderTitle,
+                            reminderContent = _screenState.value.reminderContent
+                        )
+                        localRepo.updateReminder(reminder)
+                    }
                     _screenState.update { it.copy(backNavigation = true) }
                 }
             }

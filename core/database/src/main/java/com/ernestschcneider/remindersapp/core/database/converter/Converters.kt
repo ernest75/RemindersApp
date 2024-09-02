@@ -11,7 +11,7 @@ class Converters {
 
     @TypeConverter
     fun fromUUID(uuid: UUID): String {
-        if ( uuid.toString() == DEFAULT_UUID )
+        if (uuid.toString() == DEFAULT_UUID )
             return UUID.randomUUID().toString()
 
         return uuid.toString()
@@ -27,7 +27,6 @@ class Converters {
 
     @TypeConverter
     fun fromStringArrayList(value: ArrayList<String>): String {
-
         return Gson().toJson(value)
     }
 

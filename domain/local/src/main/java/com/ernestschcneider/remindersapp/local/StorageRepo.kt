@@ -11,4 +11,6 @@ interface StorageRepo {
     suspend fun deleteReminder(reminder: Reminder)
 
     suspend fun getReminder(reminderId: String): Reminder
+
+    suspend fun updateReminder(reminder: Reminder)
 }
