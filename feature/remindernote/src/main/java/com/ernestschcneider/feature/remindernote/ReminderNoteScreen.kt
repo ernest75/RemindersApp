@@ -25,7 +25,9 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.ernestschcneider.remindersapp.core.view.R
 import com.ernestschcneider.remindersapp.core.view.R.string
+import com.ernestschcneider.remindersapp.core.view.composables.InformativeDialog
 import com.ernestschcneider.remindersapp.core.view.composables.PrimaryButton
 import com.ernestschcneider.remindersapp.core.view.composables.RemindersTopAppBar
 import com.ernestschcneider.remindersapp.core.view.theme.AppTheme
@@ -128,6 +130,13 @@ fun ReminderNoteScreenContent(
                 }
             )
 
+        }
+
+        if (state.showEmptyTitleDialog){
+            InformativeDialog(
+                onDismiss = onDismissEmptyTitleDialog,
+                titleId = R.string.warning,
+                explanationId = R.string.empty_title_explanation)
         }
     }
 }
