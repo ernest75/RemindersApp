@@ -35,6 +35,7 @@ class ReminderListViewModelTest { private val localRepo = InMemoryLocalRepo()
         viewModel.onFirstReminderListClicked()
 
         Assertions.assertTrue(viewModel.screenState.value.showCreateReminderDialog)
+        Assertions.assertTrue(viewModel.screenState.value.isFirstReminder)
     }
 
     @Test
