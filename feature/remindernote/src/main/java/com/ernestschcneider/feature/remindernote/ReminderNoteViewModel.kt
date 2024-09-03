@@ -51,7 +51,7 @@ class ReminderNoteViewModel @Inject constructor(
         if (_screenState.value.reminderTitle.isNotEmpty()) {
             viewModelScope.launch {
                 withContext(backgroundDispatcher) {
-                    if (reminderNoteArgs.reminderId == EMPTY_REMINDER_ID){
+                    if (reminderNoteArgs.reminderId == EMPTY_REMINDER_ID) {
                         val reminder = Reminder(
                             reminderTitle = _screenState.value.reminderTitle,
                             reminderContent = _screenState.value.reminderContent
