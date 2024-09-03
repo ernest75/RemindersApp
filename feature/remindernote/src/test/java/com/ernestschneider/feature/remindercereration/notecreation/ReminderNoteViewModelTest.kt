@@ -13,6 +13,8 @@ import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
+import org.mockito.kotlin.spy
+import org.mockito.kotlin.verify
 
 @ExtendWith(CoroutineTestExtension::class)
 class ReminderNoteViewModelTest {
@@ -77,6 +79,35 @@ class ReminderNoteViewModelTest {
     }
 
     @Test
+    fun onSavedExistingReminderClicked() = runTest {
+        val reminderId = "3"
+        val reminderTitle = "noteTitle"
+        val reminderContent = "foo"
+        val backNavigation = true
+        val spiedLocalRepo = spy(localRepo)
+        // TODO improve this?
+        val viewModel = ReminderNoteViewModel(
+            savedStateHandle = getSavedStateHandle(reminderId = reminderId),
+            localRepo = spiedLocalRepo,
+            backgroundDispatcher = backgroundDispatcher
+        )
+        viewModel.onReminderTitleUpdate(reminderTitle)
+        viewModel.onReminderContentUpdate(reminderContent)
+        val reminder = Reminder(
+            id = reminderId,
+            reminderTitle = reminderTitle,
+            reminderContent = reminderContent
+        )
+
+        viewModel.onSavedReminderClicked()
+
+        assertEquals(backNavigation, viewModel.screenState.value.backNavigation)
+        val savedReminder = localRepo.getReminder(reminderId)
+        assertEquals(reminder, savedReminder)
+        verify(spiedLocalRepo).updateReminder(reminder)
+    }
+
+    @Test
     fun onSavedReminderClickedEmptyTitle() {
         val reminderContent = "reminderContent"
         viewModel.onReminderContentUpdate(reminderContent)
@@ -101,8 +132,8 @@ class ReminderNoteViewModelTest {
 
     @Test
     fun onLoadReminderNotEmptyReminderId() = runTest {
-        val reminderId = "2"
-        // TODO improve this??
+        val reminderId = "3"
+        // TODO improve this?
         val viewModel = ReminderNoteViewModel(
             savedStateHandle = getSavedStateHandle(reminderId = reminderId),
             localRepo = localRepo,

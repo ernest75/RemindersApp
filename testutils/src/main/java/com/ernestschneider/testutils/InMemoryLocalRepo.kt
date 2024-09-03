@@ -19,11 +19,11 @@ class InMemoryLocalRepo : StorageRepo {
     }
 
     override suspend fun getReminder(reminderId: String): Reminder {
-        return reminders[reminderId.toInt()]
+        return reminders[reminderId.toInt() -1]
     }
 
     override suspend fun updateReminder(reminder: Reminder) {
-        val index = reminders.indexOf(reminder)
+        val index = reminder.id.toInt() -1
         reminders.removeAt(index)
         reminders.add(index, reminder)
     }
