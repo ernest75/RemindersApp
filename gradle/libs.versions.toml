@@ -27,6 +27,7 @@ hiltNavigationVersion = "1.2.0"
 ktlintVersion = "11.0.0"
 junitJupiterVersion = "5.8.2"
 gsonVersion = "2.11.0"
+mockitoVersion= "5.2.1"
 
 [libraries]
 androidx-ktx = { module = "androidx.core:core-ktx", version.ref = "androidxCoreKtxVersion" }
@@ -72,7 +73,8 @@ room-ktx = { module = "androidx.room:room-ktx", version.ref = "roomVersion" }
 room-runtime = { module = "androidx.room:room-runtime", version.ref = "roomVersion" }
 room-compiler = { module = "androidx.room:room-compiler", version.ref = "roomVersion" }
 junit-jupiter = { group = "org.junit.jupiter", name = "junit-jupiter", version.ref = "junitJupiterVersion" }
-
+mockito-core = { group = "org.mockito", name = "mockito-core", version.ref = "mockitoVersion"}
+mockito-kotlin = { group = "org.mockito.kotlin", name = "mockito-kotlin", version.ref = "mockitoVersion"}
 
 [bundles]
 androidx = ["androidx-ktx", "androidx-lifecycle-runtime"]

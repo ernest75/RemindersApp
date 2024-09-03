@@ -58,6 +58,8 @@ dependencies {
 
     kapt(libs.hilt.compiler)
 
+    testImplementation(libs.mockito.core)
+    testImplementation(libs.mockito.kotlin)
     testImplementation(project(":testutils"))
     testImplementation(libs.junit.jupiter)
     testRuntimeOnly(libs.junit.jupiter.engine)
