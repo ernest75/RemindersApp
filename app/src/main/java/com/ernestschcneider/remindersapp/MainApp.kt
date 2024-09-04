@@ -7,7 +7,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.rememberNavController
-import com.ernestschcneider.feature.remiderdetails.remindersDetailScreen
 import com.ernestschcneider.feature.reminderlist.navigateToReminderList
 import com.ernestschcneider.feature.reminderlist.reminderListScreen
 import com.ernestschcneider.feature.remindernote.navigateToReminderNote
@@ -38,10 +37,6 @@ fun MainApp() {
             onListReminderClick = { reminderListId ->
                 navController.navigateToReminderList(reminderListId)
             }
-        )
-
-        remindersDetailScreen(
-            onNavigateUp = { navController.navigateUp() }
         )
 
         reminderNoteScreen(
