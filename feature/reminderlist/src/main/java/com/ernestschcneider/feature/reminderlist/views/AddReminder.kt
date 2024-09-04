@@ -24,7 +24,6 @@ fun AddReminder(
 ) {
     Row(modifier = modifier
         .fillMaxWidth()
-        .padding(top = 32.dp)
         .clickable { onAddReminderClicked()}
     ) {
         Icon(

@@ -16,7 +16,8 @@ import org.mockito.kotlin.spy
 import org.mockito.kotlin.verify
 
 @ExtendWith(CoroutineTestExtension::class)
-class ReminderListViewModelTest { private val localRepo = InMemoryLocalRepo()
+class ReminderListViewModelTest {
+    private val localRepo = InMemoryLocalRepo()
     private val backgroundDispatcher = Dispatchers.Unconfined
     private val savedStateHandle = getSavedStateHandle()
 
@@ -64,6 +65,7 @@ class ReminderListViewModelTest { private val localRepo = InMemoryLocalRepo()
         viewModel.onFirstReminderListItemAdded(reminderText2)
 
         assertEquals(reminderList,viewModel.screenState.value.remindersList)
+        assertTrue(viewModel.screenState.value.scrollListToLast)
     }
 
     @Test
@@ -83,7 +85,8 @@ class ReminderListViewModelTest { private val localRepo = InMemoryLocalRepo()
 
         viewModel.onLastReminderListItemAdded(reminderText2)
 
-        assertEquals(reminderList,viewModel.screenState.value.remindersList)
+        assertEquals(reminderList, viewModel.screenState.value.remindersList)
+        assertTrue(viewModel.screenState.value.scrollListToLast)
     }
 
     @Test

@@ -8,5 +8,6 @@ data class ReminderListState(
     val showCreateReminderDialog: Boolean = false,
     val isFirstReminder: Boolean = false,
     val backNavigation: Boolean = false,
-    val showEmptyTitleDialog: Boolean = false
+    val showEmptyTitleDialog: Boolean = false,
+    val scrollListToLast: Boolean = false
 )

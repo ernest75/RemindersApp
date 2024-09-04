@@ -8,7 +8,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material3.FabPosition
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
@@ -33,8 +33,7 @@ import com.ernestschcneider.remindersapp.core.view.theme.PreviewLightDark
 
 @Composable
 internal fun ReminderListScreen(
-    reminderListViewModel: ReminderListViewModel = hiltViewModel(),
-    onNavigateUp: () -> Unit
+    reminderListViewModel: ReminderListViewModel = hiltViewModel(), onNavigateUp: () -> Unit
 ) {
     val state by reminderListViewModel.screenState.collectAsStateWithLifecycle()
     if (state.backNavigation) {
@@ -71,61 +70,67 @@ fun ReminderListScreenContent(
     onDismissEmptyTitleClicked: () -> Unit,
     onSaveReminderClicked: () -> Unit,
 ) {
+    val listState = rememberLazyListState()
+
+    if (screenState.scrollListToLast) {
+        LaunchedEffect(Unit) {
+            listState.scrollToItem(screenState.remindersList.size)
+        }
+    }
     val focusRequester = remember { FocusRequester() }
     if (screenState.requestFocus) {
         focusRequester.requestFocus()
     }
-    Scaffold(
-        modifier = Modifier
-            .padding(top = 48.dp)
-            .fillMaxSize(),
-        floatingActionButtonPosition = FabPosition.Center,
-        floatingActionButton = {
-            PrimaryButton(
-                modifier = Modifier.fillMaxWidth(),
-                label = stringResource(id = R.string.save_reminder_list),
-                onClick = onSaveReminderClicked,
-                isVisible = screenState.showSaveButton
-            )
-        },
-        topBar = {
-            RemindersTopAppBar(
-                onNavigateUp = onNavigateUp,
-                onTitleUpdate = onReminderListTitleUpdate,
-                focusRequester = focusRequester,
-                value = screenState.reminderListTitle,
-                titlePlaceHolderId = R.string.type_reminder_title
-            )
-        }
-    ) { paddingValues ->
+    Scaffold(modifier = Modifier
+        .padding(top = 48.dp)
+        .fillMaxSize(), topBar = {
+        RemindersTopAppBar(
+            onNavigateUp = onNavigateUp,
+            onTitleUpdate = onReminderListTitleUpdate,
+            focusRequester = focusRequester,
+            value = screenState.reminderListTitle,
+            titlePlaceHolderId = R.string.type_reminder_title
+        )
+    }) { paddingValues ->
         Column(
             modifier = Modifier
                 .fillMaxSize()
                 .background(AppTheme.colorScheme.primaryContainer)
                 .padding(paddingValues)
         ) {
-            AddReminder(
-                onAddReminderClicked = onAddFirstReminder
-            )
-            HorizontalDivider(
-                modifier = Modifier.padding(top = 24.dp),
-                color = AppTheme.colorScheme.scrim
-            )
             LazyColumn(
                 modifier = Modifier.fillMaxWidth(),
-                verticalArrangement = Arrangement.spacedBy(16.dp)
+                verticalArrangement = Arrangement.spacedBy(16.dp),
+                state = listState
             ) {
+                item {
+                    AddReminder(
+                        modifier = Modifier.padding(top = 24.dp),
+                        onAddReminderClicked = onAddFirstReminder
+                    )
+                    HorizontalDivider(
+                        modifier = Modifier.padding(top = 24.dp), color = AppTheme.colorScheme.scrim
+                    )
+                }
                 items(screenState.remindersList) {
-                    RemindersListItem(
-                        item = it,
-                        editReminder = {},
-                        deleteReminder = {}
+                    RemindersListItem(item = it, editReminder = {}, deleteReminder = {})
+                }
+                item {
+                    AddReminder(
+                        modifier = Modifier.padding(bottom = 24.dp),
+                        onAddReminderClicked = onAddLastReminder
+                    )
+                }
+                item {
+                    PrimaryButton(
+                        modifier = Modifier.fillMaxWidth(),
+                        label = stringResource(id = R.string.save_reminder_list),
+                        onClick = onSaveReminderClicked,
+                        isVisible = screenState.showSaveButton
                     )
                 }
             }
-            AddReminder(
-                onAddReminderClicked = onAddLastReminder
-            )
+
             if (screenState.showCreateReminderDialog) {
                 AddReminderDialog(
                     onDismiss = onDismissCreateDialogClicked,
@@ -135,11 +140,12 @@ fun ReminderListScreenContent(
                     isFirstReminder = screenState.isFirstReminder
                 )
             }
-            if (screenState.showEmptyTitleDialog){
+            if (screenState.showEmptyTitleDialog) {
                 InformativeDialog(
                     onDismiss = onDismissEmptyTitleClicked,
                     titleId = R.string.warning,
-                    explanationId = R.string.empty_title_explanation)
+                    explanationId = R.string.empty_title_explanation
+                )
             }
         }
     }
@@ -149,12 +155,10 @@ fun ReminderListScreenContent(
 @Composable
 private fun NoteCreationScreenPreview() {
     AppTheme {
-        ReminderListScreenContent(
-            onNavigateUp = {},
+        ReminderListScreenContent(onNavigateUp = {},
             screenState = ReminderListState(
                 remindersList = mutableListOf(
-                    "Hello",
-                    "Hello2"
+                    "Hello", "Hello2"
                 )
             ),
             onReminderListTitleUpdate = {},
@@ -164,7 +168,6 @@ private fun NoteCreationScreenPreview() {
             onAddLastReminder = {},
             onLastReminderAdded = {},
             onSaveReminderClicked = {},
-            onDismissEmptyTitleClicked = {}
-        )
+            onDismissEmptyTitleClicked = {})
     }
 }
