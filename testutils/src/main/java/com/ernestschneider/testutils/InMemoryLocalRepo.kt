@@ -19,11 +19,11 @@ class InMemoryLocalRepo : StorageRepo {
     }
 
     override suspend fun getReminder(reminderId: String): Reminder {
-        return reminders[reminderId.toInt() -1]
+        return reminders[reminderId.toInt() - 1]
     }
 
     override suspend fun updateReminder(reminder: Reminder) {
-        val index = reminder.id.toInt() -1
+        val index = reminder.reminderId.toInt() - 1
         reminders.removeAt(index)
         reminders.add(index, reminder)
     }
@@ -36,26 +36,20 @@ class InMemoryLocalRepo : StorageRepo {
         return reminders[position]
     }
 
-    private val reminders = (1..10).map {
-        ReminderBuilder
-            .aReminder()
-            .withId(it.toString())
-            .withReminderTitle("Title$it")
-            .withReminderContent("Content$it")
-            .withReminderType(
-                if (it % 3 == 0) {
-                    ReminderType.Note
-                } else {
-                    ReminderType.List
-                }
-            )
-            .withReminderList(
-                if (it % 3 != 0) {
-                    arrayListOf("Element1", "Element2")
-                } else {
-                    arrayListOf()
-                }
-            )
-            .build()
-    }.toMutableList()
+    private val reminderNote1 = ReminderBuilder.aReminder()
+        .withId("1")
+        .withReminderTitle("Title1")
+        .withReminderContent("Content1")
+        .withReminderType(ReminderType.Note)
+        .build()
+
+    private val reminderList1 = ReminderBuilder.aReminder()
+        .withId("2")
+        .withReminderTitle("Title2")
+        .withReminderType(ReminderType.List)
+        .withReminderList(arrayListOf("Element1", "Element2"))
+        .build()
+
+
+    private val reminders = mutableListOf(reminderNote1, reminderList1)
 }

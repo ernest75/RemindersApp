@@ -2,14 +2,18 @@ package com.ernestschcneider.feature.reminderlist
 
 import androidx.lifecycle.SavedStateHandle
 import com.ernestschcneider.EMPTY_REMINDER_ID
+import com.ernestschcneider.models.Reminder
 import com.ernestschcneider.models.ReminderType
 import com.ernestschcneider.remindersapp.core.dispatchers.CoroutineTestExtension
 import com.ernestschneider.testutils.InMemoryLocalRepo
+import com.ernestschneider.testutils.ReminderBuilder
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
+import org.mockito.kotlin.spy
+import org.mockito.kotlin.verify
 
 @ExtendWith(CoroutineTestExtension::class)
 class ReminderListViewModelTest { private val localRepo = InMemoryLocalRepo()
@@ -123,7 +127,7 @@ class ReminderListViewModelTest { private val localRepo = InMemoryLocalRepo()
 
     @Test
     fun onLoadReminderNotEmptyId() = runTest {
-        val reminderId = "1"
+        val reminderId = "2"
         val viewModel = ReminderListViewModel(
             savedStateHandle = getSavedStateHandle(reminderListId = reminderId),
             localRepo = localRepo,
@@ -146,6 +150,38 @@ class ReminderListViewModelTest { private val localRepo = InMemoryLocalRepo()
         viewModel.loadReminderList()
 
         assertEquals(requestFocus,viewModel.screenState.value.requestFocus )
+    }
+
+    @Test
+    fun onSaveExistingReminderList() = runTest{
+        val reminderId = "2"
+        val reminderListTitle = "noteTitle"
+        val backNavigation = true
+        val firstReminder = "1"
+        val lastReminder = "2"
+        val reminderList = arrayListOf(firstReminder, lastReminder)
+        val spiedLocalRepo = spy(localRepo)
+        // TODO improve this??
+        val viewModel = ReminderListViewModel(
+            savedStateHandle = getSavedStateHandle(reminderId),
+            localRepo = spiedLocalRepo,
+            backgroundDispatcher = backgroundDispatcher
+        )
+        val reminder = ReminderBuilder
+            .aReminder()
+            .withId(reminderId)
+            .withReminderTitle(reminderListTitle)
+            .withReminderList(reminderList)
+            .withReminderType(ReminderType.List)
+            .build()
+        viewModel.onFirstReminderListItemAdded(firstReminder)
+        viewModel.onLastReminderListItemAdded(lastReminder)
+        viewModel.onReminderListTitleUpdate(reminderListTitle)
+
+        viewModel.onSaveListReminderClicked()
+
+        verify(spiedLocalRepo).updateReminder(reminder)
+        assertEquals(backNavigation, viewModel.screenState.value.backNavigation)
     }
 
     private fun getSavedStateHandle(reminderListId: String = EMPTY_REMINDER_ID): SavedStateHandle {

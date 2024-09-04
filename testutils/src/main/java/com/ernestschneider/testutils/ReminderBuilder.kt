@@ -33,7 +33,7 @@ class ReminderBuilder {
 
     fun build(): Reminder {
         return Reminder(
-            id = id,
+            reminderId = id,
             reminderTitle = reminderTitle,
             reminderContent = reminderContent,
             reminderType = reminderType,

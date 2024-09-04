@@ -3,7 +3,6 @@ package com.ernestschcneider.feature.reminderlist
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.lifecycle.viewmodel.compose.viewModel
 import com.ernestschcneider.EMPTY_REMINDER_ID
 import com.ernestschcneider.models.Reminder
 import com.ernestschcneider.models.ReminderType
@@ -95,14 +94,25 @@ class ReminderListViewModel @Inject constructor(
             val remindersArray = arrayListOf<String>().apply {
                 addAll(_screenState.value.remindersList)
             }
-            val reminder = Reminder(
-                reminderTitle = _screenState.value.reminderListTitle,
-                remindersList = remindersArray,
-                reminderType = ReminderType.List
-            )
+            val reminderId = reminderListArgs.reminderListId
             viewModelScope.launch {
                 withContext(backgroundDispatcher) {
-                    localRepo.saveReminder(reminder)
+                    if (reminderId == EMPTY_REMINDER_ID) {
+                        val reminder = Reminder(
+                            reminderTitle = _screenState.value.reminderListTitle,
+                            remindersList = remindersArray,
+                            reminderType = ReminderType.List
+                        )
+                        localRepo.saveReminder(reminder)
+                    } else {
+                        val reminder = Reminder(
+                            reminderId = reminderId,
+                            reminderTitle = _screenState.value.reminderListTitle,
+                            remindersList = remindersArray,
+                            reminderType = ReminderType.List
+                        )
+                        localRepo.updateReminder(reminder)
+                    }
                     _screenState.update { it.copy(backNavigation = true) }
                 }
             }

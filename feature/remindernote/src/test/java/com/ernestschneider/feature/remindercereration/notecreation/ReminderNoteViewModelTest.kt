@@ -80,7 +80,7 @@ class ReminderNoteViewModelTest {
 
     @Test
     fun onSavedExistingReminderClicked() = runTest {
-        val reminderId = "3"
+        val reminderId = "1"
         val reminderTitle = "noteTitle"
         val reminderContent = "foo"
         val backNavigation = true
@@ -94,7 +94,7 @@ class ReminderNoteViewModelTest {
         viewModel.onReminderTitleUpdate(reminderTitle)
         viewModel.onReminderContentUpdate(reminderContent)
         val reminder = Reminder(
-            id = reminderId,
+            reminderId = reminderId,
             reminderTitle = reminderTitle,
             reminderContent = reminderContent
         )
@@ -132,7 +132,7 @@ class ReminderNoteViewModelTest {
 
     @Test
     fun onLoadReminderNotEmptyReminderId() = runTest {
-        val reminderId = "3"
+        val reminderId = "1"
         // TODO improve this?
         val viewModel = ReminderNoteViewModel(
             savedStateHandle = getSavedStateHandle(reminderId = reminderId),

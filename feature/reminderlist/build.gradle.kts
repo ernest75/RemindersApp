@@ -61,5 +61,7 @@ dependencies {
 
     testImplementation(project(":testutils"))
     testImplementation(libs.junit.jupiter)
+    testImplementation(libs.mockito.core)
+    testImplementation(libs.mockito.kotlin)
     testRuntimeOnly(libs.junit.jupiter.engine)
 }

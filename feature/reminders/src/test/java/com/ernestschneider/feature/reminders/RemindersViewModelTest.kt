@@ -35,7 +35,7 @@ class RemindersViewModelTest {
 
     @Test
     fun removeItem() {
-        val reminder = localRepo.getReminderAt(2)
+        val reminder = localRepo.getReminderAt(1)
 
         viewModel.removeItem(reminder)
 

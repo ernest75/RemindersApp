@@ -60,7 +60,7 @@ class ReminderNoteViewModel @Inject constructor(
                     } else {
                         val reminderId = reminderNoteArgs.reminderId
                         val reminder = Reminder(
-                            id = reminderId,
+                            reminderId = reminderId,
                             reminderTitle = _screenState.value.reminderTitle,
                             reminderContent = _screenState.value.reminderContent
                         )
