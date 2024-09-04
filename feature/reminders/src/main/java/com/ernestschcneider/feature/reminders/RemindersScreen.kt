@@ -6,7 +6,9 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material3.CenterAlignedTopAppBar
@@ -18,19 +20,24 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.ernestschcneider.models.Reminder
-import com.ernestschcneider.models.ReminderType
 import com.ernestschcneider.feature.reminders.views.ReminderCreationDialog
 import com.ernestschcneider.feature.reminders.views.RemindersItem
+import com.ernestschcneider.models.Reminder
+import com.ernestschcneider.models.ReminderType
 import com.ernestschcneider.remindersapp.core.view.R
-import com.ernestschcneider.remindersapp.core.view.composables.FloatingActionExtendedButton
+import com.ernestschcneider.remindersapp.core.view.composables.FloatingActionButton
+import com.ernestschcneider.remindersapp.core.view.composables.isScrollingUp
 import com.ernestschcneider.remindersapp.core.view.theme.AppTheme
 import com.ernestschcneider.remindersapp.core.view.theme.PreviewLightDark
 
@@ -79,14 +86,17 @@ internal fun RemindersScreenContent(
     onListReminderClick: (String) -> Unit,
     onListReminderCreationClick: () -> Unit
 ) {
+    val listState = rememberLazyListState()
+
     Scaffold(
         modifier = Modifier.fillMaxSize(),
         floatingActionButton = {
-            FloatingActionExtendedButton(
+            FloatingActionButton(
                 modifier = Modifier
                     .padding(bottom = 24.dp),
                 label = stringResource(id = R.string.add_reminder),
-                onClick = onAddButtonClicked
+                onClick = onAddButtonClicked,
+                isExpanded = listState.isScrollingUp()
             )
         },
         topBar = {
@@ -124,7 +134,8 @@ internal fun RemindersScreenContent(
 
             LazyColumn(
                 modifier = Modifier.fillMaxSize(),
-                verticalArrangement = Arrangement.spacedBy(16.dp)
+                verticalArrangement = Arrangement.spacedBy(16.dp),
+                state = listState
             ) {
                 items(screenState.reminders) { item ->
                     when (item.reminderType) {
@@ -134,7 +145,6 @@ internal fun RemindersScreenContent(
                             onItemClicked = onReminderClicked,
                             onDeleteItemClicked = onDeleteItemClicked
                         )
-
                         ReminderType.List -> RemindersItem(
                             item = item,
                             onItemClicked = onListReminderClick,

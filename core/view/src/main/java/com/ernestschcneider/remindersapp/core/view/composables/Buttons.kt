@@ -66,10 +66,11 @@ fun SecondaryButton(
 }
 
 @Composable
-fun FloatingActionExtendedButton(
+fun FloatingActionButton(
     modifier: Modifier = Modifier,
     label: String,
-    onClick: () -> Unit
+    onClick: () -> Unit,
+    isExpanded: Boolean = false
 ) {
     ExtendedFloatingActionButton(
         modifier = modifier,
@@ -77,7 +78,8 @@ fun FloatingActionExtendedButton(
         contentColor = AppTheme.colorScheme.onSurfaceBright,
         text = { Text(text = label, style = AppTheme.typography.labelLarge) },
         onClick = onClick,
-        icon = { Icon(Icons.Filled.Add, label) }
+        icon = { Icon(Icons.Filled.Add, label) },
+        expanded = isExpanded
     )
 }
 
@@ -98,9 +100,7 @@ private fun PreviewPrimaryButton() {
                 label = "Secondary",
                 onClick = {}
             )
-            FloatingActionExtendedButton(label = "Add Reminder") {
-
-            }
+            FloatingActionButton(label = "Add Reminder", onClick = {})
         }
     }
 }
