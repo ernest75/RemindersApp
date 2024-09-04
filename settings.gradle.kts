@@ -23,7 +23,6 @@ rootProject.name = "RemindersApp"
 include(":app")
 include(":core:view")
 include(":feature:reminders")
-include(":feature:reminderdetails")
 include(":feature:remindernote")
 include(":core:database")
 include(":domain:local")
