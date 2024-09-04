@@ -1,5 +1,6 @@
 package com.ernestschcneider.feature.reminderlist.views
 
+import android.widget.Toast
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -24,6 +25,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.platform.LocalWindowInfo
 import androidx.compose.ui.res.stringResource
@@ -57,6 +59,7 @@ fun AddReminderDialog(
             // WorkAround remove when https://issuetracker.google.com/issues/204502668?pli=1 is fixed
             // Update should be fixed in compose 1.7
             val windowInfo = LocalWindowInfo.current
+            val context = LocalContext.current
             LaunchedEffect(windowInfo) {
                 snapshotFlow { windowInfo.isWindowFocused }.collect { isWindowFocused ->
                     if (isWindowFocused) {
@@ -114,12 +117,18 @@ fun AddReminderDialog(
                         modifier = Modifier.padding(end = 4.dp),
                         label = stringResource(id = R.string.save),
                         onClick = {
-                            if (isFirstReminder) {
-                                onFirsReminderAdded(text.value)
+                            if (text.value.isNotEmpty()) {
+                                if (isFirstReminder) {
+                                    onFirsReminderAdded(text.value)
+                                } else {
+                                    onLastReminderAdded(text.value)
+                                }
+                                onDismiss()
                             } else {
-                                onLastReminderAdded(text.value)
+                                val message = context.getString(R.string.empty_reminder_explanation)
+                                Toast.makeText(context,message, Toast.LENGTH_SHORT).show()
                             }
-                            onDismiss()
+
                         }
                     )
                     PrimaryButton(
