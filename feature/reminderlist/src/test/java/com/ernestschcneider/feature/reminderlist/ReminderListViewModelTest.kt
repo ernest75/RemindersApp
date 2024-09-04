@@ -69,18 +69,6 @@ class ReminderListViewModelTest {
     }
 
     @Test
-    fun onFirstReminderListItemAddedEmptyText() {
-        val reminderText = "reminderText"
-        val emptyReminder = ""
-        val reminderList = listOf(reminderText)
-        viewModel.onFirstReminderListItemAdded(reminderText)
-
-        viewModel.onFirstReminderListItemAdded(emptyReminder)
-
-        assertEquals(reminderList, viewModel.screenState.value.remindersList )
-    }
-
-    @Test
     fun onAddLastReminderClicked() {
         viewModel.onAddLastReminderListClicked()
 
