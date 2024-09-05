@@ -128,7 +128,7 @@ internal fun RemindersScreenContent(
         ) {
 
             LazyColumn(
-                modifier = Modifier.fillMaxSize(),
+                modifier = Modifier.fillMaxSize().padding(8.dp),
                 verticalArrangement = Arrangement.spacedBy(16.dp),
                 state = listState
             ) {
