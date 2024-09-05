@@ -53,7 +53,8 @@ internal fun ReminderListScreen(
         onDismissCreateDialogClicked = reminderListViewModel::onDismissCreateDialogClicked,
         onLastReminderAdded = reminderListViewModel::onLastReminderListItemAdded,
         onSaveReminderClicked = reminderListViewModel::onSaveListReminderClicked,
-        onDismissEmptyTitleClicked = reminderListViewModel::onDismissEmptyTitleDialogClicked
+        onDismissEmptyTitleClicked = reminderListViewModel::onDismissEmptyTitleDialogClicked,
+        onDeleteReminder = reminderListViewModel::onDeleteReminderItem
     )
 }
 
@@ -69,6 +70,7 @@ fun ReminderListScreenContent(
     onDismissCreateDialogClicked: () -> Unit,
     onDismissEmptyTitleClicked: () -> Unit,
     onSaveReminderClicked: () -> Unit,
+    onDeleteReminder: (String) -> Unit
 ) {
     val listState = rememberLazyListState()
 
@@ -113,7 +115,11 @@ fun ReminderListScreenContent(
                     )
                 }
                 items(screenState.remindersList) {
-                    RemindersListItem(item = it, editReminder = {}, deleteReminder = {})
+                    RemindersListItem(
+                        item = it,
+                        editReminder = {},
+                        deleteReminder = onDeleteReminder
+                    )
                 }
                 item {
                     AddReminder(
@@ -168,6 +174,8 @@ private fun NoteCreationScreenPreview() {
             onAddLastReminder = {},
             onLastReminderAdded = {},
             onSaveReminderClicked = {},
-            onDismissEmptyTitleClicked = {})
+            onDismissEmptyTitleClicked = {},
+            onDeleteReminder = {}
+        )
     }
 }

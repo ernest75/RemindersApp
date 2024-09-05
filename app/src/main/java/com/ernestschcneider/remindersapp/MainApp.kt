@@ -38,11 +38,9 @@ fun MainApp() {
                 navController.navigateToReminderList(reminderListId)
             }
         )
-
         reminderNoteScreen(
             onNavigateUp = { navController.navigateUp() }
         )
-
         reminderListScreen(
             onNavigateUp = { navController.navigateUp()}
         )

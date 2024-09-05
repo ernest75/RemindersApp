@@ -2,7 +2,7 @@ package com.ernestschcneider.feature.reminderlist
 
 import androidx.lifecycle.SavedStateHandle
 import com.ernestschcneider.EMPTY_REMINDER_ID
-import com.ernestschcneider.models.Reminder
+import com.ernestschcneider.REMINDER_LIST_ID
 import com.ernestschcneider.models.ReminderType
 import com.ernestschcneider.remindersapp.core.dispatchers.CoroutineTestExtension
 import com.ernestschneider.testutils.InMemoryLocalRepo
@@ -157,7 +157,6 @@ class ReminderListViewModelTest {
 
     @Test
     fun onSaveExistingReminderList() = runTest{
-        val reminderId = "2"
         val reminderListTitle = "noteTitle"
         val backNavigation = true
         val firstReminder = "1"
@@ -166,13 +165,13 @@ class ReminderListViewModelTest {
         val spiedLocalRepo = spy(localRepo)
         // TODO improve this??
         val viewModel = ReminderListViewModel(
-            savedStateHandle = getSavedStateHandle(reminderId),
+            savedStateHandle = getSavedStateHandle(REMINDER_LIST_ID),
             localRepo = spiedLocalRepo,
             backgroundDispatcher = backgroundDispatcher
         )
         val reminder = ReminderBuilder
             .aReminder()
-            .withId(reminderId)
+            .withId(REMINDER_LIST_ID)
             .withReminderTitle(reminderListTitle)
             .withReminderList(reminderList)
             .withReminderType(ReminderType.List)
@@ -185,6 +184,21 @@ class ReminderListViewModelTest {
 
         verify(spiedLocalRepo).updateReminder(reminder)
         assertEquals(backNavigation, viewModel.screenState.value.backNavigation)
+    }
+
+    @Test
+    fun onReminderDeleteClicked() {
+        val element1 = "element1"
+        val element2 = "element2"
+        val remindersListDeleted = arrayListOf(element2)
+        viewModel.onFirstReminderListItemAdded(element1)
+        viewModel.onFirstReminderListItemAdded(element2)
+
+        viewModel.onDeleteReminderItem(element1)
+
+        assertEquals(remindersListDeleted, viewModel.screenState.value.remindersList)
+        assertTrue(viewModel.screenState.value.showSaveButton)
+        assertTrue(viewModel.screenState.value.scrollListToLast)
     }
 
     private fun getSavedStateHandle(reminderListId: String = EMPTY_REMINDER_ID): SavedStateHandle {

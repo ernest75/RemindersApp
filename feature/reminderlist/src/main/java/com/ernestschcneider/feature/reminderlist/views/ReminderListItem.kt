@@ -30,7 +30,7 @@ fun RemindersListItem(
     modifier: Modifier = Modifier,
     item: String,
     editReminder: () -> Unit,
-    deleteReminder: () -> Unit
+    deleteReminder: (String) -> Unit
 ) {
     Column {
         Row(
@@ -67,7 +67,7 @@ fun RemindersListItem(
                     .align(Alignment.CenterVertically)
                     .padding(end = 16.dp)
                     .size(16.dp)
-                    .clickable { deleteReminder() }
+                    .clickable { deleteReminder(item) }
             )
         }
 
