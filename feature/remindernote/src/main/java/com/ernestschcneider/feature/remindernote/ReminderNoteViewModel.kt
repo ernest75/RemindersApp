@@ -98,4 +98,8 @@ class ReminderNoteViewModel @Inject constructor(
     fun onDismissEmptyTitleDialog() {
         _screenState.update { it.copy(showEmptyTitleDialog = false) }
     }
+
+    fun onDoneClicked() {
+        _screenState.update { it.copy(requestFocus = true) }
+    }
 }

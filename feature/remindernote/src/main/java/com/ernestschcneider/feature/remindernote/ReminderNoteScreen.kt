@@ -16,8 +16,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusProperties
+import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.stringResource
@@ -25,6 +28,7 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.ernestschcneider.remindersapp.core.view.R
 import com.ernestschcneider.remindersapp.core.view.R.string
 import com.ernestschcneider.remindersapp.core.view.composables.InformativeDialog
@@ -53,7 +57,8 @@ internal fun ReminderNoteScreen(
         onReminderNoteContentUpdate = reminderNoteViewModel::onReminderContentUpdate,
         onReminderNoteSaved = reminderNoteViewModel::onSavedReminderClicked,
         onReminderNoteTitleUpdate = reminderNoteViewModel::onReminderTitleUpdate,
-        onDismissEmptyTitleDialog = reminderNoteViewModel::onDismissEmptyTitleDialog
+        onDismissEmptyTitleDialog = reminderNoteViewModel::onDismissEmptyTitleDialog,
+        onDoneClicked = {}
 
     )
 }
@@ -65,7 +70,8 @@ fun ReminderNoteScreenContent(
     onReminderNoteContentUpdate: (String) -> Unit,
     onReminderNoteTitleUpdate: (String) -> Unit,
     onReminderNoteSaved: () -> Unit,
-    onDismissEmptyTitleDialog: () -> Unit
+    onDismissEmptyTitleDialog: () -> Unit,
+    onDoneClicked: () -> Unit
 ) {
     val focusRequester = remember { FocusRequester() }
     if (state.requestFocus) {
@@ -92,6 +98,7 @@ fun ReminderNoteScreenContent(
             RemindersTopAppBar(
                 onNavigateUp = onNavigateUp,
                 onTitleUpdate = onReminderNoteTitleUpdate,
+                onDoneClicked = {},
                 focusRequester = focusRequester,
                 value = state.reminderTitle,
                 titlePlaceHolderId = string.type_reminder_title
@@ -120,6 +127,7 @@ fun ReminderNoteScreenContent(
                 ),
                 keyboardActions = KeyboardActions(onDone = {
                     focusManager.clearFocus()
+                    onReminderNoteSaved()
                 }),
                 textStyle = AppTheme.typography.labelLarge,
                 placeholder = {
@@ -151,7 +159,8 @@ private fun NoteCreationScreenPreview() {
             state = ReminderNoteState(showSaveButton = true),
             onReminderNoteSaved = {},
             onReminderNoteTitleUpdate = {},
-            onDismissEmptyTitleDialog = {}
+            onDismissEmptyTitleDialog = {},
+            onDoneClicked = {}
         )
     }
 }

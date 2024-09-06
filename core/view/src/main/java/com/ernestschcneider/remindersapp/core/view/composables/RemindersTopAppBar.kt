@@ -38,6 +38,7 @@ fun RemindersTopAppBar(
     modifier: Modifier = Modifier,
     onNavigateUp: () -> Unit,
     onTitleUpdate: (newValue: String) -> Unit,
+    onDoneClicked: () -> Unit = {},
     focusRequester: FocusRequester,
     value: String,
     @StringRes titlePlaceHolderId: Int
@@ -107,6 +108,7 @@ private fun ReminderTopAppBar() {
     RemindersTopAppBar(
         onNavigateUp = {},
         onTitleUpdate = {},
+        onDoneClicked = {},
         focusRequester = FocusRequester(),
         value = "Title",
         titlePlaceHolderId = R.string.type_reminder_title
