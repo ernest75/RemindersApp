@@ -31,6 +31,7 @@ import androidx.compose.ui.platform.LocalWindowInfo
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
+import com.ernestschcneider.feature.reminderlist.ReminderItem
 import com.ernestschcneider.remindersapp.core.view.R
 import com.ernestschcneider.remindersapp.core.view.composables.PrimaryButton
 import com.ernestschcneider.remindersapp.core.view.theme.AppTheme
@@ -41,9 +42,11 @@ import com.ernestschcneider.remindersapp.core.view.theme.PreviewLightDark
 fun AddReminderDialog(
     modifier: Modifier = Modifier,
     focusRequester: FocusRequester,
+    item: ReminderItem,
     onDismiss: () -> Unit,
     onFirsReminderAdded: (String) -> Unit,
     onLastReminderAdded: (String) -> Unit,
+    onReminderEdited: (ReminderItem) -> Unit,
     isFirstReminder: Boolean
 ) {
     BasicAlertDialog(onDismissRequest = onDismiss) {
@@ -68,7 +71,7 @@ fun AddReminderDialog(
                 }
             }
             val focusManager = LocalFocusManager.current
-            val text = remember { mutableStateOf("") }
+            val text = remember { mutableStateOf(item.text) }
             Column(
                 modifier = modifier
                     .fillMaxWidth()
@@ -117,18 +120,31 @@ fun AddReminderDialog(
                         modifier = Modifier.padding(end = 4.dp),
                         label = stringResource(id = R.string.save),
                         onClick = {
-                            if (text.value.isNotEmpty()) {
-                                if (isFirstReminder) {
-                                    onFirsReminderAdded(text.value)
-                                } else {
-                                    onLastReminderAdded(text.value)
+                            when {
+                                item.text.isNotEmpty() -> {
+                                    val itemEdited = ReminderItem(
+                                        pos = item.pos,
+                                        text = text.value
+                                    )
+                                    onReminderEdited(itemEdited)
+                                    onDismiss()
                                 }
-                                onDismiss()
-                            } else {
-                                val message = context.getString(R.string.empty_reminder_explanation)
-                                Toast.makeText(context,message, Toast.LENGTH_SHORT).show()
-                            }
 
+                                (text.value.isNotEmpty()) -> {
+                                    if (isFirstReminder) {
+                                        onFirsReminderAdded(text.value)
+                                    } else {
+                                        onLastReminderAdded(text.value)
+                                    }
+                                    onDismiss()
+                                }
+
+                                else -> {
+                                    val message =
+                                        context.getString(R.string.empty_reminder_explanation)
+                                    Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
+                                }
+                            }
                         }
                     )
                     PrimaryButton(
@@ -149,6 +165,8 @@ fun PreviewDialog() {
         focusRequester = FocusRequester(),
         onFirsReminderAdded = {},
         onLastReminderAdded = {},
-        isFirstReminder = false
+        item = ReminderItem(),
+        isFirstReminder = false,
+        onReminderEdited = {}
     )
 }

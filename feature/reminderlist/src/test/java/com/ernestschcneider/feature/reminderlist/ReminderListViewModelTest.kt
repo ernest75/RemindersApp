@@ -201,6 +201,39 @@ class ReminderListViewModelTest {
         assertTrue(viewModel.screenState.value.scrollListToLast)
     }
 
+    @Test
+    fun onReminderEditClicked() {
+        val element1 = "element1"
+        val element2 = "element2"
+        viewModel.onFirstReminderListItemAdded(element1)
+        viewModel.onFirstReminderListItemAdded(element2)
+        val elementToEdit = ReminderItem(
+            pos = 0,
+            text = element1
+        )
+
+        viewModel.onReminderEditClicked(elementToEdit)
+
+        assertTrue(viewModel.screenState.value.showCreateReminderDialog)
+        assertEquals(elementToEdit, viewModel.screenState.value.reminderToEdit)
+    }
+    
+    @Test
+    fun onReminderEdited() {
+        val element1 = "element1"
+        val element2 = "element2"
+        viewModel.onFirstReminderListItemAdded(element1)
+        viewModel.onLastReminderListItemAdded(element2)
+        val element1Modified = "elementModified1"
+        val reminderList = listOf(element1Modified, element2)
+        val reminderItem = ReminderItem(0, element1Modified)
+
+        viewModel.onReminderEdited(reminderItem)
+
+        assertEquals(reminderList, viewModel.screenState.value.remindersList)
+        assertTrue(viewModel.screenState.value.showSaveButton)
+    }
+
     private fun getSavedStateHandle(reminderListId: String = EMPTY_REMINDER_ID): SavedStateHandle {
         return SavedStateHandle().apply {
             set(REMINDER_LIST_ID_ARG, reminderListId)

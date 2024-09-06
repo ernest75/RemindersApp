@@ -21,6 +21,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import com.ernestschcneider.feature.reminderlist.ReminderItem
 import com.ernestschcneider.remindersapp.core.view.R
 import com.ernestschcneider.remindersapp.core.view.theme.AppTheme
 import com.ernestschcneider.remindersapp.core.view.theme.PreviewLightDark
@@ -28,8 +29,8 @@ import com.ernestschcneider.remindersapp.core.view.theme.PreviewLightDark
 @Composable
 fun RemindersListItem(
     modifier: Modifier = Modifier,
-    item: String,
-    editReminder: () -> Unit,
+    item: ReminderItem,
+    editReminder: (ReminderItem) -> Unit,
     deleteReminder: (String) -> Unit
 ) {
     Column {
@@ -43,7 +44,7 @@ fun RemindersListItem(
         ) {
             Text(
                 modifier = Modifier.padding(start = 16.dp),
-                text = item,
+                text = item.text,
                 style = AppTheme.typography.labelLarge
             )
             Spacer(
@@ -58,7 +59,7 @@ fun RemindersListItem(
                     .align(Alignment.CenterVertically)
                     .padding(end = 16.dp)
                     .size(16.dp)
-                    .clickable { editReminder() }
+                    .clickable { editReminder(item) }
             )
             Icon(
                 painter = painterResource(id = R.drawable.ic_delete_outline_24),
@@ -67,7 +68,7 @@ fun RemindersListItem(
                     .align(Alignment.CenterVertically)
                     .padding(end = 16.dp)
                     .size(16.dp)
-                    .clickable { deleteReminder(item) }
+                    .clickable { deleteReminder(item.text) }
             )
         }
 
@@ -83,7 +84,7 @@ fun RemindersListItem(
 private fun ReminderListItemPreview() {
     AppTheme {
         RemindersListItem(
-            item = "ReminderContentText",
+            item = ReminderItem(),
             editReminder = {},
             deleteReminder = {}
         )

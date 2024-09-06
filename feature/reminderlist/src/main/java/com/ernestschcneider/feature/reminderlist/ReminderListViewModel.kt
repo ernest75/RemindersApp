@@ -3,7 +3,6 @@ package com.ernestschcneider.feature.reminderlist
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.lifecycle.viewmodel.compose.viewModel
 import com.ernestschcneider.EMPTY_REMINDER_ID
 import com.ernestschcneider.models.Reminder
 import com.ernestschcneider.models.ReminderType
@@ -162,6 +161,28 @@ class ReminderListViewModel @Inject constructor(
                 remindersList = _screenState.value.remindersList,
                 showSaveButton = true,
                 requestFocus = false
+            )
+        }
+    }
+
+    fun onReminderEditClicked(item: ReminderItem) {
+        _screenState.update {
+            it.copy(
+                showCreateReminderDialog = true,
+                reminderToEdit = item
+            )
+        }
+    }
+
+    fun onReminderEdited(reminderItem: ReminderItem) {
+        val index = reminderItem.pos
+        val list = _screenState.value.remindersList
+        list.removeAt(index)
+        list.add(index, reminderItem.text)
+
+        _screenState.update {
+            it.copy(remindersList = list,
+                showSaveButton = true
             )
         }
     }

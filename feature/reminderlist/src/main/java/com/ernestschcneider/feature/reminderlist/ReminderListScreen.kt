@@ -50,11 +50,13 @@ internal fun ReminderListScreen(
         onAddFirstReminder = reminderListViewModel::onAddFirstReminderListClicked,
         onFirstReminderAdded = reminderListViewModel::onFirstReminderListItemAdded,
         onAddLastReminder = reminderListViewModel::onAddLastReminderListClicked,
-        onDismissCreateDialogClicked = reminderListViewModel::onDismissCreateDialogClicked,
         onLastReminderAdded = reminderListViewModel::onLastReminderListItemAdded,
-        onSaveReminderClicked = reminderListViewModel::onSaveListReminderClicked,
+        onDismissCreateDialogClicked = reminderListViewModel::onDismissCreateDialogClicked,
         onDismissEmptyTitleClicked = reminderListViewModel::onDismissEmptyTitleDialogClicked,
-        onDeleteReminder = reminderListViewModel::onDeleteReminderItem
+        onSaveReminderClicked = reminderListViewModel::onSaveListReminderClicked,
+        onDeleteReminder = reminderListViewModel::onDeleteReminderItem,
+        onEditReminder = reminderListViewModel::onReminderEditClicked,
+        onReminderEdited = reminderListViewModel::onReminderEdited
     )
 }
 
@@ -70,7 +72,9 @@ fun ReminderListScreenContent(
     onDismissCreateDialogClicked: () -> Unit,
     onDismissEmptyTitleClicked: () -> Unit,
     onSaveReminderClicked: () -> Unit,
-    onDeleteReminder: (String) -> Unit
+    onDeleteReminder: (String) -> Unit,
+    onEditReminder: (ReminderItem) -> Unit,
+    onReminderEdited: (ReminderItem) -> Unit
 ) {
     val listState = rememberLazyListState()
 
@@ -116,8 +120,11 @@ fun ReminderListScreenContent(
                 }
                 items(screenState.remindersList) {
                     RemindersListItem(
-                        item = it,
-                        editReminder = {},
+                        item = ReminderItem(
+                            pos = screenState.remindersList.indexOf(it),
+                            text = it
+                        ),
+                        editReminder = onEditReminder,
                         deleteReminder = onDeleteReminder
                     )
                 }
@@ -141,9 +148,11 @@ fun ReminderListScreenContent(
                 AddReminderDialog(
                     onDismiss = onDismissCreateDialogClicked,
                     focusRequester = FocusRequester(),
+                    item = screenState.reminderToEdit,
                     onFirsReminderAdded = onFirstReminderAdded,
                     onLastReminderAdded = onLastReminderAdded,
-                    isFirstReminder = screenState.isFirstReminder
+                    isFirstReminder = screenState.isFirstReminder,
+                    onReminderEdited = onReminderEdited
                 )
             }
             if (screenState.showEmptyTitleDialog) {
@@ -161,7 +170,8 @@ fun ReminderListScreenContent(
 @Composable
 private fun NoteCreationScreenPreview() {
     AppTheme {
-        ReminderListScreenContent(onNavigateUp = {},
+        ReminderListScreenContent(
+            onNavigateUp = {},
             screenState = ReminderListState(
                 remindersList = mutableListOf(
                     "Hello", "Hello2"
@@ -169,13 +179,15 @@ private fun NoteCreationScreenPreview() {
             ),
             onReminderListTitleUpdate = {},
             onAddFirstReminder = {},
-            onDismissCreateDialogClicked = {},
             onFirstReminderAdded = {},
             onAddLastReminder = {},
             onLastReminderAdded = {},
-            onSaveReminderClicked = {},
+            onDismissCreateDialogClicked = {},
             onDismissEmptyTitleClicked = {},
-            onDeleteReminder = {}
+            onSaveReminderClicked = {},
+            onDeleteReminder = {},
+            onEditReminder = {},
+            onReminderEdited = {}
         )
     }
 }
