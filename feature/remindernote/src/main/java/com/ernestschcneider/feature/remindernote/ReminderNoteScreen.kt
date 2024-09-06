@@ -57,8 +57,7 @@ internal fun ReminderNoteScreen(
         onReminderNoteContentUpdate = reminderNoteViewModel::onReminderContentUpdate,
         onReminderNoteSaved = reminderNoteViewModel::onSavedReminderClicked,
         onReminderNoteTitleUpdate = reminderNoteViewModel::onReminderTitleUpdate,
-        onDismissEmptyTitleDialog = reminderNoteViewModel::onDismissEmptyTitleDialog,
-        onDoneClicked = {}
+        onDismissEmptyTitleDialog = reminderNoteViewModel::onDismissEmptyTitleDialog
 
     )
 }
@@ -70,8 +69,7 @@ fun ReminderNoteScreenContent(
     onReminderNoteContentUpdate: (String) -> Unit,
     onReminderNoteTitleUpdate: (String) -> Unit,
     onReminderNoteSaved: () -> Unit,
-    onDismissEmptyTitleDialog: () -> Unit,
-    onDoneClicked: () -> Unit
+    onDismissEmptyTitleDialog: () -> Unit
 ) {
     val focusRequester = remember { FocusRequester() }
     if (state.requestFocus) {
@@ -98,7 +96,6 @@ fun ReminderNoteScreenContent(
             RemindersTopAppBar(
                 onNavigateUp = onNavigateUp,
                 onTitleUpdate = onReminderNoteTitleUpdate,
-                onDoneClicked = {},
                 focusRequester = focusRequester,
                 value = state.reminderTitle,
                 titlePlaceHolderId = string.type_reminder_title
@@ -159,8 +156,7 @@ private fun NoteCreationScreenPreview() {
             state = ReminderNoteState(showSaveButton = true),
             onReminderNoteSaved = {},
             onReminderNoteTitleUpdate = {},
-            onDismissEmptyTitleDialog = {},
-            onDoneClicked = {}
+            onDismissEmptyTitleDialog = {}
         )
     }
 }

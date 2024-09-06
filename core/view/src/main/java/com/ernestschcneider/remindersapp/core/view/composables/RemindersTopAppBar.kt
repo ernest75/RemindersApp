@@ -21,6 +21,7 @@ import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.FocusDirection.Companion.Next
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Color
@@ -38,7 +39,6 @@ fun RemindersTopAppBar(
     modifier: Modifier = Modifier,
     onNavigateUp: () -> Unit,
     onTitleUpdate: (newValue: String) -> Unit,
-    onDoneClicked: () -> Unit = {},
     focusRequester: FocusRequester,
     value: String,
     @StringRes titlePlaceHolderId: Int
@@ -94,7 +94,7 @@ fun RemindersTopAppBar(
                     imeAction = ImeAction.Done
                 ),
                 keyboardActions = KeyboardActions(onDone = {
-                    focusManager.clearFocus()
+                    focusManager.moveFocus(Next)
                     onTitleUpdate(value)
                 })
             )
@@ -108,7 +108,6 @@ private fun ReminderTopAppBar() {
     RemindersTopAppBar(
         onNavigateUp = {},
         onTitleUpdate = {},
-        onDoneClicked = {},
         focusRequester = FocusRequester(),
         value = "Title",
         titlePlaceHolderId = R.string.type_reminder_title
