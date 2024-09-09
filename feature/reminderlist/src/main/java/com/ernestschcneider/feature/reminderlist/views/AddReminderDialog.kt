@@ -1,5 +1,6 @@
 package com.ernestschcneider.feature.reminderlist.views
 
+import android.content.Context
 import android.widget.Toast
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -123,7 +124,16 @@ fun AddReminderDialog(
                     ),
                     keyboardActions = KeyboardActions(onDone = {
                         focusManager.clearFocus()
-                        // TODO hide keyboard??
+                        onSaveReminderClicked(
+                            item,
+                            textFieldValue,
+                            onReminderEdited,
+                            onDismiss,
+                            isFirstReminder,
+                            onFirsReminderAdded,
+                            onLastReminderAdded,
+                            context
+                        )
                     })
                 )
                 Row(modifier = Modifier.fillMaxWidth()) {
@@ -132,31 +142,16 @@ fun AddReminderDialog(
                         modifier = Modifier.padding(end = 4.dp),
                         label = stringResource(id = R.string.save),
                         onClick = {
-                            when {
-                                item.text.isNotEmpty() -> {
-                                    val itemEdited = ReminderItem(
-                                        pos = item.pos,
-                                        text = textFieldValue.text
-                                    )
-                                    onReminderEdited(itemEdited)
-                                    onDismiss()
-                                }
-
-                                (textFieldValue.text.isNotEmpty()) -> {
-                                    if (isFirstReminder) {
-                                        onFirsReminderAdded(textFieldValue.text)
-                                    } else {
-                                        onLastReminderAdded(textFieldValue.text)
-                                    }
-                                    onDismiss()
-                                }
-
-                                else -> {
-                                    val message =
-                                        context.getString(R.string.empty_reminder_explanation)
-                                    Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
-                                }
-                            }
+                            onSaveReminderClicked(
+                                item,
+                                textFieldValue,
+                                onReminderEdited,
+                                onDismiss,
+                                isFirstReminder,
+                                onFirsReminderAdded,
+                                onLastReminderAdded,
+                                context
+                            )
                         }
                     )
                     PrimaryButton(
@@ -165,6 +160,43 @@ fun AddReminderDialog(
                     )
                 }
             }
+        }
+    }
+}
+
+private fun onSaveReminderClicked(
+    item: ReminderItem,
+    textFieldValue: TextFieldValue,
+    onReminderEdited: (ReminderItem) -> Unit,
+    onDismiss: () -> Unit,
+    isFirstReminder: Boolean,
+    onFirsReminderAdded: (String) -> Unit,
+    onLastReminderAdded: (String) -> Unit,
+    context: Context
+) {
+    when {
+        item.text.isNotEmpty() -> {
+            val itemEdited = ReminderItem(
+                pos = item.pos,
+                text = textFieldValue.text
+            )
+            onReminderEdited(itemEdited)
+            onDismiss()
+        }
+
+        (textFieldValue.text.isNotEmpty()) -> {
+            if (isFirstReminder) {
+                onFirsReminderAdded(textFieldValue.text)
+            } else {
+                onLastReminderAdded(textFieldValue.text)
+            }
+            onDismiss()
+        }
+
+        else -> {
+            val message =
+                context.getString(R.string.empty_reminder_explanation)
+            Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
         }
     }
 }
