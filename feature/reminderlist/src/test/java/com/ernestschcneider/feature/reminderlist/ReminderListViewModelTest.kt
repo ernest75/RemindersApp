@@ -43,6 +43,8 @@ class ReminderListViewModelTest {
 
         assertTrue(viewModel.screenState.value.showCreateReminderDialog)
         assertTrue(viewModel.screenState.value.isFirstReminder)
+        assertTrue(viewModel.screenState.value.requestFocus)
+        assertEquals(ReminderItem(), viewModel.screenState.value.reminderToEdit)
     }
 
     @Test
@@ -74,6 +76,8 @@ class ReminderListViewModelTest {
 
         assertTrue(viewModel.screenState.value.showCreateReminderDialog)
         assertFalse(viewModel.screenState.value.isFirstReminder)
+        assertTrue(viewModel.screenState.value.requestFocus)
+        assertEquals(ReminderItem(), viewModel.screenState.value.reminderToEdit)
     }
 
     @Test

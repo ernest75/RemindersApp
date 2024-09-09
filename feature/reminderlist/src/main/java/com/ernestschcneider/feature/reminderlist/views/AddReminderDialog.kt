@@ -18,8 +18,10 @@ import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
@@ -29,7 +31,9 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.platform.LocalWindowInfo
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.TextRange
 import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import com.ernestschcneider.feature.reminderlist.ReminderItem
 import com.ernestschcneider.remindersapp.core.view.R
@@ -59,8 +63,8 @@ fun AddReminderDialog(
                 disabledContainerColor = AppTheme.colorScheme.onPrimary.copy(alpha = 0.25F)
             )
         ) {
-            // WorkAround remove when https://issuetracker.google.com/issues/204502668?pli=1 is fixed
-            // Update should be fixed in compose 1.7
+            // WorkAround to bring keyboard up remove when https://issuetracker.google.com/issues/204502668?pli=1
+            // is fixed Update should be fixed in compose 1.7
             val windowInfo = LocalWindowInfo.current
             val context = LocalContext.current
             LaunchedEffect(windowInfo) {
@@ -71,7 +75,14 @@ fun AddReminderDialog(
                 }
             }
             val focusManager = LocalFocusManager.current
-            val text = remember { mutableStateOf(item.text) }
+            var textFieldValue by remember {
+                mutableStateOf(
+                    TextFieldValue(
+                        text = item.text,
+                        selection = TextRange(item.text.length)
+                    )
+                )
+            }
             Column(
                 modifier = modifier
                     .fillMaxWidth()
@@ -102,9 +113,9 @@ fun AddReminderDialog(
                             color = AppTheme.colorScheme.secondary
                         )
                     },
-                    value = text.value,
+                    value = textFieldValue,
                     onValueChange = {
-                        text.value = it
+                        textFieldValue = it
                     },
                     keyboardOptions = KeyboardOptions(
                         imeAction = ImeAction.Done
@@ -124,17 +135,17 @@ fun AddReminderDialog(
                                 item.text.isNotEmpty() -> {
                                     val itemEdited = ReminderItem(
                                         pos = item.pos,
-                                        text = text.value
+                                        text = textFieldValue.text
                                     )
                                     onReminderEdited(itemEdited)
                                     onDismiss()
                                 }
 
-                                (text.value.isNotEmpty()) -> {
+                                (textFieldValue.text.isNotEmpty()) -> {
                                     if (isFirstReminder) {
-                                        onFirsReminderAdded(text.value)
+                                        onFirsReminderAdded(textFieldValue.text)
                                     } else {
-                                        onLastReminderAdded(text.value)
+                                        onLastReminderAdded(textFieldValue.text)
                                     }
                                     onDismiss()
                                 }
