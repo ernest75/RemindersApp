@@ -106,6 +106,7 @@ fun AddReminderDialog(
                         unfocusedIndicatorColor = Color.Transparent,
                         disabledIndicatorColor = Color.Transparent,
                     ),
+                    maxLines = 10,
                     textStyle = AppTheme.typography.labelLarge,
                     placeholder = {
                         Text(

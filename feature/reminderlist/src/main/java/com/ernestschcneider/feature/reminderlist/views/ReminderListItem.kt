@@ -20,6 +20,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.ernestschcneider.feature.reminderlist.ReminderItem
 import com.ernestschcneider.remindersapp.core.view.R
@@ -42,10 +43,18 @@ fun RemindersListItem(
                 .background(AppTheme.colorScheme.primaryContainer),
             verticalAlignment = Alignment.CenterVertically,
         ) {
+            val textLimited = if (item.text.length > 20) {
+                item.text.subSequence(0,20).toString() + "..."
+            } else {
+                item.text
+            }
             Text(
-                modifier = Modifier.padding(start = 16.dp),
-                text = item.text,
-                style = AppTheme.typography.labelLarge
+                modifier = Modifier
+                    .padding(start = 16.dp),
+                text = textLimited,
+                style = AppTheme.typography.labelLarge,
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis,
             )
             Spacer(
                 Modifier
