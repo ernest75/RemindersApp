@@ -41,7 +41,8 @@ class ReminderListViewModel @Inject constructor(
             it.copy(
                 showCreateReminderDialog = true,
                 requestFocus = true,
-                isFirstReminder = true
+                isFirstReminder = true,
+                reminderToEdit = ReminderItem()
             )
         }
     }
@@ -73,7 +74,8 @@ class ReminderListViewModel @Inject constructor(
             it.copy(
                 showCreateReminderDialog = true,
                 requestFocus = true,
-                isFirstReminder = false
+                isFirstReminder = false,
+                reminderToEdit = ReminderItem()
             )
         }
     }
