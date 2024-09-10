@@ -136,7 +136,6 @@ fun ReminderNoteScreenContent(
             )
 
         }
-
         if (state.showEmptyTitleDialog){
             InformativeDialog(
                 onDismiss = onDismissEmptyTitleDialog,
