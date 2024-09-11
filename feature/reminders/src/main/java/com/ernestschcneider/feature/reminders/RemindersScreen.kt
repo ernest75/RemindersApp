@@ -9,7 +9,6 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.icons.Icons
@@ -78,7 +77,7 @@ internal fun RemindersScreen(
             remindersViewModel.onDismissDialog()
         },
         onListReminderClick = onListReminderClick,
-        moveReminder = remindersViewModel::moveReminder
+        onMoveReminder = remindersViewModel::onMoveReminder
     )
 }
 
@@ -95,7 +94,7 @@ internal fun RemindersScreenContent(
     onReminderCreationClick: () -> Unit,
     onListReminderClick: (String) -> Unit,
     onListReminderCreationClick: () -> Unit,
-    moveReminder: (Int, Int) -> Unit
+    onMoveReminder: (Int, Int) -> Unit
 ) {
     val listState = rememberLazyListState()
     var overscrollJob by remember { mutableStateOf<Job?>(null) }
@@ -145,7 +144,7 @@ internal fun RemindersScreenContent(
         ) {
             val dragAndDropListState =
                 rememberDragAndDropListState(listState) { from, to ->
-                    moveReminder(from, to)
+                    onMoveReminder(from, to)
                 }
             val coroutineScope = rememberCoroutineScope()
             LazyColumn(
@@ -240,7 +239,7 @@ private fun RemaindersScreenPreview() {
             onReminderCreationClick = {},
             onListReminderCreationClick = {},
             onListReminderClick = {},
-            moveReminder = {_,_ -> }
+            onMoveReminder = { _, _ -> }
         )
     }
 }

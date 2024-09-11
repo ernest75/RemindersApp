@@ -49,7 +49,7 @@ class RemindersViewModel  @Inject constructor(
         _screenState.update { it.copy(showCreationDialog = false) }
     }
 
-    fun moveReminder(from: Int, to: Int) {
+    fun onMoveReminder(from: Int, to: Int) {
         if (from == to) return
         val list = _screenState.value.reminders.toMutableList()
         list.apply {

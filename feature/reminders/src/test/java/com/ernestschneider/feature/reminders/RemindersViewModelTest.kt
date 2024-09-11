@@ -4,7 +4,6 @@ import com.ernestschcneider.feature.reminders.RemindersViewModel
 import com.ernestschcneider.models.Reminder
 import com.ernestschcneider.remindersapp.core.dispatchers.CoroutineTestExtension
 import com.ernestschneider.testutils.InMemoryLocalRepo
-import com.ernestschneider.testutils.ReminderBuilder
 import com.google.common.truth.Truth.assertThat
 import kotlinx.coroutines.Dispatchers
 import org.junit.jupiter.api.Assertions.assertEquals
@@ -60,18 +59,18 @@ class RemindersViewModelTest {
     }
 
     @Test
-    fun onMoveReminderSamePosition() {
+    fun onOnMoveReminderSamePosition() {
         val list = localRepo.getReminders()
         viewModel.loadReminders()
 
-        viewModel.moveReminder(0, 0)
+        viewModel.onMoveReminder(0, 0)
 
         assertThat(viewModel.screenState.value)
             .isEqualTo(viewModel.screenState.value.copy(reminders = list))
     }
 
     @Test
-    fun onMoveReminderDifferentPosition() {
+    fun onOnMoveReminderDifferentPosition() {
         val list = localRepo.getReminders()
         val from = 0
         val to = 1
@@ -81,7 +80,7 @@ class RemindersViewModelTest {
         }
         viewModel.loadReminders()
 
-        viewModel.moveReminder(from, to)
+        viewModel.onMoveReminder(from, to)
 
         assertThat(viewModel.screenState.value)
             .isEqualTo(viewModel.screenState.value.copy(reminders = listModified))
