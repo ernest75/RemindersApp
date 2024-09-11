@@ -1,12 +1,16 @@
 package com.ernestschcneider.feature.reminders
 
+import android.annotation.SuppressLint
 import androidx.compose.foundation.background
+import androidx.compose.foundation.gestures.detectDragGesturesAfterLongPress
+import androidx.compose.foundation.gestures.scrollBy
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
@@ -20,8 +24,15 @@ import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.composed
 import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.graphics.graphicsLayer
+import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -35,6 +46,8 @@ import com.ernestschcneider.remindersapp.core.view.composables.FloatingActionBut
 import com.ernestschcneider.remindersapp.core.view.composables.isScrollingUp
 import com.ernestschcneider.remindersapp.core.view.theme.AppTheme
 import com.ernestschcneider.remindersapp.core.view.theme.PreviewLightDark
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.launch
 
 @Composable
 internal fun RemindersScreen(
@@ -64,10 +77,12 @@ internal fun RemindersScreen(
             onListReminderCreationClick()
             remindersViewModel.onDismissDialog()
         },
-        onListReminderClick = onListReminderClick
+        onListReminderClick = onListReminderClick,
+        moveReminder = remindersViewModel::moveReminder
     )
 }
 
+@SuppressLint("UnnecessaryComposedModifier")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 internal fun RemindersScreenContent(
@@ -79,9 +94,11 @@ internal fun RemindersScreenContent(
     onReminderClicked: (reminderId: String) -> Unit,
     onReminderCreationClick: () -> Unit,
     onListReminderClick: (String) -> Unit,
-    onListReminderCreationClick: () -> Unit
+    onListReminderCreationClick: () -> Unit,
+    moveReminder: (Int, Int) -> Unit
 ) {
     val listState = rememberLazyListState()
+    var overscrollJob by remember { mutableStateOf<Job?>(null) }
 
     Scaffold(
         modifier = Modifier.fillMaxSize(),
@@ -126,22 +143,71 @@ internal fun RemindersScreenContent(
                 .background(AppTheme.colorScheme.surfaceContainerHigh)
                 .padding(paddingValues)
         ) {
-
+            val dragAndDropListState =
+                rememberDragAndDropListState(listState) { from, to ->
+                    moveReminder(from, to)
+                }
+            val coroutineScope = rememberCoroutineScope()
             LazyColumn(
-                modifier = Modifier.fillMaxSize().padding(8.dp),
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(8.dp)
+                    .pointerInput(Unit) {
+                    detectDragGesturesAfterLongPress(
+                        onDrag = { change, offset ->
+                            change.consume()
+                            dragAndDropListState.onDrag(offset)
+
+                            if (overscrollJob?.isActive == true) return@detectDragGesturesAfterLongPress
+
+                            dragAndDropListState
+                                .checkOverscroll()
+                                .takeIf { it != 0f }
+                                ?.let {
+                                    overscrollJob = coroutineScope.launch {
+                                        dragAndDropListState.lazyListState.scrollBy(it)
+                                    }
+                                } ?: kotlin.run { overscrollJob?.cancel() }
+
+                        },
+                        onDragStart = { offset ->
+                            dragAndDropListState.onDragStart(offset)
+                        },
+                        onDragEnd = { dragAndDropListState.onDragInterrupted() },
+                        onDragCancel = { dragAndDropListState.onDragInterrupted() }
+                    )
+                },
                 verticalArrangement = Arrangement.spacedBy(16.dp),
                 state = listState
             ) {
-                items(screenState.reminders) { item ->
+                itemsIndexed(screenState.reminders) { index, item ->
                     when (item.reminderType) {
                         ReminderType.Note -> RemindersItem(
                             item = item,
+                            modifier = Modifier.composed {
+                                val offsetOrNull =
+                                    dragAndDropListState.elementDisplacement.takeIf {
+                                        index == dragAndDropListState.currentIndexOfDraggedItem
+                                    }
+                                Modifier.graphicsLayer {
+                                    translationY = offsetOrNull ?: 0f
+                                }
+                            },
                             startDrawableRes = R.drawable.ic_note_24,
                             onItemClicked = onReminderClicked,
                             onDeleteItemClicked = onDeleteItemClicked
                         )
                         ReminderType.List -> RemindersItem(
                             item = item,
+                            modifier = Modifier.composed {
+                                val offsetOrNull =
+                                    dragAndDropListState.elementDisplacement.takeIf {
+                                        index == dragAndDropListState.currentIndexOfDraggedItem
+                                    }
+                                Modifier.graphicsLayer {
+                                    translationY = offsetOrNull ?: 0f
+                                }
+                            },
                             onItemClicked = onListReminderClick,
                             startDrawableRes = R.drawable.ic_list_bulleted_24,
                             onDeleteItemClicked = onDeleteItemClicked
@@ -173,7 +239,8 @@ private fun RemaindersScreenPreview() {
             onDismissDialog = {},
             onReminderCreationClick = {},
             onListReminderCreationClick = {},
-            onListReminderClick = {}
+            onListReminderClick = {},
+            moveReminder = {_,_ -> }
         )
     }
 }

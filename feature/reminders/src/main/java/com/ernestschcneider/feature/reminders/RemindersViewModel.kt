@@ -48,4 +48,16 @@ class RemindersViewModel  @Inject constructor(
     fun onDismissDialog() {
         _screenState.update { it.copy(showCreationDialog = false) }
     }
+
+    fun moveReminder(from: Int, to: Int) {
+        if (from == to) return
+        val list = _screenState.value.reminders.toMutableList()
+        list.apply {
+            val element = this.removeAt(from)
+            this.add(to, element)
+        }
+        _screenState.update { it.copy(
+            reminders = list
+        ) }
+    }
 }
