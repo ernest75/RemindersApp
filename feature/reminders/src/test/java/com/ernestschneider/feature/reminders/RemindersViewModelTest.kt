@@ -57,4 +57,32 @@ class RemindersViewModelTest {
         assertThat(viewModel.screenState.value)
             .isEqualTo(viewModel.screenState.value.copy(showCreationDialog = false))
     }
+
+    @Test
+    fun onOnMoveReminderSamePosition() {
+        val list = localRepo.getReminders()
+        viewModel.loadReminders()
+
+        viewModel.onMoveReminder(0, 0)
+
+        assertThat(viewModel.screenState.value)
+            .isEqualTo(viewModel.screenState.value.copy(reminders = list))
+    }
+
+    @Test
+    fun onOnMoveReminderDifferentPosition() {
+        val list = localRepo.getReminders()
+        val from = 0
+        val to = 1
+        val listModified = list.toMutableList().apply {
+            val element = this.removeAt(from)
+            this.add(to, element)
+        }
+        viewModel.loadReminders()
+
+        viewModel.onMoveReminder(from, to)
+
+        assertThat(viewModel.screenState.value)
+            .isEqualTo(viewModel.screenState.value.copy(reminders = listModified))
+    }
 }
