@@ -102,18 +102,22 @@ class ReminderListViewModel @Inject constructor(
             viewModelScope.launch {
                 withContext(backgroundDispatcher) {
                     if (reminderId == EMPTY_REMINDER_ID) {
+                        val position = localRepo.getAllReminders().size
                         val reminder = Reminder(
                             reminderTitle = _screenState.value.reminderListTitle,
                             remindersList = remindersArray,
-                            reminderType = ReminderType.List
+                            reminderType = ReminderType.List,
+                            reminderPosition = position
                         )
                         localRepo.saveReminder(reminder)
                     } else {
+                        val position = localRepo.getReminder(reminderId).reminderPosition
                         val reminder = Reminder(
                             reminderId = reminderId,
                             reminderTitle = _screenState.value.reminderListTitle,
                             remindersList = remindersArray,
-                            reminderType = ReminderType.List
+                            reminderType = ReminderType.List,
+                            reminderPosition = position
                         )
                         localRepo.updateReminder(reminder)
                     }
