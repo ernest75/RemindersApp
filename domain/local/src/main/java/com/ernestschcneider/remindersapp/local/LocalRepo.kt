@@ -11,7 +11,7 @@ class LocalRepo @Inject constructor(
 ): StorageRepo {
 
     override suspend fun getAllReminders():List<Reminder>{
-      return reminderDao.loadAll().map {
+      return reminderDao.getAllReminders().map {
            it.toDomain()
        }
     }

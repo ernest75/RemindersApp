@@ -133,8 +133,7 @@ internal fun RemindersScreenContent(
                         )
                     }
                 },
-
-                )
+            )
         }
     ) { paddingValues ->
         Box(
@@ -153,30 +152,30 @@ internal fun RemindersScreenContent(
                     .fillMaxSize()
                     .padding(8.dp)
                     .pointerInput(Unit) {
-                    detectDragGesturesAfterLongPress(
-                        onDrag = { change, offset ->
-                            change.consume()
-                            dragAndDropListState.onDrag(offset)
+                        detectDragGesturesAfterLongPress(
+                            onDrag = { change, offset ->
+                                change.consume()
+                                dragAndDropListState.onDrag(offset)
 
-                            if (overscrollJob?.isActive == true) return@detectDragGesturesAfterLongPress
+                                if (overscrollJob?.isActive == true) return@detectDragGesturesAfterLongPress
 
-                            dragAndDropListState
-                                .checkOverscroll()
-                                .takeIf { it != 0f }
-                                ?.let {
-                                    overscrollJob = coroutineScope.launch {
-                                        dragAndDropListState.lazyListState.scrollBy(it)
-                                    }
-                                } ?: kotlin.run { overscrollJob?.cancel() }
+                                dragAndDropListState
+                                    .checkOverscroll()
+                                    .takeIf { it != 0f }
+                                    ?.let {
+                                        overscrollJob = coroutineScope.launch {
+                                            dragAndDropListState.lazyListState.scrollBy(it)
+                                        }
+                                    } ?: kotlin.run { overscrollJob?.cancel() }
 
-                        },
-                        onDragStart = { offset ->
-                            dragAndDropListState.onDragStart(offset)
-                        },
-                        onDragEnd = { dragAndDropListState.onDragInterrupted() },
-                        onDragCancel = { dragAndDropListState.onDragInterrupted() }
-                    )
-                },
+                            },
+                            onDragStart = { offset ->
+                                dragAndDropListState.onDragStart(offset)
+                            },
+                            onDragEnd = { dragAndDropListState.onDragInterrupted() },
+                            onDragCancel = { dragAndDropListState.onDragInterrupted() }
+                        )
+                    },
                 verticalArrangement = Arrangement.spacedBy(16.dp),
                 state = listState
             ) {
@@ -197,6 +196,7 @@ internal fun RemindersScreenContent(
                             onItemClicked = onReminderClicked,
                             onDeleteItemClicked = onDeleteItemClicked
                         )
+
                         ReminderType.List -> RemindersItem(
                             item = item,
                             modifier = Modifier.composed {

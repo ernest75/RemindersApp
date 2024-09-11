@@ -52,17 +52,21 @@ class ReminderNoteViewModel @Inject constructor(
             viewModelScope.launch {
                 withContext(backgroundDispatcher) {
                     if (reminderNoteArgs.reminderId == EMPTY_REMINDER_ID) {
+                        val position = localRepo.getAllReminders().size
                         val reminder = Reminder(
                             reminderTitle = _screenState.value.reminderTitle,
-                            reminderContent = _screenState.value.reminderContent
+                            reminderContent = _screenState.value.reminderContent,
+                            reminderPosition = position
                         )
                         localRepo.saveReminder(reminder)
                     } else {
                         val reminderId = reminderNoteArgs.reminderId
+                        val position = localRepo.getReminder(reminderId).reminderPosition
                         val reminder = Reminder(
                             reminderId = reminderId,
                             reminderTitle = _screenState.value.reminderTitle,
-                            reminderContent = _screenState.value.reminderContent
+                            reminderContent = _screenState.value.reminderContent,
+                            reminderPosition = position
                         )
                         localRepo.updateReminder(reminder)
                     }
@@ -97,9 +101,5 @@ class ReminderNoteViewModel @Inject constructor(
 
     fun onDismissEmptyTitleDialog() {
         _screenState.update { it.copy(showEmptyTitleDialog = false) }
-    }
-
-    fun onDoneClicked() {
-        _screenState.update { it.copy(requestFocus = true) }
     }
 }

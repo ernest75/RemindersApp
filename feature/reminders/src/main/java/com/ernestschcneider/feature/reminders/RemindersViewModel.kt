@@ -25,7 +25,7 @@ class RemindersViewModel  @Inject constructor(
     fun loadReminders() {
         viewModelScope.launch {
             withContext(backgroundDispatcher) {
-                val reminders = localRepo.getAllReminders()
+                val reminders = localRepo.getAllReminders().sortedBy { it.reminderPosition }
                 _screenState.update { it.copy(reminders = reminders) }
             }
         }
