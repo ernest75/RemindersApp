@@ -24,4 +24,8 @@ interface ReminderDao {
 
     @Update
     suspend fun update(reminder: ReminderEntity)
+
+    @Query("UPDATE reminders SET reminderPosition=:position WHERE id = :id")
+    fun updateReminderPosition(position: Int, id: UUID)
+
 }

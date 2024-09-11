@@ -31,4 +31,8 @@ class LocalRepo @Inject constructor(
     override suspend fun updateReminder(reminder: Reminder) {
         reminderDao.update(reminder.toReminderEntity())
     }
+
+    override suspend fun updateReminderPosition(position: Int, reminderId: String) {
+        reminderDao.updateReminderPosition(position, UUID.fromString(reminderId))
+    }
 }

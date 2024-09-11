@@ -78,7 +78,8 @@ internal fun RemindersScreen(
             remindersViewModel.onDismissDialog()
         },
         onListReminderClick = onListReminderClick,
-        onMoveReminder = remindersViewModel::onMoveReminder
+        onMoveReminder = remindersViewModel::onMoveReminder,
+        onReminderMoved = remindersViewModel::onReminderMoved
     )
 }
 
@@ -95,7 +96,8 @@ internal fun RemindersScreenContent(
     onReminderCreationClick: () -> Unit,
     onListReminderClick: (String) -> Unit,
     onListReminderCreationClick: () -> Unit,
-    onMoveReminder: (Int, Int) -> Unit
+    onMoveReminder: (Int, Int) -> Unit,
+    onReminderMoved: () -> Unit
 ) {
     val listState = rememberLazyListState()
     var overscrollJob by remember { mutableStateOf<Job?>(null) }
@@ -172,7 +174,10 @@ internal fun RemindersScreenContent(
                             onDragStart = { offset ->
                                 dragAndDropListState.onDragStart(offset)
                             },
-                            onDragEnd = { dragAndDropListState.onDragInterrupted() },
+                            onDragEnd = {
+                                dragAndDropListState.onDragInterrupted()
+                                onReminderMoved()
+                            },
                             onDragCancel = { dragAndDropListState.onDragInterrupted() }
                         )
                     },
@@ -240,7 +245,8 @@ private fun RemaindersScreenPreview() {
             onReminderCreationClick = {},
             onListReminderCreationClick = {},
             onListReminderClick = {},
-            onMoveReminder = { _, _ -> }
+            onMoveReminder = { _, _ -> },
+            onReminderMoved = {}
         )
     }
 }

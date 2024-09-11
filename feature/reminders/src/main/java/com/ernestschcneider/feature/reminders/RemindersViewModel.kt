@@ -60,4 +60,15 @@ class RemindersViewModel  @Inject constructor(
             reminders = list
         ) }
     }
+
+    fun onReminderMoved() {
+        viewModelScope.launch {
+            withContext(backgroundDispatcher){
+                val list = _screenState.value.reminders
+                list.forEachIndexed { index, reminder ->
+                    localRepo.updateReminderPosition(index, reminder.reminderId)
+                }
+            }
+        }
+    }
 }
