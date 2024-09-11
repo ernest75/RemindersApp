@@ -1,4 +1,4 @@
-package com.ernestschcneider.feature.reminders
+package com.ernestschcneider.remindersapp.core.states
 
 import androidx.compose.foundation.lazy.LazyListItemInfo
 import androidx.compose.foundation.lazy.LazyListState
