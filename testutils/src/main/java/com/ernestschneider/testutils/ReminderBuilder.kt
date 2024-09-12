@@ -9,6 +9,7 @@ class ReminderBuilder {
     private var reminderContent: String = ""
     private var reminderType = ReminderType.Note
     private var reminderList: ArrayList<String> = arrayListOf()
+    private var reminderPosition: Int = 0
 
     fun withId(id: String) = apply {
         this.id = id
@@ -30,6 +31,9 @@ class ReminderBuilder {
         this.reminderList = reminderList
     }
 
+    fun withReminderPosition(reminderPosition: Int) = apply {
+        this.reminderPosition = reminderPosition
+    }
 
     fun build(): Reminder {
         return Reminder(
@@ -37,7 +41,8 @@ class ReminderBuilder {
             reminderTitle = reminderTitle,
             reminderContent = reminderContent,
             reminderType = reminderType,
-            remindersList = reminderList
+            remindersList = reminderList,
+            reminderPosition = reminderPosition
         )
     }
 

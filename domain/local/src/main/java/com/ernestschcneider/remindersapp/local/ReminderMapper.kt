@@ -7,6 +7,7 @@ import java.util.UUID
 fun Reminder.toReminderEntity(): ReminderEntity {
     return ReminderEntity(
         id = UUID.fromString(reminderId),
+        reminderPosition = reminderPosition,
         reminderTitle = reminderTitle,
         reminderContent = reminderContent,
         reminderType = reminderType,
@@ -17,6 +18,7 @@ fun Reminder.toReminderEntity(): ReminderEntity {
 fun ReminderEntity.toDomain(): Reminder {
     return Reminder(
         reminderId = id.toString(),
+        reminderPosition = reminderPosition,
         reminderTitle = reminderTitle,
         reminderContent = reminderContent,
         reminderType = reminderType,

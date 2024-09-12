@@ -25,8 +25,9 @@ class RemindersViewModel  @Inject constructor(
     fun loadReminders() {
         viewModelScope.launch {
             withContext(backgroundDispatcher) {
-                val reminders = localRepo.getAllReminders()
+                val reminders = localRepo.getAllReminders().sortedBy { it.reminderPosition }
                 _screenState.update { it.copy(reminders = reminders) }
+                savePositions()
             }
         }
 
@@ -59,5 +60,20 @@ class RemindersViewModel  @Inject constructor(
         _screenState.update { it.copy(
             reminders = list
         ) }
+    }
+
+    fun onReminderMoved() {
+        savePositions()
+    }
+
+    private fun savePositions() {
+        viewModelScope.launch {
+            withContext(backgroundDispatcher) {
+                val list = _screenState.value.reminders
+                list.forEachIndexed { index, reminder ->
+                    localRepo.updateReminderPosition(index, reminder.reminderId)
+                }
+            }
+        }
     }
 }

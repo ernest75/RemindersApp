@@ -27,6 +27,20 @@ class ReminderListViewModelTest {
         savedStateHandle = savedStateHandle
     )
 
+    private val reminderNote1 = ReminderBuilder.aReminder()
+        .withId("1")
+        .withReminderTitle("Title1")
+        .withReminderContent("Content1")
+        .withReminderType(ReminderType.Note)
+        .build()
+
+    private val reminderList1 = ReminderBuilder.aReminder()
+        .withId("2")
+        .withReminderTitle("Title2")
+        .withReminderType(ReminderType.List)
+        .withReminderList(arrayListOf("Element1", "Element2"))
+        .build()
+
     @Test
     fun onReminderListTitleUpdate() {
         val reminderListTitle = "reminderListTitle"
@@ -140,6 +154,7 @@ class ReminderListViewModelTest {
             localRepo = localRepo,
             backgroundDispatcher = backgroundDispatcher
         )
+        localRepo.saveReminders(listOf(reminderNote1, reminderList1))
         val reminder = localRepo.getReminder(reminderId)
 
         viewModel.loadReminderList()
@@ -167,6 +182,7 @@ class ReminderListViewModelTest {
         val lastReminder = "2"
         val reminderList = arrayListOf(firstReminder, lastReminder)
         val spiedLocalRepo = spy(localRepo)
+        localRepo.saveReminders(listOf(reminderNote1, reminderList1))
         // TODO improve this??
         val viewModel = ReminderListViewModel(
             savedStateHandle = getSavedStateHandle(REMINDER_LIST_ID),

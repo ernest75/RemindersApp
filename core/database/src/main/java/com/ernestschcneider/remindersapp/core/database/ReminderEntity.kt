@@ -10,6 +10,7 @@ import java.util.UUID
 @Entity(tableName = "reminders")
 data class ReminderEntity(
     @PrimaryKey val id: UUID = UUID.fromString(DEFAULT_UUID),
+    @ColumnInfo(name = "reminderPosition") val reminderPosition: Int,
     @ColumnInfo(name = "reminderTitle") val reminderTitle: String,
     @ColumnInfo(name = "noteContent") val reminderContent: String,
     @ColumnInfo(name = "noteType") val reminderType: ReminderType,

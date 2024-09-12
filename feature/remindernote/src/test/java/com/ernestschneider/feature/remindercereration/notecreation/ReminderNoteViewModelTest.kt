@@ -8,6 +8,7 @@ import com.ernestschcneider.models.Reminder
 import com.ernestschcneider.models.ReminderType
 import com.ernestschcneider.remindersapp.core.dispatchers.CoroutineTestExtension
 import com.ernestschneider.testutils.InMemoryLocalRepo
+import com.ernestschneider.testutils.ReminderBuilder
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Assertions.assertEquals
@@ -24,9 +25,23 @@ class ReminderNoteViewModelTest {
 
     private val viewModel = ReminderNoteViewModel(
         localRepo = localRepo,
-        backgroundDispatcher= backgroundDispatcher,
+        backgroundDispatcher = backgroundDispatcher,
         savedStateHandle = savedStateHandle
     )
+
+    private val reminderNote1 = ReminderBuilder.aReminder()
+        .withId("1")
+        .withReminderTitle("Title1")
+        .withReminderContent("Content1")
+        .withReminderType(ReminderType.Note)
+        .build()
+
+    private val reminderList1 = ReminderBuilder.aReminder()
+        .withId("2")
+        .withReminderTitle("Title2")
+        .withReminderType(ReminderType.List)
+        .withReminderList(arrayListOf("Element1", "Element2"))
+        .build()
 
     @Test
     fun onReminderContentUpdate() {
@@ -38,7 +53,7 @@ class ReminderNoteViewModelTest {
         assertEquals(true, viewModel.screenState.value.showSaveButton)
         assertEquals(false, viewModel.screenState.value.requestFocus)
     }
-    
+
     @Test
     fun onReminderTitleUpdate() {
         val reminderTitle = "reminderTitle"
@@ -49,7 +64,7 @@ class ReminderNoteViewModelTest {
         assertEquals(true, viewModel.screenState.value.showSaveButton)
         assertEquals(false, viewModel.screenState.value.requestFocus)
     }
-    
+
     @Test
     fun onSavedReminderClickedNotEmptyTitle() {
         val reminderTitle = "reminderTitle"
@@ -91,12 +106,16 @@ class ReminderNoteViewModelTest {
             localRepo = spiedLocalRepo,
             backgroundDispatcher = backgroundDispatcher
         )
+        localRepo.saveReminders(listOf(reminderNote1, reminderList1))
         viewModel.onReminderTitleUpdate(reminderTitle)
         viewModel.onReminderContentUpdate(reminderContent)
         val reminder = Reminder(
-            reminderId = reminderId,
+            reminderId = reminderNote1.reminderId,
             reminderTitle = reminderTitle,
-            reminderContent = reminderContent
+            reminderContent = reminderContent,
+            remindersList = reminderNote1.remindersList,
+            reminderPosition = reminderNote1.reminderPosition,
+            reminderType = reminderNote1.reminderType
         )
 
         viewModel.onSavedReminderClicked()
@@ -139,6 +158,7 @@ class ReminderNoteViewModelTest {
             localRepo = localRepo,
             backgroundDispatcher = backgroundDispatcher
         )
+        localRepo.saveReminders(listOf(reminderNote1, reminderList1))
         val reminder = localRepo.getReminder(reminderId)
 
         viewModel.loadReminder()
@@ -155,7 +175,7 @@ class ReminderNoteViewModelTest {
 
         viewModel.onDismissEmptyTitleDialog()
 
-        assertEquals(false, viewModel.screenState.value.showEmptyTitleDialog )
+        assertEquals(false, viewModel.screenState.value.showEmptyTitleDialog)
     }
 
     private fun getSavedStateHandle(reminderId: String = EMPTY_REMINDER_ID): SavedStateHandle {

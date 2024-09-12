@@ -2,10 +2,13 @@ package com.ernestschneider.feature.reminders
 
 import com.ernestschcneider.feature.reminders.RemindersViewModel
 import com.ernestschcneider.models.Reminder
+import com.ernestschcneider.models.ReminderType
 import com.ernestschcneider.remindersapp.core.dispatchers.CoroutineTestExtension
 import com.ernestschneider.testutils.InMemoryLocalRepo
+import com.ernestschneider.testutils.ReminderBuilder
 import com.google.common.truth.Truth.assertThat
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
@@ -19,6 +22,20 @@ class RemindersViewModelTest {
         localRepo = localRepo,
         backgroundDispatcher = backgroundDispatcher
     )
+
+    private val reminderNote1 = ReminderBuilder.aReminder()
+        .withId("1")
+        .withReminderTitle("Title1")
+        .withReminderContent("Content1")
+        .withReminderType(ReminderType.Note)
+        .build()
+
+    private val reminderList1 = ReminderBuilder.aReminder()
+        .withId("2")
+        .withReminderTitle("Title2")
+        .withReminderType(ReminderType.List)
+        .withReminderList(arrayListOf("Element1", "Element2"))
+        .build()
 
     @Test
     fun onInitialDefaultState() {
@@ -35,6 +52,7 @@ class RemindersViewModelTest {
 
     @Test
     fun removeItem() {
+        localRepo.saveReminders(listOf(reminderNote1, reminderList1))
         val reminder = localRepo.getReminderAt(1)
 
         viewModel.removeItem(reminder)
@@ -71,6 +89,7 @@ class RemindersViewModelTest {
 
     @Test
     fun onOnMoveReminderDifferentPosition() {
+        localRepo.saveReminders(listOf(reminderNote1, reminderList1))
         val list = localRepo.getReminders()
         val from = 0
         val to = 1
@@ -84,5 +103,41 @@ class RemindersViewModelTest {
 
         assertThat(viewModel.screenState.value)
             .isEqualTo(viewModel.screenState.value.copy(reminders = listModified))
+    }
+
+    @Test
+    fun onReminderMoved() = runTest {
+        val reminderPosition1 = 0
+        val reminderPosition2 = 1
+        val reminder1 = ReminderBuilder
+            .aReminder()
+            .withReminderPosition(reminderPosition1)
+            .withId("1")
+            .build()
+        val reminder2 = ReminderBuilder
+            .aReminder()
+            .withReminderPosition(reminderPosition2)
+            .withId("2")
+            .build()
+        val reminder1AfterMoving = ReminderBuilder
+            .aReminder()
+            .withReminderPosition(reminderPosition2)
+            .withId("1")
+            .build()
+        val reminder2AfterMoving = ReminderBuilder
+            .aReminder()
+            .withReminderPosition(reminderPosition1)
+            .withId("2")
+            .build()
+        val listB4Moving = listOf(reminder1, reminder2)
+        val lisAfterMoving = listOf(reminder2AfterMoving, reminder1AfterMoving)
+        localRepo.saveReminders(listB4Moving)
+        viewModel.loadReminders()
+        viewModel.onMoveReminder(reminderPosition2, reminderPosition1)
+
+        viewModel.onReminderMoved()
+
+        val list = localRepo.getReminders()
+        assertEquals(lisAfterMoving, list)
     }
 }

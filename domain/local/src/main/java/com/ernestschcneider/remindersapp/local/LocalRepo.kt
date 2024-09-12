@@ -11,7 +11,7 @@ class LocalRepo @Inject constructor(
 ): StorageRepo {
 
     override suspend fun getAllReminders():List<Reminder>{
-      return reminderDao.loadAll().map {
+      return reminderDao.getAllReminders().map {
            it.toDomain()
        }
     }
@@ -30,5 +30,9 @@ class LocalRepo @Inject constructor(
 
     override suspend fun updateReminder(reminder: Reminder) {
         reminderDao.update(reminder.toReminderEntity())
+    }
+
+    override suspend fun updateReminderPosition(position: Int, reminderId: String) {
+        reminderDao.updateReminderPosition(position, UUID.fromString(reminderId))
     }
 }
