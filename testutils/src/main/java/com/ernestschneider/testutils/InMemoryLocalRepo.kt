@@ -28,6 +28,22 @@ class InMemoryLocalRepo : StorageRepo {
         reminders.add(index, reminder)
     }
 
+    override suspend fun updateReminderPosition(position: Int, reminderId: String) {
+        val reminder = findReminderById(reminderId)
+        reminders.remove(reminder)
+        val reminderChanged = Reminder(
+            reminderId = reminder.reminderId,
+            reminderTitle = reminder.reminderTitle,
+            reminderContent = reminder.reminderContent,
+            reminderPosition = position
+        )
+        reminders.add(position, reminderChanged)
+    }
+
+    private fun findReminderById(reminderId: String): Reminder {
+       return reminders.first { it.reminderId == reminderId }
+    }
+
     fun getReminders(): List<Reminder> {
         return reminders
     }
@@ -36,20 +52,24 @@ class InMemoryLocalRepo : StorageRepo {
         return reminders[position]
     }
 
-    private val reminderNote1 = ReminderBuilder.aReminder()
-        .withId("1")
-        .withReminderTitle("Title1")
-        .withReminderContent("Content1")
-        .withReminderType(ReminderType.Note)
-        .build()
+    fun saveReminders(reminders : List<Reminder>) {
+        this.reminders.addAll(reminders)
+    }
 
-    private val reminderList1 = ReminderBuilder.aReminder()
-        .withId("2")
-        .withReminderTitle("Title2")
-        .withReminderType(ReminderType.List)
-        .withReminderList(arrayListOf("Element1", "Element2"))
-        .build()
+//    private val reminderNote1 = ReminderBuilder.aReminder()
+//        .withId("1")
+//        .withReminderTitle("Title1")
+//        .withReminderContent("Content1")
+//        .withReminderType(ReminderType.Note)
+//        .build()
+//
+//    private val reminderList1 = ReminderBuilder.aReminder()
+//        .withId("2")
+//        .withReminderTitle("Title2")
+//        .withReminderType(ReminderType.List)
+//        .withReminderList(arrayListOf("Element1", "Element2"))
+//        .build()
 
 
-    private val reminders = mutableListOf(reminderNote1, reminderList1)
+    private var reminders = mutableListOf<Reminder>()
 }
