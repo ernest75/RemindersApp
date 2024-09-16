@@ -254,6 +254,80 @@ class ReminderListViewModelTest {
         assertTrue(viewModel.screenState.value.showSaveButton)
     }
 
+    @Test
+    fun onMoveListItemSamePosition() {
+        val element1 = "element1"
+        val element2 = "element2"
+        viewModel.onFirstReminderListItemAdded(element1)
+        viewModel.onLastReminderListItemAdded(element2)
+        val list = viewModel.screenState.value.remindersList
+        val samePosition = 2
+
+        viewModel.onMoveListItem(samePosition, samePosition)
+
+        assertEquals(list, viewModel.screenState.value.remindersList)
+    }
+
+    @Test
+    fun onMoveListItemToFirstNotDraggableElement() {
+        val element1 = "element1"
+        val element2 = "element2"
+        viewModel.onFirstReminderListItemAdded(element1)
+        viewModel.onLastReminderListItemAdded(element2)
+        val list = viewModel.screenState.value.remindersList
+        val firstNotDraggableElement = 0
+        val irrelevantFromPosition = 1
+
+        viewModel.onMoveListItem(irrelevantFromPosition, firstNotDraggableElement)
+
+        assertEquals(list, viewModel.screenState.value.remindersList)
+    }
+
+    @Test
+    fun onMoveListItemToLastNotDraggableElement() {
+        val element1 = "element1"
+        val element2 = "element2"
+        viewModel.onFirstReminderListItemAdded(element1)
+        viewModel.onLastReminderListItemAdded(element2)
+        val list = viewModel.screenState.value.remindersList
+        val lastNotDraggableElement = list.size
+        val irrelevantFromPosition = 1
+
+        viewModel.onMoveListItem(irrelevantFromPosition, lastNotDraggableElement)
+
+        assertEquals(list, viewModel.screenState.value.remindersList)
+    }
+
+    @Test
+    fun onMoveListItemFromFirstNotDraggableElement() {
+        val element1 = "element1"
+        val element2 = "element2"
+        viewModel.onFirstReminderListItemAdded(element1)
+        viewModel.onLastReminderListItemAdded(element2)
+        val list = viewModel.screenState.value.remindersList
+        val firstNotDraggableElement = 0
+        val irrelevantFromPosition = 1
+
+        viewModel.onMoveListItem(firstNotDraggableElement, irrelevantFromPosition)
+
+        assertEquals(list, viewModel.screenState.value.remindersList)
+    }
+
+    @Test
+    fun onMoveListItemFromLastNotDraggableElement() {
+        val element1 = "element1"
+        val element2 = "element2"
+        viewModel.onFirstReminderListItemAdded(element1)
+        viewModel.onLastReminderListItemAdded(element2)
+        val list = viewModel.screenState.value.remindersList
+        val lastNotDraggableElement = list.size
+        val irrelevantFromPosition = 1
+
+        viewModel.onMoveListItem(lastNotDraggableElement, irrelevantFromPosition)
+
+        assertEquals(list, viewModel.screenState.value.remindersList)
+    }
+
     private fun getSavedStateHandle(reminderListId: String = EMPTY_REMINDER_ID): SavedStateHandle {
         return SavedStateHandle().apply {
             set(REMINDER_LIST_ID_ARG, reminderListId)
