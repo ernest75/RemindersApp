@@ -1,5 +1,6 @@
 package com.ernestschcneider.feature.reminderlist
 
+import android.annotation.SuppressLint
 import androidx.compose.foundation.background
 import androidx.compose.foundation.gestures.detectDragGesturesAfterLongPress
 import androidx.compose.foundation.gestures.scrollBy
@@ -10,6 +11,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Scaffold
@@ -21,7 +23,9 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.composed
 import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
@@ -70,6 +74,7 @@ internal fun ReminderListScreen(
     )
 }
 
+@SuppressLint("UnnecessaryComposedModifier")
 @Composable
 fun ReminderListScreenContent(
     onNavigateUp: () -> Unit,
@@ -113,7 +118,7 @@ fun ReminderListScreenContent(
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .background(AppTheme.colorScheme.primaryContainer)
+                .background(AppTheme.colorScheme.surfaceContainerHigh)
                 .padding(paddingValues)
         ) {
             val dragAndDropListState =
@@ -152,7 +157,7 @@ fun ReminderListScreenContent(
                         onDragCancel = { dragAndDropListState.onDragInterrupted() }
                     )
                 },
-                verticalArrangement = Arrangement.spacedBy(16.dp),
+                verticalArrangement = Arrangement.spacedBy(8.dp),
                 state = listState
             ) {
                 item {
@@ -160,16 +165,22 @@ fun ReminderListScreenContent(
                         modifier = Modifier.padding(top = 24.dp),
                         onAddReminderClicked = onAddFirstReminder
                     )
-                    HorizontalDivider(
-                        modifier = Modifier.padding(top = 24.dp), color = AppTheme.colorScheme.scrim
-                    )
                 }
-                items(screenState.remindersList) {
+                itemsIndexed(screenState.remindersList) {index, item ->
                     RemindersListItem(
                         item = ReminderItem(
-                            pos = screenState.remindersList.indexOf(it),
-                            text = it
+                            pos = screenState.remindersList.indexOf(item),
+                            text = item
                         ),
+                        modifier = Modifier.composed {
+                            val offsetOrNull =
+                                dragAndDropListState.elementDisplacement.takeIf {
+                                    index + 1 == dragAndDropListState.currentIndexOfDraggedItem
+                                }
+                            Modifier.graphicsLayer {
+                                translationY = offsetOrNull ?: 0f
+                            }
+                        },
                         editReminder = onEditReminder,
                         deleteReminder = onDeleteReminder
                     )
