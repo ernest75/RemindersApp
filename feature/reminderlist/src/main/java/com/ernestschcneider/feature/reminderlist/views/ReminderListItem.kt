@@ -80,10 +80,6 @@ fun RemindersListItem(
                     .clickable { deleteReminder(item.text) }
             )
         }
-
-        HorizontalDivider(
-            color = AppTheme.colorScheme.scrim
-        )
     }
 
 }

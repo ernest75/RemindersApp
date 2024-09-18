@@ -17,6 +17,9 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
+private const val FIRST_NOT_DRAGGABLE_ELEMENT = 0
+private const val TO_OBTAIN_TOTAL_DRAGGABLE_ELEMENTS = 1
+
 @HiltViewModel
 class ReminderListViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
@@ -40,7 +43,6 @@ class ReminderListViewModel @Inject constructor(
         _screenState.update {
             it.copy(
                 showCreateReminderDialog = true,
-                requestFocus = true,
                 isFirstReminder = true,
                 reminderToEdit = ReminderItem()
             )
@@ -48,7 +50,7 @@ class ReminderListViewModel @Inject constructor(
     }
 
     fun onFirstReminderListItemAdded(reminderText: String) {
-        val firstIndex = 0
+        val firstIndex = FIRST_NOT_DRAGGABLE_ELEMENT
         _screenState.value.remindersList.apply {
             add(firstIndex, reminderText)
         }
@@ -73,7 +75,6 @@ class ReminderListViewModel @Inject constructor(
         _screenState.update {
             it.copy(
                 showCreateReminderDialog = true,
-                requestFocus = true,
                 isFirstReminder = false,
                 reminderToEdit = ReminderItem()
             )
@@ -190,6 +191,21 @@ class ReminderListViewModel @Inject constructor(
 
         _screenState.update {
             it.copy(remindersList = list,
+                showSaveButton = true
+            )
+        }
+    }
+
+    fun onMoveListItem(from: Int, to: Int) {
+        val list = _screenState.value.remindersList.toMutableList()
+        if (from == to || to == FIRST_NOT_DRAGGABLE_ELEMENT || to > list.size || from == FIRST_NOT_DRAGGABLE_ELEMENT || from > list.size) return
+        list.apply {
+            val element = this.removeAt(from - TO_OBTAIN_TOTAL_DRAGGABLE_ELEMENTS)
+            this.add(to - TO_OBTAIN_TOTAL_DRAGGABLE_ELEMENTS, element)
+        }
+        _screenState.update {
+            it.copy(
+                remindersList = list,
                 showSaveButton = true
             )
         }
