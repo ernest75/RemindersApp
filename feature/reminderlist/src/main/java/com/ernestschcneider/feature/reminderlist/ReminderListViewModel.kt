@@ -138,7 +138,7 @@ class ReminderListViewModel @Inject constructor(
         }
     }
 
-    fun loadReminderList() {
+    fun loadReminderList(showSaveButton: Boolean = false) {
         val reminderId = reminderListArgs.reminderListId
         if (reminderId == EMPTY_REMINDER_ID) {
             _screenState.update {
@@ -152,7 +152,7 @@ class ReminderListViewModel @Inject constructor(
                         it.copy(
                             reminderListTitle = reminder.reminderTitle,
                             remindersList = reminder.remindersList,
-                            showSaveButton = false
+                            showSaveButton = showSaveButton
                         )
                     }
                 }
@@ -161,13 +161,15 @@ class ReminderListViewModel @Inject constructor(
     }
 
     fun onDeleteReminderItem(item: String) {
-        _screenState.value.remindersList.apply { remove(item) }
-        _screenState.update {
-            it.copy(
-                remindersList = _screenState.value.remindersList,
-                showSaveButton = true,
-                requestFocus = false
-            )
+        val remindersArray = arrayListOf<String>().apply {
+            addAll(_screenState.value.remindersList)
+        }
+        remindersArray.remove(item)
+        viewModelScope.launch {
+            withContext(backgroundDispatcher) {
+                localRepo.updateReminderList(remindersArray, reminderListArgs.reminderListId)
+                loadReminderList(true)
+            }
         }
     }
 

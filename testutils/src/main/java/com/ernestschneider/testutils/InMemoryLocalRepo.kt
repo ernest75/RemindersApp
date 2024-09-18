@@ -36,9 +36,23 @@ class InMemoryLocalRepo : StorageRepo {
             reminderId = reminder.reminderId,
             reminderTitle = reminder.reminderTitle,
             reminderContent = reminder.reminderContent,
+            remindersList = reminder.remindersList,
             reminderPosition = position
         )
         reminders.add(position, reminderChanged)
+    }
+
+    override suspend fun updateReminderList(reminderList: ArrayList<String>, reminderId: String) {
+        val reminder = findReminderById(reminderId)
+        reminders.remove(reminder)
+        val reminderChanged = Reminder(
+            reminderId = reminder.reminderId,
+            reminderTitle = reminder.reminderTitle,
+            reminderContent = reminder.reminderContent,
+            remindersList = reminderList,
+            reminderPosition = reminder.reminderPosition
+        )
+        reminders.add(reminder.reminderPosition, reminderChanged)
     }
 
     private fun findReminderById(reminderId: String): Reminder {

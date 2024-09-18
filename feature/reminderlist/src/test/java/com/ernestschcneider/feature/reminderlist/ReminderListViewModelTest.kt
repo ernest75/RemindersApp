@@ -208,11 +208,17 @@ class ReminderListViewModelTest {
 
     @Test
     fun onReminderDeleteClicked() {
+        val viewModel = ReminderListViewModel(
+            savedStateHandle = getSavedStateHandle(REMINDER_LIST_ID),
+            localRepo = localRepo,
+            backgroundDispatcher = backgroundDispatcher
+        )
         val element1 = "element1"
         val element2 = "element2"
         val remindersListDeleted = arrayListOf(element2)
         viewModel.onFirstReminderListItemAdded(element1)
         viewModel.onFirstReminderListItemAdded(element2)
+        localRepo.saveReminders(listOf(reminderNote1, reminderList1))
 
         viewModel.onDeleteReminderItem(element1)
 
