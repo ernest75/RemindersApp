@@ -28,4 +28,7 @@ interface ReminderDao {
     @Query("UPDATE reminders SET reminderPosition=:position WHERE id = :id")
     fun updateReminderPosition(position: Int, id: UUID)
 
+    @Query("UPDATE reminders SET remindersList=:remindersList WHERE id = :id")
+    fun updateReminderList(remindersList: ArrayList<String>, id:UUID)
+
 }
