@@ -43,7 +43,6 @@ class ReminderListViewModel @Inject constructor(
         _screenState.update {
             it.copy(
                 showCreateReminderDialog = true,
-                requestFocus = true,
                 isFirstReminder = true,
                 reminderToEdit = ReminderItem()
             )
@@ -76,7 +75,6 @@ class ReminderListViewModel @Inject constructor(
         _screenState.update {
             it.copy(
                 showCreateReminderDialog = true,
-                requestFocus = true,
                 isFirstReminder = false,
                 reminderToEdit = ReminderItem()
             )
@@ -200,14 +198,15 @@ class ReminderListViewModel @Inject constructor(
 
     fun onMoveListItem(from: Int, to: Int) {
         val list = _screenState.value.remindersList.toMutableList()
-        if (from == to || to == FIRST_NOT_DRAGGABLE_ELEMENT || to >= list.size || from == FIRST_NOT_DRAGGABLE_ELEMENT || from >= list.size) return
+        if (from == to || to == FIRST_NOT_DRAGGABLE_ELEMENT || to > list.size || from == FIRST_NOT_DRAGGABLE_ELEMENT || from > list.size) return
         list.apply {
             val element = this.removeAt(from - TO_OBTAIN_TOTAL_DRAGGABLE_ELEMENTS)
             this.add(to - TO_OBTAIN_TOTAL_DRAGGABLE_ELEMENTS, element)
         }
         _screenState.update {
             it.copy(
-                remindersList = list
+                remindersList = list,
+                showSaveButton = true
             )
         }
     }

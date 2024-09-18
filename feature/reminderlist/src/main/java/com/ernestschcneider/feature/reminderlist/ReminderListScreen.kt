@@ -152,7 +152,6 @@ fun ReminderListScreenContent(
                         },
                         onDragEnd = {
                             dragAndDropListState.onDragInterrupted()
-                            //onReminderMoved()
                         },
                         onDragCancel = { dragAndDropListState.onDragInterrupted() }
                     )

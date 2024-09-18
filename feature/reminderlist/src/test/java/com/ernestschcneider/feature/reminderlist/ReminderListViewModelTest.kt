@@ -57,7 +57,6 @@ class ReminderListViewModelTest {
 
         assertTrue(viewModel.screenState.value.showCreateReminderDialog)
         assertTrue(viewModel.screenState.value.isFirstReminder)
-        assertTrue(viewModel.screenState.value.requestFocus)
         assertEquals(ReminderItem(), viewModel.screenState.value.reminderToEdit)
     }
 
@@ -90,7 +89,6 @@ class ReminderListViewModelTest {
 
         assertTrue(viewModel.screenState.value.showCreateReminderDialog)
         assertFalse(viewModel.screenState.value.isFirstReminder)
-        assertTrue(viewModel.screenState.value.requestFocus)
         assertEquals(ReminderItem(), viewModel.screenState.value.reminderToEdit)
     }
 
@@ -296,7 +294,7 @@ class ReminderListViewModelTest {
         viewModel.onFirstReminderListItemAdded(element1)
         viewModel.onLastReminderListItemAdded(element2)
         val list = viewModel.screenState.value.remindersList
-        val lastNotDraggableElement = list.size
+        val lastNotDraggableElement = list.size + 1
         val irrelevantFromPosition = 1
 
         viewModel.onMoveListItem(irrelevantFromPosition, lastNotDraggableElement)
@@ -326,7 +324,7 @@ class ReminderListViewModelTest {
         viewModel.onFirstReminderListItemAdded(element1)
         viewModel.onLastReminderListItemAdded(element2)
         val list = viewModel.screenState.value.remindersList
-        val lastNotDraggableElement = list.size
+        val lastNotDraggableElement = list.size + 1
         val irrelevantFromPosition = 1
 
         viewModel.onMoveListItem(lastNotDraggableElement, irrelevantFromPosition)
