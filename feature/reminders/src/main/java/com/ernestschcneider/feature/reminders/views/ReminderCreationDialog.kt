@@ -2,9 +2,12 @@
 
 package com.ernestschcneider.feature.reminders.views
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.BasicAlertDialog
 import androidx.compose.material3.Card
@@ -31,43 +34,58 @@ fun ReminderCreationDialog(
 ) {
     BasicAlertDialog(onDismissRequest = onDismiss) {
         Card(
-            modifier  = modifier.padding(16.dp),
-            colors = CardColors(containerColor = AppTheme.colorScheme.secondaryContainer,
+            modifier = modifier.padding(16.dp),
+            colors = CardColors(
+                containerColor = AppTheme.colorScheme.secondaryContainer,
                 contentColor = AppTheme.colorScheme.scrim,
                 disabledContentColor = AppTheme.colorScheme.primary.copy(alpha = 0.25F),
-                disabledContainerColor = AppTheme.colorScheme.onPrimary.copy(alpha = 0.25F))
+                disabledContainerColor = AppTheme.colorScheme.onPrimary.copy(alpha = 0.25F)
+            )
         ) {
             Column(
                 modifier = modifier
-                    .fillMaxWidth()
-                    .padding(16.dp),
-                verticalArrangement = Arrangement.spacedBy(28.dp),
-
-                ) {
-                Text(
-                    text = stringResource(id = string.new_reminder),
-                    style = AppTheme.typography.titleLarge,
+                    .fillMaxWidth(),
+            ) {
+                Column(
+                    modifier = modifier
+                        .fillMaxWidth()
+                        .padding(16.dp),
+                    verticalArrangement = Arrangement.spacedBy(28.dp)
                 )
+                {
+                    Text(
+                        text = stringResource(id = string.new_reminder),
+                        style = AppTheme.typography.titleLarge,
+                    )
 
-                Text(
-                    text = stringResource(id = string.new_reminder_explanation),
-                    style = AppTheme.typography.paragraph
-                )
+                    Text(
+                        text = stringResource(id = string.new_reminder_explanation),
+                        style = AppTheme.typography.paragraph
+                    )
+                }
+
                 OptionItemDialog(
-                    modifier = Modifier.padding(top = 16.dp),
-                    onClickItem = onCreateReminder,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .heightIn(24.dp),
                     drawableRes = R.drawable.ic_note_24,
                     textResId = string.reminder_note,
-                    contentDescriptionIconId = string.note_icon
+                    contentDescriptionIconId = string.note_icon,
+                    onClickItem = onCreateReminder
                 )
                 OptionItemDialog(
-                    onClickItem = onCreateListReminder,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .heightIn(24.dp),
                     drawableRes = R.drawable.ic_list_bulleted_24,
                     textResId = string.reminder_list,
-                    contentDescriptionIconId = string.list_icon
+                    contentDescriptionIconId = string.list_icon,
+                    onClickItem = onCreateListReminder
                 )
                 PrimaryButton(
-                    modifier = Modifier.align(Alignment.End),
+                    modifier = Modifier
+                        .align(Alignment.End)
+                        .padding(16.dp),
                     label = stringResource(id = string.cancel),
                     onClick = onDismiss
                 )
@@ -79,9 +97,11 @@ fun ReminderCreationDialog(
 @PreviewLightDark
 @Composable
 fun PreviewDialog() {
-    ReminderCreationDialog(
-        onDismiss = {},
-        onCreateReminder = {},
-        onCreateListReminder = {}
-    )
+    AppTheme {
+        ReminderCreationDialog(
+            onDismiss = {},
+            onCreateReminder = {},
+            onCreateListReminder = {}
+        )
+    }
 }
