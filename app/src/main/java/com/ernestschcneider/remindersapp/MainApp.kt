@@ -7,6 +7,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.rememberNavController
+import com.ernestschcneider.REMINDERS_ROUTE
 import com.ernestschcneider.feature.reminderlist.navigateToReminderList
 import com.ernestschcneider.feature.reminderlist.reminderListScreen
 import com.ernestschcneider.feature.remindernote.navigateToReminderNote
@@ -21,7 +22,7 @@ fun MainApp() {
     NavHost(
         modifier = Modifier.fillMaxSize(),
         navController = navController,
-        startDestination = "reminders"
+        startDestination = REMINDERS_ROUTE
     ) {
         remindersScreen(
             onNavigateUp = { activity.finish() },

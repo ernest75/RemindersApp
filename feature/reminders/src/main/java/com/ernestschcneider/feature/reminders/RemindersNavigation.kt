@@ -3,8 +3,7 @@ package com.ernestschcneider.feature.reminders
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
-
-const val REMINDERS_ROUTE = "reminders"
+import com.ernestschcneider.REMINDERS_ROUTE
 
 fun NavGraphBuilder.remindersScreen(
     onNavigateUp: () -> Unit,
