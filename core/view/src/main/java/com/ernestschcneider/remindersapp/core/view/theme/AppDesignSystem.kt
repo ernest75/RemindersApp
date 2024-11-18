@@ -38,7 +38,8 @@ data class AppColorScheme(
 @Stable
 data class AppShape(
     val container: Shape,
-    val button: Shape
+    val button: Shape,
+    val roundedContainer: Shape
 )
 
 @Stable
@@ -81,7 +82,8 @@ val LocalAppTypography = staticCompositionLocalOf {
 val LocalAppShape = staticCompositionLocalOf {
     AppShape(
         container = RectangleShape,
-        button = RectangleShape
+        button = RectangleShape,
+        roundedContainer = RectangleShape
     )
 }
 

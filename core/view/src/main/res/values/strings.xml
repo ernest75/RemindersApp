@@ -26,4 +26,5 @@
     <string name="save_reminder_list">"Save reminder list"</string>
     <string name="warning">"Warning"</string>
     <string name="empty_reminder_explanation">"You are trying to save an empty reminder"</string>
+    <string name="find_reminder">Find reminder\n</string>
 </resources>
