@@ -217,4 +217,8 @@ class ReminderListViewModel @Inject constructor(
             )
         }
     }
+
+    fun onCrossReminder(reminderListItem: ReminderListItem) {
+        TODO("Not yet implemented")
+    }
 }

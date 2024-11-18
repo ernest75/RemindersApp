@@ -69,7 +69,8 @@ internal fun ReminderListScreen(
         onDeleteReminder = reminderListViewModel::onDeleteReminderItem,
         onEditReminder = reminderListViewModel::onReminderEditClicked,
         onReminderEdited = reminderListViewModel::onReminderEdited,
-        onMoveListItem = reminderListViewModel::onMoveListItem
+        onMoveListItem = reminderListViewModel::onMoveListItem,
+        onCrossReminder = reminderListViewModel::onCrossReminder
     )
 }
 
@@ -89,7 +90,8 @@ fun ReminderListScreenContent(
     onDeleteReminder: (ReminderListItem) -> Unit,
     onEditReminder: (ReminderListItem) -> Unit,
     onReminderEdited: (ReminderListItem) -> Unit,
-    onMoveListItem: (Int, Int) -> Unit
+    onMoveListItem: (Int, Int) -> Unit,
+    onCrossReminder: (ReminderListItem) -> Unit
 ) {
     val listState = rememberLazyListState()
     val focusRequester = remember { FocusRequester() }
@@ -180,7 +182,8 @@ fun ReminderListScreenContent(
                             }
                         },
                         editReminder = onEditReminder,
-                        deleteReminder = onDeleteReminder
+                        deleteReminder = onDeleteReminder,
+                        crossReminder = onCrossReminder
                     )
                 }
                 item {
@@ -241,7 +244,8 @@ private fun NoteCreationScreenPreview() {
             onDeleteReminder = {},
             onEditReminder = {},
             onReminderEdited = {},
-            onMoveListItem = {_,_  ->}
+            onMoveListItem = {_,_  ->},
+            onCrossReminder = {}
         )
     }
 }

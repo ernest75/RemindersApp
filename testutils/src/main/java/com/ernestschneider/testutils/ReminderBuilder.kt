@@ -1,6 +1,7 @@
 package com.ernestschneider.testutils
 
 import com.ernestschcneider.models.Reminder
+import com.ernestschcneider.models.ReminderListItem
 import com.ernestschcneider.models.ReminderType
 
 class ReminderBuilder {
@@ -8,7 +9,7 @@ class ReminderBuilder {
     private var reminderTitle: String = ""
     private var reminderContent: String = ""
     private var reminderType = ReminderType.Note
-    private var reminderList: ArrayList<String> = arrayListOf()
+    private var reminderList: ArrayList<ReminderListItem> = arrayListOf()
     private var reminderPosition: Int = 0
 
     fun withId(id: String) = apply {
@@ -27,7 +28,7 @@ class ReminderBuilder {
         this.reminderType = reminderType
     }
 
-    fun withReminderList(reminderList: ArrayList<String>) = apply {
+    fun withReminderList(reminderList: ArrayList<ReminderListItem>) = apply {
         this.reminderList = reminderList
     }
 

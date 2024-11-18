@@ -16,6 +16,10 @@ import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
@@ -34,17 +38,23 @@ fun RemindersListItem(
     modifier: Modifier = Modifier,
     item: ReminderListItem,
     editReminder: (ReminderListItem) -> Unit,
-    deleteReminder: (ReminderListItem) -> Unit
+    deleteReminder: (ReminderListItem) -> Unit,
+    crossReminder: (ReminderListItem) -> Unit
 ) {
     Column {
-        val crossed = true
-        val alpha = if (crossed) {
+        var crossed by remember{ mutableStateOf(false) }
+
+        val alpha = if (item.isCrossed) {
             .5f
         } else {
             1f
         }
         Box(
-            modifier = Modifier.fillMaxWidth(),
+            modifier = Modifier
+                .fillMaxWidth()
+                .clickable {
+               crossed = !crossed
+            },
             contentAlignment = Alignment.Center
         ) {
             Box(modifier = Modifier.alpha(alpha)) {
@@ -95,7 +105,7 @@ fun RemindersListItem(
                 }
 
             }
-            if (crossed) {
+            if (item.isCrossed) {
                 Box {
                     HorizontalDivider(modifier = Modifier.padding(horizontal = 16.dp), thickness = 2.dp)
                 }
@@ -112,7 +122,8 @@ private fun ReminderListItemPreview() {
         RemindersListItem(
             item = ReminderListItem(),
             editReminder = {},
-            deleteReminder = {}
+            deleteReminder = {},
+            crossReminder = {}
         )
     }
 }
