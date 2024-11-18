@@ -7,6 +7,6 @@ data class Reminder(
     val reminderTitle: String,
     val reminderPosition: Int = -1,
     val reminderContent: String = "",
-    val remindersList: ArrayList<String> = arrayListOf(),
+    val remindersList: ArrayList<ReminderListItem> = arrayListOf(),
     val reminderType: ReminderType = ReminderType.Note
 )

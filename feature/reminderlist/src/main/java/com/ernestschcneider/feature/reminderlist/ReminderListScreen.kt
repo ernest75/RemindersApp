@@ -32,6 +32,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.ernestschcneider.feature.reminderlist.views.AddReminder
 import com.ernestschcneider.feature.reminderlist.views.AddReminderDialog
 import com.ernestschcneider.feature.reminderlist.views.RemindersListItem
+import com.ernestschcneider.models.ReminderListItem
 import com.ernestschcneider.remindersapp.core.states.rememberDragAndDropListState
 import com.ernestschcneider.remindersapp.core.view.R
 import com.ernestschcneider.remindersapp.core.view.composables.InformativeDialog
@@ -85,9 +86,9 @@ fun ReminderListScreenContent(
     onDismissCreateDialogClicked: () -> Unit,
     onDismissEmptyTitleClicked: () -> Unit,
     onSaveReminderClicked: () -> Unit,
-    onDeleteReminder: (String) -> Unit,
-    onEditReminder: (ReminderItem) -> Unit,
-    onReminderEdited: (ReminderItem) -> Unit,
+    onDeleteReminder: (ReminderListItem) -> Unit,
+    onEditReminder: (ReminderListItem) -> Unit,
+    onReminderEdited: (ReminderListItem) -> Unit,
     onMoveListItem: (Int, Int) -> Unit
 ) {
     val listState = rememberLazyListState()
@@ -165,9 +166,9 @@ fun ReminderListScreenContent(
                 }
                 itemsIndexed(screenState.remindersList) {index, item ->
                     RemindersListItem(
-                        item = ReminderItem(
-                            pos = screenState.remindersList.indexOf(item),
-                            text = item
+                        item = ReminderListItem(
+                            position = screenState.remindersList.indexOf(item),
+                            text = item.text
                         ),
                         modifier = Modifier.composed {
                             val offsetOrNull =
@@ -227,9 +228,7 @@ private fun NoteCreationScreenPreview() {
         ReminderListScreenContent(
             onNavigateUp = {},
             screenState = ReminderListState(
-                remindersList = mutableListOf(
-                    "Hello", "Hello2"
-                )
+                remindersList = mutableListOf()
             ),
             onReminderListTitleUpdate = {},
             onAddFirstReminder = {},

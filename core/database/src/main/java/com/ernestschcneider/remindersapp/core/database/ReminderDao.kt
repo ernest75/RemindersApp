@@ -6,6 +6,7 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Update
+import com.ernestschcneider.models.ReminderListItem
 import java.util.UUID
 
 @Dao
@@ -29,6 +30,6 @@ interface ReminderDao {
     fun updateReminderPosition(position: Int, id: UUID)
 
     @Query("UPDATE reminders SET remindersList=:remindersList WHERE id = :id")
-    fun updateReminderList(remindersList: ArrayList<String>, id:UUID)
+    fun updateReminderList(remindersList: ArrayList<ReminderListItem>, id:UUID)
 
 }

@@ -4,6 +4,7 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.ernestschcneider.DEFAULT_UUID
+import com.ernestschcneider.models.ReminderListItem
 import com.ernestschcneider.models.ReminderType
 import java.util.UUID
 
@@ -14,5 +15,5 @@ data class ReminderEntity(
     @ColumnInfo(name = "reminderTitle") val reminderTitle: String,
     @ColumnInfo(name = "noteContent") val reminderContent: String,
     @ColumnInfo(name = "noteType") val reminderType: ReminderType,
-    @ColumnInfo(name = "remindersList") val remindersList: ArrayList<String>
+    @ColumnInfo(name = "remindersList") val remindersList: ArrayList<ReminderListItem>
 )

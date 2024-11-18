@@ -1,6 +1,7 @@
 package com.ernestschcneider.remindersapp.local
 
 import com.ernestschcneider.models.Reminder
+import com.ernestschcneider.models.ReminderListItem
 import com.ernestschcneider.remindersapp.core.database.ReminderDao
 import java.util.ArrayList
 import java.util.UUID
@@ -37,7 +38,7 @@ class LocalRepo @Inject constructor(
         reminderDao.updateReminderPosition(position, UUID.fromString(reminderId))
     }
 
-    override suspend fun updateReminderList(reminderList: ArrayList<String>, reminderId: String) {
+    override suspend fun updateReminderList(reminderList: ArrayList<ReminderListItem>, reminderId: String) {
         reminderDao.updateReminderList(reminderList, UUID.fromString(reminderId))
     }
 }
