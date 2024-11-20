@@ -42,8 +42,6 @@ fun RemindersListItem(
     crossReminder: (ReminderListItem) -> Unit
 ) {
     Column {
-        var crossed by remember{ mutableStateOf(false) }
-
         val alpha = if (item.isCrossed) {
             .5f
         } else {
@@ -91,7 +89,7 @@ fun RemindersListItem(
                             .align(Alignment.CenterVertically)
                             .padding(end = 16.dp)
                             .size(16.dp)
-                            .clickable(enabled = !crossed) { editReminder(item) }
+                            .clickable { editReminder(item) }
                     )
                     Icon(
                         painter = painterResource(id = R.drawable.ic_delete_outline_24),
@@ -100,7 +98,7 @@ fun RemindersListItem(
                             .align(Alignment.CenterVertically)
                             .padding(end = 16.dp)
                             .size(16.dp)
-                            .clickable(enabled = !crossed) { deleteReminder(item) }
+                            .clickable { deleteReminder(item) }
                     )
                 }
 
