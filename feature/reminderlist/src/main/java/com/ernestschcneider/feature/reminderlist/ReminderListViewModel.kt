@@ -181,12 +181,6 @@ class ReminderListViewModel @Inject constructor(
         }
         remindersArray.remove(item)
         remindersArray.forEachIndexed{ index, reminderListItem -> reminderListItem.position = index }
-//        viewModelScope.launch {
-//            withContext(backgroundDispatcher) {
-//                localRepo.updateReminderList(remindersArray, reminderListArgs.reminderListId)
-//                loadReminderList(true)
-//            }
-//        }
         _screenState.update {
             it.copy(
                 remindersList = remindersArray,
