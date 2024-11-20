@@ -109,13 +109,15 @@ fun ReminderListScreenContent(
     }
     Scaffold(modifier = Modifier
         .padding(top = 48.dp)
-        .fillMaxSize(), topBar = {
+        .fillMaxSize(),
+        topBar = {
         RemindersTopAppBar(
             onNavigateUp = onNavigateUp,
             onTitleUpdate = onReminderListTitleUpdate,
             focusRequester = focusRequester,
             value = screenState.reminderListTitle,
-            titlePlaceHolderId = R.string.type_reminder_title
+            titlePlaceHolderId = R.string.type_reminder_title,
+            parentScreenHasMoreFocusableElements = false
         )
     }) { paddingValues ->
         Column(

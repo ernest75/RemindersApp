@@ -41,6 +41,7 @@ fun RemindersTopAppBar(
     onTitleUpdate: (newValue: String) -> Unit,
     focusRequester: FocusRequester,
     value: String,
+    parentScreenHasMoreFocusableElements: Boolean = true,
     @StringRes titlePlaceHolderId: Int
 ) {
     val focusManager = LocalFocusManager.current
@@ -94,7 +95,11 @@ fun RemindersTopAppBar(
                     imeAction = ImeAction.Done
                 ),
                 keyboardActions = KeyboardActions(onDone = {
-                    focusManager.moveFocus(Next)
+                    if(parentScreenHasMoreFocusableElements) {
+                        focusManager.moveFocus(Next)
+                    } else {
+                        focusManager.clearFocus(true)
+                    }
                     onTitleUpdate(value)
                 })
             )
