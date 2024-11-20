@@ -1,6 +1,7 @@
 package com.ernestschneider.testutils
 
 import com.ernestschcneider.models.Reminder
+import com.ernestschcneider.models.ReminderListItem
 import com.ernestschcneider.models.ReminderType
 import com.ernestschcneider.remindersapp.local.StorageRepo
 
@@ -42,7 +43,7 @@ class InMemoryLocalRepo : StorageRepo {
         reminders.add(position, reminderChanged)
     }
 
-    override suspend fun updateReminderList(reminderList: ArrayList<String>, reminderId: String) {
+    override suspend fun updateReminderList(reminderList: ArrayList<ReminderListItem>, reminderId: String) {
         val reminder = findReminderById(reminderId)
         reminders.remove(reminder)
         val reminderChanged = Reminder(

@@ -32,6 +32,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.ernestschcneider.feature.reminderlist.views.AddReminder
 import com.ernestschcneider.feature.reminderlist.views.AddReminderDialog
 import com.ernestschcneider.feature.reminderlist.views.RemindersListItem
+import com.ernestschcneider.models.ReminderListItem
 import com.ernestschcneider.remindersapp.core.states.rememberDragAndDropListState
 import com.ernestschcneider.remindersapp.core.view.R
 import com.ernestschcneider.remindersapp.core.view.composables.InformativeDialog
@@ -68,7 +69,9 @@ internal fun ReminderListScreen(
         onDeleteReminder = reminderListViewModel::onDeleteReminderItem,
         onEditReminder = reminderListViewModel::onReminderEditClicked,
         onReminderEdited = reminderListViewModel::onReminderEdited,
-        onMoveListItem = reminderListViewModel::onMoveListItem
+        onMoveListItem = reminderListViewModel::onMoveListItem,
+        onCrossReminder = reminderListViewModel::onCrossReminder,
+        onDragFinished = reminderListViewModel::onDragFinished
     )
 }
 
@@ -85,10 +88,12 @@ fun ReminderListScreenContent(
     onDismissCreateDialogClicked: () -> Unit,
     onDismissEmptyTitleClicked: () -> Unit,
     onSaveReminderClicked: () -> Unit,
-    onDeleteReminder: (String) -> Unit,
-    onEditReminder: (ReminderItem) -> Unit,
-    onReminderEdited: (ReminderItem) -> Unit,
-    onMoveListItem: (Int, Int) -> Unit
+    onDeleteReminder: (ReminderListItem) -> Unit,
+    onEditReminder: (ReminderListItem) -> Unit,
+    onReminderEdited: (ReminderListItem) -> Unit,
+    onMoveListItem: (Int, Int) -> Unit,
+    onCrossReminder: (ReminderListItem) -> Unit,
+    onDragFinished: () -> Unit
 ) {
     val listState = rememberLazyListState()
     val focusRequester = remember { FocusRequester() }
@@ -120,7 +125,7 @@ fun ReminderListScreenContent(
                 .padding(paddingValues)
         ) {
             val dragAndDropListState =
-                rememberDragAndDropListState(listState) { from, to ->
+                rememberDragAndDropListState(listState, onDragFinished) { from, to ->
                     onMoveListItem(from, to)
                 }
             val coroutineScope = rememberCoroutineScope()
@@ -163,12 +168,9 @@ fun ReminderListScreenContent(
                         onAddReminderClicked = onAddFirstReminder
                     )
                 }
-                itemsIndexed(screenState.remindersList) {index, item ->
+                itemsIndexed(screenState.remindersList) { index, item ->
                     RemindersListItem(
-                        item = ReminderItem(
-                            pos = screenState.remindersList.indexOf(item),
-                            text = item
-                        ),
+                        item = item,
                         modifier = Modifier.composed {
                             val offsetOrNull =
                                 dragAndDropListState.elementDisplacement.takeIf {
@@ -179,7 +181,8 @@ fun ReminderListScreenContent(
                             }
                         },
                         editReminder = onEditReminder,
-                        deleteReminder = onDeleteReminder
+                        deleteReminder = onDeleteReminder,
+                        crossReminder = onCrossReminder
                     )
                 }
                 item {
@@ -227,9 +230,7 @@ private fun NoteCreationScreenPreview() {
         ReminderListScreenContent(
             onNavigateUp = {},
             screenState = ReminderListState(
-                remindersList = mutableListOf(
-                    "Hello", "Hello2"
-                )
+                remindersList = mutableListOf()
             ),
             onReminderListTitleUpdate = {},
             onAddFirstReminder = {},
@@ -242,7 +243,9 @@ private fun NoteCreationScreenPreview() {
             onDeleteReminder = {},
             onEditReminder = {},
             onReminderEdited = {},
-            onMoveListItem = {_,_  ->}
+            onMoveListItem = { _, _ -> },
+            onCrossReminder = {},
+            onDragFinished = {}
         )
     }
 }

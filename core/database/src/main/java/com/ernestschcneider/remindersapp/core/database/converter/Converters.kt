@@ -2,6 +2,7 @@ package com.ernestschcneider.remindersapp.core.database.converter
 
 import androidx.room.TypeConverter
 import com.ernestschcneider.DEFAULT_UUID
+import com.ernestschcneider.models.ReminderListItem
 import com.ernestschcneider.remindersapp.core.database.ReminderEntity
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
@@ -26,14 +27,14 @@ class Converters {
     }
 
     @TypeConverter
-    fun fromStringArrayList(value: ArrayList<String>): String {
+    fun fromStringArrayList(value: ArrayList<ReminderListItem>): String {
         return Gson().toJson(value)
     }
 
     @TypeConverter
-    fun toStringArrayList(value: String): ArrayList<String> {
+    fun toStringArrayList(value: String): ArrayList<ReminderListItem> {
         return try {
-            Gson().fromJson<ArrayList<String>>(value) //using extension function
+            Gson().fromJson<ArrayList<ReminderListItem>>(value) //using extension function
         } catch (e: Exception) {
             arrayListOf()
         }

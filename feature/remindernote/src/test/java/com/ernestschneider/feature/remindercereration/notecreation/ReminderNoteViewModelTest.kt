@@ -5,6 +5,7 @@ import com.ernestschcneider.EMPTY_REMINDER_ID
 import com.ernestschcneider.feature.remindernote.REMINDER_ID_ARG
 import com.ernestschcneider.feature.remindernote.ReminderNoteViewModel
 import com.ernestschcneider.models.Reminder
+import com.ernestschcneider.models.ReminderListItem
 import com.ernestschcneider.models.ReminderType
 import com.ernestschcneider.remindersapp.core.dispatchers.CoroutineTestExtension
 import com.ernestschneider.testutils.InMemoryLocalRepo
@@ -36,12 +37,13 @@ class ReminderNoteViewModelTest {
         .withReminderType(ReminderType.Note)
         .build()
 
-    private val reminderList1 = ReminderBuilder.aReminder()
-        .withId("2")
-        .withReminderTitle("Title2")
-        .withReminderType(ReminderType.List)
-        .withReminderList(arrayListOf("Element1", "Element2"))
-        .build()
+    private val reminderList1 = ReminderBuilder.aReminder().withId("2").withReminderTitle("Title2")
+        .withReminderType(ReminderType.List).withReminderList(
+            arrayListOf(
+                ReminderListItem(position = 0, text = "Element1"),
+                ReminderListItem(position = 1, text = "Element2")
+            )
+        ).build()
 
     @Test
     fun onReminderContentUpdate() {

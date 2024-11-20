@@ -3,6 +3,7 @@ package com.ernestschcneider.feature.reminderlist
 import androidx.lifecycle.SavedStateHandle
 import com.ernestschcneider.EMPTY_REMINDER_ID
 import com.ernestschcneider.REMINDER_LIST_ID
+import com.ernestschcneider.models.ReminderListItem
 import com.ernestschcneider.models.ReminderType
 import com.ernestschcneider.remindersapp.core.dispatchers.CoroutineTestExtension
 import com.ernestschneider.testutils.InMemoryLocalRepo
@@ -27,19 +28,16 @@ class ReminderListViewModelTest {
         savedStateHandle = savedStateHandle
     )
 
-    private val reminderNote1 = ReminderBuilder.aReminder()
-        .withId("1")
-        .withReminderTitle("Title1")
-        .withReminderContent("Content1")
-        .withReminderType(ReminderType.Note)
-        .build()
+    private val reminderNote1 = ReminderBuilder.aReminder().withId("1").withReminderTitle("Title1")
+        .withReminderContent("Content1").withReminderType(ReminderType.Note).build()
 
-    private val reminderList1 = ReminderBuilder.aReminder()
-        .withId("2")
-        .withReminderTitle("Title2")
-        .withReminderType(ReminderType.List)
-        .withReminderList(arrayListOf("Element1", "Element2"))
-        .build()
+    private val reminderList1 = ReminderBuilder.aReminder().withId("2").withReminderTitle("Title2")
+        .withReminderType(ReminderType.List).withReminderList(
+            arrayListOf(
+                ReminderListItem(position = 0, text = "Element1"),
+                ReminderListItem(position = 1, text = "Element2")
+            )
+        ).build()
 
     @Test
     fun onReminderListTitleUpdate() {
@@ -57,7 +55,7 @@ class ReminderListViewModelTest {
 
         assertTrue(viewModel.screenState.value.showCreateReminderDialog)
         assertTrue(viewModel.screenState.value.isFirstReminder)
-        assertEquals(ReminderItem(), viewModel.screenState.value.reminderToEdit)
+        assertEquals(ReminderListItem(), viewModel.screenState.value.reminderToEdit)
     }
 
     @Test
@@ -69,12 +67,14 @@ class ReminderListViewModelTest {
 
         assertFalse(viewModel.screenState.value.showCreateReminderDialog)
     }
-    
+
     @Test
     fun onFirstReminderListItemAdded() {
         val reminderText = "reminderText"
         val reminderText2 = "reminderText2"
-        val reminderList = listOf(reminderText2, reminderText)
+        val firstReminder = ReminderListItem(position = 0, reminderText2)
+        val lastReminder = ReminderListItem(position = 1, reminderText)
+        val reminderList = listOf(firstReminder, lastReminder)
         viewModel.onFirstReminderListItemAdded(reminderText)
 
         viewModel.onFirstReminderListItemAdded(reminderText2)
@@ -89,14 +89,16 @@ class ReminderListViewModelTest {
 
         assertTrue(viewModel.screenState.value.showCreateReminderDialog)
         assertFalse(viewModel.screenState.value.isFirstReminder)
-        assertEquals(ReminderItem(), viewModel.screenState.value.reminderToEdit)
+        assertEquals(ReminderListItem(), viewModel.screenState.value.reminderToEdit)
     }
 
     @Test
     fun onLastReminderListItemAdded() {
         val reminderText = "reminderText"
         val reminderText2 = "reminderText2"
-        val reminderList = listOf(reminderText, reminderText2)
+        val firstReminderList = ReminderListItem(text = reminderText, position = 0)
+        val lastReminderList = ReminderListItem(text = reminderText2, position = 1)
+        val reminderList = listOf(firstReminderList, lastReminderList)
         viewModel.onLastReminderListItemAdded(reminderText)
 
         viewModel.onLastReminderListItemAdded(reminderText2)
@@ -110,7 +112,10 @@ class ReminderListViewModelTest {
         val reminderListTitle = "title"
         val firstReminder = "1"
         val lastReminder = "2"
-        val reminderList = listOf(firstReminder, lastReminder)
+        val reminderList = listOf(
+            ReminderListItem(text = firstReminder, position = 0),
+            ReminderListItem(text = lastReminder, position = 1)
+        )
         val backNavigation = true
         viewModel.onFirstReminderListItemAdded(firstReminder)
         viewModel.onLastReminderListItemAdded(lastReminder)
@@ -169,33 +174,28 @@ class ReminderListViewModelTest {
 
         viewModel.loadReminderList()
 
-        assertEquals(requestFocus,viewModel.screenState.value.requestFocus )
+        assertEquals(requestFocus, viewModel.screenState.value.requestFocus)
     }
 
     @Test
-    fun onSaveExistingReminderList() = runTest{
+    fun onSaveExistingReminderList() = runTest {
         val reminderListTitle = "noteTitle"
         val backNavigation = true
-        val firstReminder = "1"
-        val lastReminder = "2"
+        val firstReminder = ReminderListItem(text = "1", position = 0)
+        val lastReminder = ReminderListItem(text = "2", position = 1)
         val reminderList = arrayListOf(firstReminder, lastReminder)
         val spiedLocalRepo = spy(localRepo)
         localRepo.saveReminders(listOf(reminderNote1, reminderList1))
-        // TODO improve this??
         val viewModel = ReminderListViewModel(
             savedStateHandle = getSavedStateHandle(REMINDER_LIST_ID),
             localRepo = spiedLocalRepo,
             backgroundDispatcher = backgroundDispatcher
         )
-        val reminder = ReminderBuilder
-            .aReminder()
-            .withId(REMINDER_LIST_ID)
-            .withReminderTitle(reminderListTitle)
-            .withReminderList(reminderList)
-            .withReminderType(ReminderType.List)
-            .build()
-        viewModel.onFirstReminderListItemAdded(firstReminder)
-        viewModel.onLastReminderListItemAdded(lastReminder)
+        val reminder = ReminderBuilder.aReminder().withId(REMINDER_LIST_ID)
+            .withReminderTitle(reminderListTitle).withReminderList(reminderList)
+            .withReminderType(ReminderType.List).build()
+        viewModel.onFirstReminderListItemAdded(firstReminder.text)
+        viewModel.onLastReminderListItemAdded(lastReminder.text)
         viewModel.onReminderListTitleUpdate(reminderListTitle)
 
         viewModel.onSaveListReminderClicked()
@@ -213,12 +213,14 @@ class ReminderListViewModelTest {
         )
         val element1 = "element1"
         val element2 = "element2"
-        val remindersListDeleted = arrayListOf(element2)
+        val remindersListDeleted = arrayListOf(ReminderListItem(text = element2, position = 0))
         viewModel.onFirstReminderListItemAdded(element1)
         viewModel.onFirstReminderListItemAdded(element2)
-        localRepo.saveReminders(listOf(reminderNote1, reminderList1))
+        val reminderToDelete = ReminderListItem(
+            text = element1, position = 1
+        )
 
-        viewModel.onDeleteReminderItem(element1)
+        viewModel.onDeleteReminderItem(reminderToDelete)
 
         assertEquals(remindersListDeleted, viewModel.screenState.value.remindersList)
         assertTrue(viewModel.screenState.value.showSaveButton)
@@ -231,9 +233,8 @@ class ReminderListViewModelTest {
         val element2 = "element2"
         viewModel.onFirstReminderListItemAdded(element1)
         viewModel.onFirstReminderListItemAdded(element2)
-        val elementToEdit = ReminderItem(
-            pos = 0,
-            text = element1
+        val elementToEdit = ReminderListItem(
+            position = 0, text = element1
         )
 
         viewModel.onReminderEditClicked(elementToEdit)
@@ -241,18 +242,19 @@ class ReminderListViewModelTest {
         assertTrue(viewModel.screenState.value.showCreateReminderDialog)
         assertEquals(elementToEdit, viewModel.screenState.value.reminderToEdit)
     }
-    
+
     @Test
     fun onReminderEdited() {
         val element1 = "element1"
         val element2 = "element2"
         viewModel.onFirstReminderListItemAdded(element1)
         viewModel.onLastReminderListItemAdded(element2)
+        val reminderNotEdited = ReminderListItem(text = element2, position = 1)
         val element1Modified = "elementModified1"
-        val reminderList = listOf(element1Modified, element2)
-        val reminderItem = ReminderItem(0, element1Modified)
+        val reminderItemEdited = ReminderListItem(text = element1Modified, position = 0)
+        val reminderList = listOf(reminderItemEdited, reminderNotEdited)
 
-        viewModel.onReminderEdited(reminderItem)
+        viewModel.onReminderEdited(reminderItemEdited)
 
         assertEquals(reminderList, viewModel.screenState.value.remindersList)
         assertTrue(viewModel.screenState.value.showSaveButton)
@@ -330,6 +332,62 @@ class ReminderListViewModelTest {
         viewModel.onMoveListItem(lastNotDraggableElement, irrelevantFromPosition)
 
         assertEquals(list, viewModel.screenState.value.remindersList)
+    }
+
+    @Test
+    fun onUnCrossedElementCrossed() = runTest {
+        val reminderId = "2"
+        val viewModel = ReminderListViewModel(
+            savedStateHandle = getSavedStateHandle(reminderListId = reminderId),
+            localRepo = localRepo,
+            backgroundDispatcher = backgroundDispatcher
+        )
+        localRepo.saveReminders(listOf(reminderList1))
+        val reminder = localRepo.getReminder(reminderId)
+        val reminderItemToCross = reminder.remindersList.first()
+        viewModel.loadReminderList()
+        val reminderListItemCrossed = reminderItemToCross.copy(isCrossed = true)
+
+        viewModel.onCrossReminder(reminderItemToCross)
+
+        assertEquals(reminderListItemCrossed, viewModel.screenState.value.remindersList.first())
+    }
+
+    @Test
+    fun onDragFinishedWithPositionChanges() {
+        val reminderText1 = "1"
+        val reminderText2 = "2"
+        viewModel.onFirstReminderListItemAdded(reminderText2)
+        viewModel.onFirstReminderListItemAdded(reminderText1)
+        val reminderListItemFinal1 = ReminderListItem(position = 0, text = reminderText1)
+        val reminderListItemFinal2 = ReminderListItem(position = 1, text = reminderText2)
+        val reminderList = listOf(
+            reminderListItemFinal1,
+            reminderListItemFinal2
+        )
+        viewModel.onMoveListItem(0,1)
+
+        viewModel.onDragFinished()
+
+        assertEquals(reminderList, viewModel.screenState.value.remindersList)
+    }
+
+    @Test
+    fun onDragFinishedWithNoPositionChanges() {
+        val reminderText1 = "1"
+        val reminderText2 = "2"
+        viewModel.onFirstReminderListItemAdded(reminderText2)
+        viewModel.onFirstReminderListItemAdded(reminderText1)
+        val reminderListItemFinal1 = ReminderListItem(position = 0, text = reminderText1)
+        val reminderListItemFinal2 = ReminderListItem(position = 1, text = reminderText2)
+        val reminderList = listOf(
+            reminderListItemFinal1,
+            reminderListItemFinal2
+        )
+
+        viewModel.onDragFinished()
+
+        assertEquals(reminderList, viewModel.screenState.value.remindersList)
     }
 
     private fun getSavedStateHandle(reminderListId: String = EMPTY_REMINDER_ID): SavedStateHandle {

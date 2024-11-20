@@ -36,7 +36,7 @@ import androidx.compose.ui.text.TextRange
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
-import com.ernestschcneider.feature.reminderlist.ReminderItem
+import com.ernestschcneider.models.ReminderListItem
 import com.ernestschcneider.remindersapp.core.view.R
 import com.ernestschcneider.remindersapp.core.view.composables.PrimaryButton
 import com.ernestschcneider.remindersapp.core.view.theme.AppTheme
@@ -47,11 +47,11 @@ import com.ernestschcneider.remindersapp.core.view.theme.PreviewLightDark
 fun AddReminderDialog(
     modifier: Modifier = Modifier,
     focusRequester: FocusRequester,
-    item: ReminderItem,
+    item: ReminderListItem,
     onDismiss: () -> Unit,
     onFirsReminderAdded: (String) -> Unit,
     onLastReminderAdded: (String) -> Unit,
-    onReminderEdited: (ReminderItem) -> Unit,
+    onReminderEdited: (ReminderListItem) -> Unit,
     isFirstReminder: Boolean
 ) {
     BasicAlertDialog(onDismissRequest = onDismiss) {
@@ -140,7 +140,7 @@ fun AddReminderDialog(
                     Spacer(Modifier.weight(0.5F))
                     PrimaryButton(
                         modifier = Modifier.padding(end = 4.dp),
-                        label = stringResource(id = R.string.save),
+                        label = stringResource(id = R.string.ok),
                         onClick = {
                             onSaveReminderClicked(
                                 item,
@@ -165,9 +165,9 @@ fun AddReminderDialog(
 }
 
 private fun onSaveReminderClicked(
-    item: ReminderItem,
+    item: ReminderListItem,
     textFieldValue: TextFieldValue,
-    onReminderEdited: (ReminderItem) -> Unit,
+    onReminderEdited: (ReminderListItem) -> Unit,
     onDismiss: () -> Unit,
     isFirstReminder: Boolean,
     onFirsReminderAdded: (String) -> Unit,
@@ -176,8 +176,8 @@ private fun onSaveReminderClicked(
 ) {
     when {
         item.text.isNotEmpty() -> {
-            val itemEdited = ReminderItem(
-                pos = item.pos,
+            val itemEdited = ReminderListItem(
+                position = item.position,
                 text = textFieldValue.text
             )
             onReminderEdited(itemEdited)
@@ -209,7 +209,7 @@ fun PreviewDialog() {
         focusRequester = FocusRequester(),
         onFirsReminderAdded = {},
         onLastReminderAdded = {},
-        item = ReminderItem(),
+        item = ReminderListItem(),
         isFirstReminder = false,
         onReminderEdited = {}
     )

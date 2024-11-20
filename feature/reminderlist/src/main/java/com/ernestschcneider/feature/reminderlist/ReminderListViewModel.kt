@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ernestschcneider.EMPTY_REMINDER_ID
 import com.ernestschcneider.models.Reminder
+import com.ernestschcneider.models.ReminderListItem
 import com.ernestschcneider.models.ReminderType
 import com.ernestschcneider.remindersapp.local.StorageRepo
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -44,16 +45,21 @@ class ReminderListViewModel @Inject constructor(
             it.copy(
                 showCreateReminderDialog = true,
                 isFirstReminder = true,
-                reminderToEdit = ReminderItem()
+                reminderToEdit = ReminderListItem()
             )
         }
     }
 
     fun onFirstReminderListItemAdded(reminderText: String) {
         val firstIndex = FIRST_NOT_DRAGGABLE_ELEMENT
+        val reminderItem = ReminderListItem(
+            text = reminderText,
+            position = firstIndex
+        )
         _screenState.value.remindersList.apply {
-            add(firstIndex, reminderText)
+            add(firstIndex, reminderItem)
         }
+        updateReminderListPositions()
         _screenState.update {
             it.copy(
                 remindersList = _screenState.value.remindersList,
@@ -61,6 +67,10 @@ class ReminderListViewModel @Inject constructor(
                 scrollListToLast = true
             )
         }
+    }
+
+    private fun updateReminderListPositions() {
+        _screenState.value.remindersList.forEachIndexed{ index, reminderListItem -> reminderListItem.position = index  }
     }
 
     fun onDismissCreateDialogClicked() {
@@ -76,15 +86,19 @@ class ReminderListViewModel @Inject constructor(
             it.copy(
                 showCreateReminderDialog = true,
                 isFirstReminder = false,
-                reminderToEdit = ReminderItem()
+                reminderToEdit = ReminderListItem()
             )
         }
     }
 
     fun onLastReminderListItemAdded(reminderText: String) {
+        val reminderItem = ReminderListItem(
+            text = reminderText,
+        )
         _screenState.value.remindersList.apply {
-            add(reminderText)
+            add(reminderItem)
         }
+         updateReminderListPositions()
         _screenState.update {
             it.copy(
                 remindersList = _screenState.value.remindersList,
@@ -96,7 +110,7 @@ class ReminderListViewModel @Inject constructor(
 
     fun onSaveListReminderClicked() {
         if (_screenState.value.reminderListTitle.isNotEmpty()) {
-            val remindersArray = arrayListOf<String>().apply {
+            val remindersArray = arrayListOf<ReminderListItem>().apply {
                 addAll(_screenState.value.remindersList)
             }
             val reminderId = reminderListArgs.reminderListId
@@ -161,20 +175,21 @@ class ReminderListViewModel @Inject constructor(
         }
     }
 
-    fun onDeleteReminderItem(item: String) {
-        val remindersArray = arrayListOf<String>().apply {
+    fun onDeleteReminderItem(item: ReminderListItem) {
+        val remindersArray = arrayListOf<ReminderListItem>().apply {
             addAll(_screenState.value.remindersList)
         }
         remindersArray.remove(item)
-        viewModelScope.launch {
-            withContext(backgroundDispatcher) {
-                localRepo.updateReminderList(remindersArray, reminderListArgs.reminderListId)
-                loadReminderList(true)
-            }
+        remindersArray.forEachIndexed{ index, reminderListItem -> reminderListItem.position = index }
+        _screenState.update {
+            it.copy(
+                remindersList = remindersArray,
+                showSaveButton = true
+            )
         }
     }
 
-    fun onReminderEditClicked(item: ReminderItem) {
+    fun onReminderEditClicked(item: ReminderListItem) {
         _screenState.update {
             it.copy(
                 showCreateReminderDialog = true,
@@ -183,11 +198,11 @@ class ReminderListViewModel @Inject constructor(
         }
     }
 
-    fun onReminderEdited(reminderItem: ReminderItem) {
-        val index = reminderItem.pos
+    fun onReminderEdited(reminderItem: ReminderListItem) {
+        val index = reminderItem.position
         val list = _screenState.value.remindersList
         list.removeAt(index)
-        list.add(index, reminderItem.text)
+        list.add(index, reminderItem)
 
         _screenState.update {
             it.copy(remindersList = list,
@@ -209,5 +224,28 @@ class ReminderListViewModel @Inject constructor(
                 showSaveButton = true
             )
         }
+    }
+
+    fun onCrossReminder(reminderListItem: ReminderListItem) {
+        // TODO asks about why with array list works and delete commented code
+        val reminderCrossChanged = reminderListItem.copy(isCrossed = !reminderListItem.isCrossed)
+        val list = arrayListOf<ReminderListItem>().apply {
+            addAll(_screenState.value.remindersList)
+        }
+        list.removeAt(reminderListItem.position)
+        list.add(reminderCrossChanged.position, reminderCrossChanged)
+//        val list :MutableList<ReminderListItem> = _screenState.value.remindersList
+//        list.removeAt(reminderListItem.position)
+//        list.add(reminderCrossChanged.position, reminderCrossChanged)
+        _screenState.update {
+            it.copy(
+                remindersList = list,
+                showSaveButton = true
+            )
+        }
+    }
+
+    fun onDragFinished() {
+        updateReminderListPositions()
     }
 }

@@ -1,6 +1,7 @@
 package com.ernestschcneider.remindersapp.local
 
 import com.ernestschcneider.models.Reminder
+import com.ernestschcneider.models.ReminderListItem
 import java.util.UUID
 
 interface StorageRepo {
@@ -16,5 +17,5 @@ interface StorageRepo {
 
     suspend fun updateReminderPosition(position: Int, reminderId: String)
 
-    suspend fun updateReminderList(reminderList: ArrayList<String>, reminderId: String)
+    suspend fun updateReminderList(reminderList: ArrayList<ReminderListItem>, reminderId: String)
 }
