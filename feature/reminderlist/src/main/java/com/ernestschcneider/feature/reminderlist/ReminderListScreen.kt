@@ -70,7 +70,8 @@ internal fun ReminderListScreen(
         onEditReminder = reminderListViewModel::onReminderEditClicked,
         onReminderEdited = reminderListViewModel::onReminderEdited,
         onMoveListItem = reminderListViewModel::onMoveListItem,
-        onCrossReminder = reminderListViewModel::onCrossReminder
+        onCrossReminder = reminderListViewModel::onCrossReminder,
+        onDragFinished = reminderListViewModel::onDragFinished
     )
 }
 
@@ -91,7 +92,8 @@ fun ReminderListScreenContent(
     onEditReminder: (ReminderListItem) -> Unit,
     onReminderEdited: (ReminderListItem) -> Unit,
     onMoveListItem: (Int, Int) -> Unit,
-    onCrossReminder: (ReminderListItem) -> Unit
+    onCrossReminder: (ReminderListItem) -> Unit,
+    onDragFinished: () -> Unit
 ) {
     val listState = rememberLazyListState()
     val focusRequester = remember { FocusRequester() }
@@ -123,7 +125,7 @@ fun ReminderListScreenContent(
                 .padding(paddingValues)
         ) {
             val dragAndDropListState =
-                rememberDragAndDropListState(listState) { from, to ->
+                rememberDragAndDropListState(listState, onDragFinished) { from, to ->
                     onMoveListItem(from, to)
                 }
             val coroutineScope = rememberCoroutineScope()
@@ -166,12 +168,9 @@ fun ReminderListScreenContent(
                         onAddReminderClicked = onAddFirstReminder
                     )
                 }
-                itemsIndexed(screenState.remindersList) {index, item ->
+                itemsIndexed(screenState.remindersList) { index, item ->
                     RemindersListItem(
-                        item = ReminderListItem(
-                            position = screenState.remindersList.indexOf(item),
-                            text = item.text
-                        ),
+                        item = item,
                         modifier = Modifier.composed {
                             val offsetOrNull =
                                 dragAndDropListState.elementDisplacement.takeIf {
@@ -244,8 +243,9 @@ private fun NoteCreationScreenPreview() {
             onDeleteReminder = {},
             onEditReminder = {},
             onReminderEdited = {},
-            onMoveListItem = {_,_  ->},
-            onCrossReminder = {}
+            onMoveListItem = { _, _ -> },
+            onCrossReminder = {},
+            onDragFinished = {}
         )
     }
 }

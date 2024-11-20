@@ -140,7 +140,7 @@ fun AddReminderDialog(
                     Spacer(Modifier.weight(0.5F))
                     PrimaryButton(
                         modifier = Modifier.padding(end = 4.dp),
-                        label = stringResource(id = R.string.save),
+                        label = stringResource(id = R.string.ok),
                         onClick = {
                             onSaveReminderClicked(
                                 item,

@@ -13,14 +13,16 @@ import androidx.compose.ui.geometry.Offset
 @Composable
 fun rememberDragAndDropListState(
 	lazyListState: LazyListState,
+	onDragFinished: () -> Unit = {},
 	onMove: (Int, Int) -> Unit
 ): DragAndDropListState {
-	return remember { DragAndDropListState(lazyListState, onMove) }
+	return remember { DragAndDropListState(lazyListState, onMove, onDragFinished) }
 }
 
 class DragAndDropListState(
 	val lazyListState: LazyListState,
-	private val onMove: (Int, Int) -> Unit
+	private val onMove: (Int, Int) -> Unit,
+	private val onDragFinished: () -> Unit
 ) {
 	private var draggingDistance by mutableFloatStateOf(0f)
 	private var initialDraggingElement by mutableStateOf<LazyListItemInfo?>(null)
@@ -51,6 +53,7 @@ class DragAndDropListState(
 		initialDraggingElement = null
 		currentIndexOfDraggedItem = null
 		draggingDistance = 0f
+		onDragFinished.invoke()
 	}
 
 	fun onDrag(offset: Offset) {

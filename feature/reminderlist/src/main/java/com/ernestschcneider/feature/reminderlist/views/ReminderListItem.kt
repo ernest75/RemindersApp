@@ -53,7 +53,7 @@ fun RemindersListItem(
             modifier = Modifier
                 .fillMaxWidth()
                 .clickable {
-               crossed = !crossed
+               crossReminder(item)
             },
             contentAlignment = Alignment.Center
         ) {
