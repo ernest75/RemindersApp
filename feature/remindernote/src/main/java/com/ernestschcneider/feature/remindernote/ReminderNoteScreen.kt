@@ -108,7 +108,7 @@ fun ReminderNoteScreenContent(
                 .background(AppTheme.colorScheme.secondaryContainer)
         ) {
             TextField(
-                modifier = Modifier.fillMaxWidth().focusRequester(focusRequester),
+                modifier = Modifier.fillMaxWidth(),
                 value = TextFieldValue(
                     text = state.reminderContent,
                     selection = TextRange(state.reminderContent.length)
