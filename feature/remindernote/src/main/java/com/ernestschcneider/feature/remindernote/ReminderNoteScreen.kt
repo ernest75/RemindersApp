@@ -16,19 +16,18 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
-import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
-import androidx.compose.ui.focus.focusProperties
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.TextRange
 import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import androidx.lifecycle.viewmodel.compose.viewModel
 import com.ernestschcneider.remindersapp.core.view.R
 import com.ernestschcneider.remindersapp.core.view.R.string
 import com.ernestschcneider.remindersapp.core.view.composables.InformativeDialog
@@ -66,7 +65,7 @@ internal fun ReminderNoteScreen(
 fun ReminderNoteScreenContent(
     state: ReminderNoteState,
     onNavigateUp: () -> Unit,
-    onReminderNoteContentUpdate: (String) -> Unit,
+    onReminderNoteContentUpdate: (TextFieldValue) -> Unit,
     onReminderNoteTitleUpdate: (String) -> Unit,
     onReminderNoteSaved: () -> Unit,
     onDismissEmptyTitleDialog: () -> Unit
@@ -109,8 +108,11 @@ fun ReminderNoteScreenContent(
                 .background(AppTheme.colorScheme.secondaryContainer)
         ) {
             TextField(
-                modifier = Modifier.fillMaxWidth(),
-                value = state.reminderContent,
+                modifier = Modifier.fillMaxWidth().focusRequester(focusRequester),
+                value = TextFieldValue(
+                    text = state.reminderContent,
+                    selection = TextRange(state.reminderContent.length)
+                ),
                 onValueChange = onReminderNoteContentUpdate,
                 colors = TextFieldDefaults.colors(
                     focusedContainerColor = AppTheme.colorScheme.secondaryContainer,
@@ -129,7 +131,7 @@ fun ReminderNoteScreenContent(
                 textStyle = AppTheme.typography.labelLarge,
                 placeholder = {
                     Text(
-                        stringResource(id = string.type_reminder_text),
+                        text = stringResource(id = string.type_reminder_text),
                         color = AppTheme.colorScheme.secondary
                     )
                 }

@@ -1,5 +1,6 @@
 package com.ernestschneider.feature.remindercereration.notecreation
 
+import androidx.compose.ui.text.input.TextFieldValue
 import androidx.lifecycle.SavedStateHandle
 import com.ernestschcneider.EMPTY_REMINDER_ID
 import com.ernestschcneider.feature.remindernote.REMINDER_ID_ARG
@@ -48,8 +49,9 @@ class ReminderNoteViewModelTest {
     @Test
     fun onReminderContentUpdate() {
         val reminderContent = "reminderContent"
+        val textFieldValue = TextFieldValue(reminderContent)
 
-        viewModel.onReminderContentUpdate(reminderContent)
+        viewModel.onReminderContentUpdate(textFieldValue)
 
         assertEquals(reminderContent, viewModel.screenState.value.reminderContent)
         assertEquals(true, viewModel.screenState.value.showSaveButton)
@@ -59,6 +61,8 @@ class ReminderNoteViewModelTest {
     @Test
     fun onReminderTitleUpdate() {
         val reminderTitle = "reminderTitle"
+        viewModel.onReminderTitleUpdate(reminderTitle)
+        viewModel.onSavedReminderClicked()
 
         viewModel.onReminderTitleUpdate(reminderTitle)
 
@@ -68,11 +72,30 @@ class ReminderNoteViewModelTest {
     }
 
     @Test
+    fun onReminderTitleUpdateSameTitle() = runTest {
+        val reminderId = "1"
+        val viewModel = ReminderNoteViewModel(
+            savedStateHandle = getSavedStateHandle(reminderId = reminderId),
+            localRepo = localRepo,
+            backgroundDispatcher = backgroundDispatcher
+        )
+        localRepo.saveReminders(listOf(reminderNote1, reminderList1))
+        val reminder = localRepo.getReminder(reminderId)
+        viewModel.loadReminder()
+
+        viewModel.onReminderTitleUpdate(reminder.reminderTitle)
+
+        assertEquals(reminder.reminderTitle, viewModel.screenState.value.reminderTitle)
+        assertEquals(false, viewModel.screenState.value.showSaveButton)
+    }
+
+    @Test
     fun onSavedReminderClickedNotEmptyTitle() {
         val reminderTitle = "reminderTitle"
         val reminderContent = "reminderContent"
+        val textFieldValue = TextFieldValue(reminderContent)
         viewModel.onReminderTitleUpdate(reminderTitle)
-        viewModel.onReminderContentUpdate(reminderContent)
+        viewModel.onReminderContentUpdate(textFieldValue)
 
         viewModel.onSavedReminderClicked()
 
@@ -110,7 +133,8 @@ class ReminderNoteViewModelTest {
         )
         localRepo.saveReminders(listOf(reminderNote1, reminderList1))
         viewModel.onReminderTitleUpdate(reminderTitle)
-        viewModel.onReminderContentUpdate(reminderContent)
+        val textFieldValue = TextFieldValue(reminderContent)
+        viewModel.onReminderContentUpdate(textFieldValue)
         val reminder = Reminder(
             reminderId = reminderNote1.reminderId,
             reminderTitle = reminderTitle,
@@ -131,7 +155,8 @@ class ReminderNoteViewModelTest {
     @Test
     fun onSavedReminderClickedEmptyTitle() {
         val reminderContent = "reminderContent"
-        viewModel.onReminderContentUpdate(reminderContent)
+        val textFieldValue = TextFieldValue(reminderContent)
+        viewModel.onReminderContentUpdate(textFieldValue)
         val showEmptyTitleDialog = true
         val backNavigation = false
 
@@ -154,7 +179,6 @@ class ReminderNoteViewModelTest {
     @Test
     fun onLoadReminderNotEmptyReminderId() = runTest {
         val reminderId = "1"
-        // TODO improve this?
         val viewModel = ReminderNoteViewModel(
             savedStateHandle = getSavedStateHandle(reminderId = reminderId),
             localRepo = localRepo,

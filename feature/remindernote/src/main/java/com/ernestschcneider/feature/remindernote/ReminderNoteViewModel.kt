@@ -1,5 +1,6 @@
 package com.ernestschcneider.feature.remindernote
 
+import androidx.compose.ui.text.input.TextFieldValue
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -27,10 +28,10 @@ class ReminderNoteViewModel @Inject constructor(
     val screenState: StateFlow<ReminderNoteState> = _screenState.asStateFlow()
     private val reminderNoteArgs = ReminderNoteArgs(savedStateHandle)
 
-    fun onReminderContentUpdate(reminderContent: String) {
+    fun onReminderContentUpdate(reminderContent: TextFieldValue) {
         _screenState.update {
             it.copy(
-                reminderContent = reminderContent,
+                reminderContent = reminderContent.text,
                 showSaveButton = true,
                 requestFocus = false
             )
@@ -38,12 +39,13 @@ class ReminderNoteViewModel @Inject constructor(
     }
 
     fun onReminderTitleUpdate(reminderTitle: String) {
-        _screenState.update {
-            it.copy(
-                reminderTitle = reminderTitle,
-                showSaveButton = true,
-                requestFocus = false
-            )
+        if (reminderTitle != _screenState.value.reminderTitle){
+            _screenState.update {
+                it.copy(
+                    reminderTitle = reminderTitle,
+                    showSaveButton = true
+                )
+            }
         }
     }
 
