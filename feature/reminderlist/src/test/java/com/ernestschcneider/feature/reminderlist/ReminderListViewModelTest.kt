@@ -353,6 +353,43 @@ class ReminderListViewModelTest {
         assertEquals(reminderListItemCrossed, viewModel.screenState.value.remindersList.first())
     }
 
+    @Test
+    fun onDragFinishedWithPositionChanges() {
+        val reminderText1 = "1"
+        val reminderText2 = "2"
+        viewModel.onFirstReminderListItemAdded(reminderText2)
+        viewModel.onFirstReminderListItemAdded(reminderText1)
+        val reminderListItemFinal1 = ReminderListItem(position = 0, text = reminderText1)
+        val reminderListItemFinal2 = ReminderListItem(position = 1, text = reminderText2)
+        val reminderList = listOf(
+            reminderListItemFinal1,
+            reminderListItemFinal2
+        )
+        viewModel.onMoveListItem(0,1)
+
+        viewModel.onDragFinished()
+
+        assertEquals(reminderList, viewModel.screenState.value.remindersList)
+    }
+
+    @Test
+    fun onDragFinishedWithNoPositionChanges() {
+        val reminderText1 = "1"
+        val reminderText2 = "2"
+        viewModel.onFirstReminderListItemAdded(reminderText2)
+        viewModel.onFirstReminderListItemAdded(reminderText1)
+        val reminderListItemFinal1 = ReminderListItem(position = 0, text = reminderText1)
+        val reminderListItemFinal2 = ReminderListItem(position = 1, text = reminderText2)
+        val reminderList = listOf(
+            reminderListItemFinal1,
+            reminderListItemFinal2
+        )
+
+        viewModel.onDragFinished()
+
+        assertEquals(reminderList, viewModel.screenState.value.remindersList)
+    }
+
     private fun getSavedStateHandle(reminderListId: String = EMPTY_REMINDER_ID): SavedStateHandle {
         return SavedStateHandle().apply {
             set(REMINDER_LIST_ID_ARG, reminderListId)

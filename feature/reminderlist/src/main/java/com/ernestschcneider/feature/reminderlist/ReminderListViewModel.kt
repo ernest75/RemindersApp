@@ -110,11 +110,9 @@ class ReminderListViewModel @Inject constructor(
 
     fun onSaveListReminderClicked() {
         if (_screenState.value.reminderListTitle.isNotEmpty()) {
-            // TODO borrar aquesta part
             val remindersArray = arrayListOf<ReminderListItem>().apply {
                 addAll(_screenState.value.remindersList)
             }
-            remindersArray.forEachIndexed { index, reminderListItem -> reminderListItem.position = index }
             val reminderId = reminderListArgs.reminderListId
             viewModelScope.launch {
                 withContext(backgroundDispatcher) {
@@ -235,16 +233,19 @@ class ReminderListViewModel @Inject constructor(
     }
 
     fun onCrossReminder(reminderListItem: ReminderListItem) {
-        // TODO to asks about why with array list works
+        // TODO asks about why with array list works and delete commented code
         val reminderCrossChanged = reminderListItem.copy(isCrossed = !reminderListItem.isCrossed)
-        val remindersArray = arrayListOf<ReminderListItem>().apply {
+        val list = arrayListOf<ReminderListItem>().apply {
             addAll(_screenState.value.remindersList)
         }
-        remindersArray.removeAt(reminderListItem.position)
-        remindersArray.add(reminderCrossChanged.position, reminderCrossChanged)
+        list.removeAt(reminderListItem.position)
+        list.add(reminderCrossChanged.position, reminderCrossChanged)
+//        val list :MutableList<ReminderListItem> = _screenState.value.remindersList
+//        list.removeAt(reminderListItem.position)
+//        list.add(reminderCrossChanged.position, reminderCrossChanged)
         _screenState.update {
             it.copy(
-                remindersList = remindersArray,
+                remindersList = list,
                 showSaveButton = true
             )
         }
