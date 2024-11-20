@@ -87,7 +87,7 @@ fun ReminderNoteScreenContent(
                 modifier = Modifier
                     .padding(top = 48.dp)
                     .fillMaxWidth(),
-                label = stringResource(id = string.save_reminder),
+                label = stringResource(id = string.save_changes),
                 onClick = onReminderNoteSaved,
                 isVisible = state.showSaveButton
             )

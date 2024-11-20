@@ -194,7 +194,7 @@ fun ReminderListScreenContent(
                 item {
                     PrimaryButton(
                         modifier = Modifier.fillMaxWidth(),
-                        label = stringResource(id = R.string.save_reminder_list),
+                        label = stringResource(id = R.string.save_changes),
                         onClick = onSaveReminderClicked,
                         isVisible = screenState.showSaveButton
                     )
