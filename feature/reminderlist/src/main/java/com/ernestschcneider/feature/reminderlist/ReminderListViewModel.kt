@@ -56,21 +56,23 @@ class ReminderListViewModel @Inject constructor(
             text = reminderText,
             position = firstIndex
         )
-        _screenState.value.remindersList.apply {
+        val list = _screenState.value.remindersList.toMutableList().apply {
             add(firstIndex, reminderItem)
         }
-        updateReminderListPositions()
+        updateReminderListPositions(list)
         _screenState.update {
             it.copy(
-                remindersList = _screenState.value.remindersList,
+                remindersList = list,
                 showSaveButton = true,
                 scrollListToLast = true
             )
         }
     }
 
-    private fun updateReminderListPositions() {
-        _screenState.value.remindersList.forEachIndexed{ index, reminderListItem -> reminderListItem.position = index  }
+    private fun updateReminderListPositions(reminderList: List<ReminderListItem>) {
+        reminderList.forEachIndexed { index, reminderListItem ->
+            reminderListItem.position = index
+        }
     }
 
     fun onDismissCreateDialogClicked() {
@@ -95,13 +97,13 @@ class ReminderListViewModel @Inject constructor(
         val reminderItem = ReminderListItem(
             text = reminderText,
         )
-        _screenState.value.remindersList.apply {
+        val list = _screenState.value.remindersList.toMutableList().apply {
             add(reminderItem)
         }
-         updateReminderListPositions()
+        updateReminderListPositions(list)
         _screenState.update {
             it.copy(
-                remindersList = _screenState.value.remindersList,
+                remindersList = list,
                 showSaveButton = true,
                 scrollListToLast = true
             )
@@ -180,7 +182,9 @@ class ReminderListViewModel @Inject constructor(
             addAll(_screenState.value.remindersList)
         }
         remindersArray.remove(item)
-        remindersArray.forEachIndexed{ index, reminderListItem -> reminderListItem.position = index }
+        remindersArray.forEachIndexed { index, reminderListItem ->
+            reminderListItem.position = index
+        }
         _screenState.update {
             it.copy(
                 remindersList = remindersArray,
@@ -200,12 +204,12 @@ class ReminderListViewModel @Inject constructor(
 
     fun onReminderEdited(reminderItem: ReminderListItem) {
         val index = reminderItem.position
-        val list = _screenState.value.remindersList
-        list.removeAt(index)
-        list.add(index, reminderItem)
+        val list = _screenState.value.remindersList.toMutableList()
+        list[index] = reminderItem
 
         _screenState.update {
-            it.copy(remindersList = list,
+            it.copy(
+                remindersList = list,
                 showSaveButton = true
             )
         }
@@ -227,16 +231,9 @@ class ReminderListViewModel @Inject constructor(
     }
 
     fun onCrossReminder(reminderListItem: ReminderListItem) {
-        // TODO asks about why with array list works and delete commented code
         val reminderCrossChanged = reminderListItem.copy(isCrossed = !reminderListItem.isCrossed)
-        val list = arrayListOf<ReminderListItem>().apply {
-            addAll(_screenState.value.remindersList)
-        }
-        list.removeAt(reminderListItem.position)
-        list.add(reminderCrossChanged.position, reminderCrossChanged)
-//        val list :MutableList<ReminderListItem> = _screenState.value.remindersList
-//        list.removeAt(reminderListItem.position)
-//        list.add(reminderCrossChanged.position, reminderCrossChanged)
+        val list = screenState.value.remindersList.toMutableList()
+        list[reminderListItem.position] = reminderCrossChanged
         _screenState.update {
             it.copy(
                 remindersList = list,
@@ -246,6 +243,6 @@ class ReminderListViewModel @Inject constructor(
     }
 
     fun onDragFinished() {
-        updateReminderListPositions()
+        updateReminderListPositions(screenState.value.remindersList)
     }
 }
