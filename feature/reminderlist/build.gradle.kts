@@ -57,7 +57,7 @@ dependencies {
     implementation(project(":domain:data"))
     implementation(libs.bundles.hilt)
 
-   kapt(libs.hilt.compiler)
+    kapt(libs.hilt.compiler)
 
     testImplementation(project(":testutils"))
     testImplementation(libs.junit.jupiter)

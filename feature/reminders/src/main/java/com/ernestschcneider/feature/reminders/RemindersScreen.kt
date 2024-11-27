@@ -32,6 +32,7 @@ import androidx.compose.ui.composed
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.input.pointer.pointerInput
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -107,7 +108,8 @@ internal fun RemindersScreenContent(
         floatingActionButton = {
             FloatingActionButton(
                 modifier = Modifier
-                    .padding(bottom = 24.dp),
+                    .padding(bottom = 24.dp)
+                    .testTag("addButton"),
                 label = stringResource(id = R.string.add_reminder),
                 onClick = onAddButtonClicked,
                 isExpanded = listState.isScrollingUp()
