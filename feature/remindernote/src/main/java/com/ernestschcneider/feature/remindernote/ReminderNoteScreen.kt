@@ -21,6 +21,7 @@ import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalFocusManager
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextRange
 import androidx.compose.ui.text.input.ImeAction
@@ -79,7 +80,8 @@ fun ReminderNoteScreenContent(
     Scaffold(
         modifier = Modifier
             .padding(top = 48.dp)
-            .fillMaxSize(),
+            .fillMaxSize()
+            .testTag("reminderNote"),
         floatingActionButtonPosition = FabPosition.Center,
         floatingActionButton = {
             PrimaryButton(

@@ -67,7 +67,8 @@ fun ReminderCreationDialog(
                 OptionItemDialog(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .heightIn(24.dp),
+                        .heightIn(24.dp)
+                        .testTag("addNoteButton"),
                     drawableRes = R.drawable.ic_note_24,
                     textResId = string.reminder_note,
                     contentDescriptionIconId = string.note_icon,
@@ -76,7 +77,8 @@ fun ReminderCreationDialog(
                 OptionItemDialog(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .heightIn(24.dp),
+                        .heightIn(24.dp)
+                        .testTag("addListButton"),
                     drawableRes = R.drawable.ic_list_bulleted_24,
                     textResId = string.reminder_list,
                     contentDescriptionIconId = string.list_icon,

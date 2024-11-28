@@ -25,6 +25,7 @@ import androidx.compose.ui.composed
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.input.pointer.pointerInput
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -109,7 +110,8 @@ fun ReminderListScreenContent(
     }
     Scaffold(modifier = Modifier
         .padding(top = 48.dp)
-        .fillMaxSize(),
+        .fillMaxSize()
+        .testTag("reminderList"),
         topBar = {
         RemindersTopAppBar(
             onNavigateUp = onNavigateUp,

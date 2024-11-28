@@ -28,6 +28,16 @@ class RemindersRobot(
         return RemindersVerification(rule).apply(block)
     }
 
+    fun clickAddReminderNoteButton() {
+        rule.onNodeWithTag("addNoteButton")
+            .performClick()
+    }
+
+    fun clickAddReminderListButton() {
+        rule.onNodeWithTag("addListButton")
+            .performClick()
+    }
+
 }
 
 class RemindersVerification(
@@ -35,6 +45,16 @@ class RemindersVerification(
 ) {
     fun createReminderDialogIsShown() {
         rule.onNodeWithTag("reminderCreationDialog")
+            .assertIsDisplayed()
+    }
+
+    fun reminderNoteIsShown() {
+        rule.onNodeWithTag("reminderNote")
+            .assertIsDisplayed()
+    }
+
+    fun reminderListIsShown() {
+        rule.onNodeWithTag("reminderList")
             .assertIsDisplayed()
     }
 }

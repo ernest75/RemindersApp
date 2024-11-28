@@ -17,5 +17,25 @@ class RemindersTest {
             createReminderDialogIsShown()
         }
     }
+
+    @Test
+    fun onAddReminderNoteAddsReminder() {
+        launchRemindersScreen(remindersTestRule){
+            clickAddButton()
+            clickAddReminderNoteButton()
+        } verify {
+            reminderNoteIsShown()
+        }
+    }
+
+    @Test
+    fun onAddReminderListAddsReminderList() {
+        launchRemindersScreen(remindersTestRule) {
+            clickAddButton()
+            clickAddReminderListButton()
+        } verify {
+            reminderListIsShown()
+        }
+    }
 }
 
