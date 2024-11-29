@@ -18,7 +18,7 @@ android {
         minSdk = libs.versions.minSdkVersion.get().toInt()
         targetSdk = libs.versions.compileSdkVersion.get().toInt()
 
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner = "com.ernestschcneider.remindersapp.CustomTestRunner"
         vectorDrawables {
             useSupportLibrary = true
         }
@@ -78,6 +78,8 @@ android {
 dependencies {
     implementation(project(":core:view"))
     implementation(project(":domain:data"))
+    implementation(project(":domain:local"))
+    implementation(project(":testutils"))
     implementation(project(":feature:reminders"))
     implementation(project(":feature:remindernote"))
     implementation(project(":feature:reminderlist"))

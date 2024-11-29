@@ -1,10 +1,17 @@
 package com.ernestschcneider.remindersapp
 
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.junit4.AndroidComposeTestRule
+import androidx.compose.ui.test.onChild
+import androidx.compose.ui.test.onChildAt
+import androidx.compose.ui.test.onNodeWithContentDescription
 import androidx.compose.ui.test.onNodeWithTag
+import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
+import androidx.compose.ui.test.performScrollToNode
 import androidx.test.ext.junit.rules.ActivityScenarioRule
+import com.ernestschcneider.remindersapp.core.view.R.*
 
 fun launchRemindersScreen(
     rule: AndroidComposeTestRule<ActivityScenarioRule<MainActivity>, MainActivity>,
@@ -38,6 +45,23 @@ class RemindersRobot(
             .performClick()
     }
 
+    fun clickReminderNote() {
+        rule.onNodeWithText("ReminderNoteTitle")
+            .performClick()
+    }
+
+    fun clickReminderList() {
+        rule.onNodeWithText("ReminderListTitle")
+            .performClick()
+    }
+
+    // TODO try to fix this, how to access to children's of lazylist custom actions
+    fun clickDeleteReminderNote() {
+//        val deleteIconContentDescription = rule.activity.getString(string.delete_icon)
+//        rule.onNodeWithContentDescription(deleteIconContentDescription).performClick()
+     //   rule.onNodeWithTag("remindersList").performScrollToNode().on
+    }
+
 }
 
 class RemindersVerification(
@@ -55,6 +79,16 @@ class RemindersVerification(
 
     fun reminderListIsShown() {
         rule.onNodeWithTag("reminderList")
+            .assertIsDisplayed()
+    }
+
+    fun reminderNoteElementIsShown() {
+        rule.onNodeWithText("ReminderNoteTitle")
+            .assertIsDisplayed()
+    }
+
+    fun reminderListElementIsShown() {
+        rule.onNodeWithText("ReminderListTitle")
             .assertIsDisplayed()
     }
 }

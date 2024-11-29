@@ -5,7 +5,8 @@ import com.ernestschcneider.models.ReminderListItem
 import com.ernestschcneider.models.ReminderType
 import com.ernestschcneider.remindersapp.local.StorageRepo
 
-class InMemoryLocalRepo : StorageRepo {
+class InMemoryLocalRepo(private val reminders: MutableList<Reminder> = mutableListOf()) : StorageRepo {
+
 
     override suspend fun getAllReminders(): List<Reminder> {
         return reminders
@@ -71,6 +72,4 @@ class InMemoryLocalRepo : StorageRepo {
     fun saveReminders(reminders : List<Reminder>) {
         this.reminders.addAll(reminders)
     }
-
-    private var reminders = mutableListOf<Reminder>()
 }
