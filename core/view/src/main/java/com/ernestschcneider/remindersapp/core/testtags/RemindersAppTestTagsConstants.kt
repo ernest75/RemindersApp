@@ -1,6 +1,5 @@
 package com.ernestschcneider.remindersapp.core.testtags
 
-
 const val ADD_REMINDER_BUTTON = "addButton"
 const val ADD_NOTE_BUTTON = "addNoteButton"
 const val ADD_LIST_BUTTON = "addListButton"
@@ -10,3 +9,9 @@ const val REMINDER_CREATION_DIALOG = "reminderCreationDialog"
 const val REMINDER_NOTE = "reminderNote"
 const val REMINDER_LIST = "reminderList"
 const val REMINDERS_LOADING = "remindersLoading"
+const val REMINDER_NOTE_TOP_BAR = "reminderNoteTopBar"
+const val TEXT_INPUT_TOP_BAR = "textInputTopBar"
+const val TEX_TEST = "texTest"
+const val REMINDER_NOTE_TEXT_FIELD = "reminderNoteTextField"
+const val REMINDER_NOTE_SAVE_BUTTON = "reminderNoteSaveButton"
+const val INFORMATIVE_DIALOG = "informativeDialog"
