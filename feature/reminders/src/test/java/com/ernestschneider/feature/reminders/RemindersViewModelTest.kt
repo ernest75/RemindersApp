@@ -47,9 +47,12 @@ class RemindersViewModelTest {
 
     @Test
     fun loadingReminders() {
+        val reminders = localRepo.getReminders()
+
         viewModel.loadReminders()
 
-        assertEquals(localRepo.getReminders(), viewModel.screenState.value.reminders)
+        assertThat(viewModel.screenState.value)
+            .isEqualTo(viewModel.screenState.value.copy(reminders = reminders, showLoading = false))
     }
 
     @Test
@@ -141,5 +144,14 @@ class RemindersViewModelTest {
 
         val list = localRepo.getReminders()
         assertEquals(lisAfterMoving, list)
+    }
+
+    @Test
+    fun onShowLoading() {
+        val showLoading = true
+
+        viewModel.showLoading()
+
+        assertEquals(showLoading, viewModel.screenState.value.showLoading)
     }
 }

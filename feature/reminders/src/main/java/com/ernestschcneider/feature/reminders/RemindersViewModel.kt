@@ -6,6 +6,7 @@ import com.ernestschcneider.models.Reminder
 import com.ernestschcneider.remindersapp.local.StorageRepo
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -25,8 +26,9 @@ class RemindersViewModel  @Inject constructor(
     fun loadReminders() {
         viewModelScope.launch {
             withContext(backgroundDispatcher) {
+                showLoading()
                 val reminders = localRepo.getAllReminders().sortedBy { it.reminderPosition }
-                _screenState.update { it.copy(reminders = reminders) }
+                _screenState.update { it.copy(reminders = reminders, showLoading = false) }
                 savePositions()
             }
         }
@@ -75,5 +77,9 @@ class RemindersViewModel  @Inject constructor(
                 }
             }
         }
+    }
+
+    fun showLoading() {
+        _screenState.update { it.copy(showLoading = true) }
     }
 }

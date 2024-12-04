@@ -105,12 +105,24 @@ class RemindersTest {
         }
     }
 
+    // Todo Fix or delete this
 //    @Test
 //    fun onReminderNoteDelete() {
 //        launchRemindersScreen(remindersTestRule) {
 //            clickDeleteReminderNote()
 //        } verify {
 //            reminderNoteIsNotShown()
+//        }
+//    }
+
+    // Todo Fix or delete this
+//    @Test
+//    fun onLoadingScreenShoesLoading() {
+//        launchRemindersScreen(remindersTestRule) {
+//            // No action
+//        } verify {
+//            Thread.sleep(2000)
+//            loadingIsShown()
 //        }
 //    }
 }

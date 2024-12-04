@@ -2,6 +2,7 @@ package com.ernestschcneider.remindersapp
 
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.test.assertIsDisplayed
+import androidx.compose.ui.test.assertIsNotDisplayed
 import androidx.compose.ui.test.junit4.AndroidComposeTestRule
 import androidx.compose.ui.test.onChild
 import androidx.compose.ui.test.onChildAt
@@ -89,6 +90,16 @@ class RemindersVerification(
 
     fun reminderListElementIsShown() {
         rule.onNodeWithText("ReminderListTitle")
+            .assertIsDisplayed()
+    }
+
+    fun reminderNoteIsNotShown() {
+        rule.onNodeWithTag("reminderNote")
+            .assertIsNotDisplayed()
+    }
+
+    fun loadingIsShown() {
+        rule.onNodeWithTag("remindersLoading")
             .assertIsDisplayed()
     }
 }
