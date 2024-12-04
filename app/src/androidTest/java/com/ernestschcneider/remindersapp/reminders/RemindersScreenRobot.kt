@@ -1,18 +1,15 @@
-package com.ernestschcneider.remindersapp
+package com.ernestschcneider.remindersapp.reminders
 
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.assertIsNotDisplayed
 import androidx.compose.ui.test.junit4.AndroidComposeTestRule
-import androidx.compose.ui.test.onChild
-import androidx.compose.ui.test.onChildAt
-import androidx.compose.ui.test.onNodeWithContentDescription
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
-import androidx.compose.ui.test.performScrollToNode
 import androidx.test.ext.junit.rules.ActivityScenarioRule
-import com.ernestschcneider.remindersapp.core.view.R.*
+import com.ernestschcneider.remindersapp.core.testtags.*
+import com.ernestschcneider.remindersapp.MainActivity
+
 
 fun launchRemindersScreen(
     rule: AndroidComposeTestRule<ActivityScenarioRule<MainActivity>, MainActivity>,
@@ -26,7 +23,7 @@ class RemindersRobot(
 ) {
 
     fun clickAddButton() {
-        rule.onNodeWithTag("addButton")
+        rule.onNodeWithTag(ADD_REMINDER_BUTTON)
             .performClick()
     }
 
@@ -37,22 +34,22 @@ class RemindersRobot(
     }
 
     fun clickAddReminderNoteButton() {
-        rule.onNodeWithTag("addNoteButton")
+        rule.onNodeWithTag(ADD_NOTE_BUTTON)
             .performClick()
     }
 
     fun clickAddReminderListButton() {
-        rule.onNodeWithTag("addListButton")
+        rule.onNodeWithTag(ADD_LIST_BUTTON)
             .performClick()
     }
 
     fun clickReminderNote() {
-        rule.onNodeWithText("ReminderNoteTitle")
+        rule.onNodeWithText(REMINDER_NOTE_TITLE)
             .performClick()
     }
 
     fun clickReminderList() {
-        rule.onNodeWithText("ReminderListTitle")
+        rule.onNodeWithText(REMINDER_LIST_TITLE)
             .performClick()
     }
 
@@ -65,41 +62,44 @@ class RemindersRobot(
 
 }
 
+
+
+
 class RemindersVerification(
     private val rule: AndroidComposeTestRule<ActivityScenarioRule<MainActivity>, MainActivity>
 ) {
     fun createReminderDialogIsShown() {
-        rule.onNodeWithTag("reminderCreationDialog")
+        rule.onNodeWithTag(REMINDER_CREATION_DIALOG)
             .assertIsDisplayed()
     }
 
     fun reminderNoteIsShown() {
-        rule.onNodeWithTag("reminderNote")
+        rule.onNodeWithTag(REMINDER_NOTE)
             .assertIsDisplayed()
     }
 
     fun reminderListIsShown() {
-        rule.onNodeWithTag("reminderList")
+        rule.onNodeWithTag(REMINDER_LIST)
             .assertIsDisplayed()
     }
 
     fun reminderNoteElementIsShown() {
-        rule.onNodeWithText("ReminderNoteTitle")
+        rule.onNodeWithText(REMINDER_NOTE_TITLE)
             .assertIsDisplayed()
     }
 
     fun reminderListElementIsShown() {
-        rule.onNodeWithText("ReminderListTitle")
+        rule.onNodeWithText(REMINDER_LIST_TITLE)
             .assertIsDisplayed()
     }
 
     fun reminderNoteIsNotShown() {
-        rule.onNodeWithTag("reminderNote")
+        rule.onNodeWithTag(REMINDER_NOTE)
             .assertIsNotDisplayed()
     }
 
     fun loadingIsShown() {
-        rule.onNodeWithTag("remindersLoading")
+        rule.onNodeWithTag(REMINDERS_LOADING)
             .assertIsDisplayed()
     }
 }

@@ -1,8 +1,10 @@
-package com.ernestschcneider.remindersapp
+package com.ernestschcneider.remindersapp.reminders
 
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
 import com.ernestschcneider.models.ReminderListItem
 import com.ernestschcneider.models.ReminderType
+import com.ernestschcneider.remindersapp.MainActivity
+import com.ernestschcneider.remindersapp.core.testtags.*
 import com.ernestschcneider.remindersapp.local.HiltWrapper_LocalModule
 import com.ernestschcneider.remindersapp.local.StorageRepo
 import com.ernestschneider.testutils.InMemoryLocalRepo
@@ -26,14 +28,14 @@ class RemindersTest {
 
     private val reminderNote = ReminderBuilder.aReminder()
         .withId("1")
-        .withReminderTitle("ReminderNoteTitle")
+        .withReminderTitle(REMINDER_NOTE_TITLE)
         .withReminderContent("Content1")
         .withReminderType(ReminderType.Note)
         .build()
 
     private val reminderList = ReminderBuilder.aReminder()
         .withId("2")
-        .withReminderTitle("ReminderListTitle")
+        .withReminderTitle(REMINDER_LIST_TITLE)
         .withReminderType(ReminderType.List)
         .withReminderList(
             arrayListOf(
@@ -117,7 +119,7 @@ class RemindersTest {
 
     // Todo Fix or delete this
 //    @Test
-//    fun onLoadingScreenShoesLoading() {
+//    fun onLoadingScreenShowsLoading() {
 //        launchRemindersScreen(remindersTestRule) {
 //            // No action
 //        } verify {

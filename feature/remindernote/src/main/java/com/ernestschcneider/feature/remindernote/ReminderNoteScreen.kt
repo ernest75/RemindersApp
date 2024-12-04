@@ -28,6 +28,7 @@ import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.ernestschcneider.remindersapp.core.testtags.*
 import com.ernestschcneider.remindersapp.core.view.R
 import com.ernestschcneider.remindersapp.core.view.R.string
 import com.ernestschcneider.remindersapp.core.view.composables.InformativeDialog
@@ -80,7 +81,7 @@ fun ReminderNoteScreenContent(
         modifier = Modifier
             .padding(top = 48.dp)
             .fillMaxSize()
-            .testTag("reminderNote"),
+            .testTag(REMINDER_NOTE),
         floatingActionButtonPosition = FabPosition.Center,
         floatingActionButton = {
             PrimaryButton(
@@ -94,6 +95,7 @@ fun ReminderNoteScreenContent(
         },
         topBar = {
             RemindersTopAppBar(
+                modifier = Modifier.testTag("ReminderNoteTopBar"),
                 onNavigateUp = onNavigateUp,
                 onTitleUpdate = onReminderNoteTitleUpdate,
                 focusRequester = focusRequester,

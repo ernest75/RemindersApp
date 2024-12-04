@@ -18,6 +18,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import com.ernestschcneider.remindersapp.core.testtags.*
 import com.ernestschcneider.remindersapp.core.view.R
 import com.ernestschcneider.remindersapp.core.view.R.string
 import com.ernestschcneider.remindersapp.core.view.composables.PrimaryButton
@@ -34,7 +35,7 @@ fun ReminderCreationDialog(
     BasicAlertDialog(onDismissRequest = onDismiss) {
         Card(
             modifier = modifier.padding(16.dp)
-                .testTag("reminderCreationDialog"),
+                .testTag(REMINDER_CREATION_DIALOG),
             colors = CardColors(
                 containerColor = AppTheme.colorScheme.secondaryContainer,
                 contentColor = AppTheme.colorScheme.scrim,
@@ -68,7 +69,7 @@ fun ReminderCreationDialog(
                     modifier = Modifier
                         .fillMaxWidth()
                         .heightIn(24.dp)
-                        .testTag("addNoteButton"),
+                        .testTag(ADD_NOTE_BUTTON),
                     drawableRes = R.drawable.ic_note_24,
                     textResId = string.reminder_note,
                     contentDescriptionIconId = string.note_icon,
@@ -78,7 +79,7 @@ fun ReminderCreationDialog(
                     modifier = Modifier
                         .fillMaxWidth()
                         .heightIn(24.dp)
-                        .testTag("addListButton"),
+                        .testTag(ADD_LIST_BUTTON),
                     drawableRes = R.drawable.ic_list_bulleted_24,
                     textResId = string.reminder_list,
                     contentDescriptionIconId = string.list_icon,

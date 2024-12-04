@@ -35,6 +35,7 @@ import com.ernestschcneider.feature.reminderlist.views.AddReminderDialog
 import com.ernestschcneider.feature.reminderlist.views.RemindersListItem
 import com.ernestschcneider.models.ReminderListItem
 import com.ernestschcneider.remindersapp.core.states.rememberDragAndDropListState
+import com.ernestschcneider.remindersapp.core.testtags.*
 import com.ernestschcneider.remindersapp.core.view.R
 import com.ernestschcneider.remindersapp.core.view.composables.InformativeDialog
 import com.ernestschcneider.remindersapp.core.view.composables.PrimaryButton
@@ -111,7 +112,7 @@ fun ReminderListScreenContent(
     Scaffold(modifier = Modifier
         .padding(top = 48.dp)
         .fillMaxSize()
-        .testTag("reminderList"),
+        .testTag(REMINDER_LIST),
         topBar = {
         RemindersTopAppBar(
             onNavigateUp = onNavigateUp,
