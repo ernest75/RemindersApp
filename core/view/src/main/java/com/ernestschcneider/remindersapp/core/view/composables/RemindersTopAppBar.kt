@@ -26,10 +26,12 @@ import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalFocusManager
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
+import com.ernestschcneider.remindersapp.core.testtags.*
 import com.ernestschcneider.remindersapp.core.view.R
 import com.ernestschcneider.remindersapp.core.view.theme.AppTheme
 import com.ernestschcneider.remindersapp.core.view.theme.PreviewLightDark
@@ -71,7 +73,8 @@ fun RemindersTopAppBar(
             TextField(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .focusRequester(focusRequester),
+                    .focusRequester(focusRequester)
+                    .testTag(TEXT_INPUT_TOP_BAR),
                 colors = TextFieldDefaults.colors(
                     focusedContainerColor = Color.Transparent,
                     disabledContainerColor = Color.Transparent,

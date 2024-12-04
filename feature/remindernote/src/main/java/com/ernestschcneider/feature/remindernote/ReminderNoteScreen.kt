@@ -87,7 +87,8 @@ fun ReminderNoteScreenContent(
             PrimaryButton(
                 modifier = Modifier
                     .padding(top = 48.dp)
-                    .fillMaxWidth(),
+                    .fillMaxWidth()
+                    .testTag(REMINDER_NOTE_SAVE_BUTTON),
                 label = stringResource(id = string.save_changes),
                 onClick = onReminderNoteSaved,
                 isVisible = state.showSaveButton
@@ -95,7 +96,7 @@ fun ReminderNoteScreenContent(
         },
         topBar = {
             RemindersTopAppBar(
-                modifier = Modifier.testTag("ReminderNoteTopBar"),
+                modifier = Modifier.testTag(REMINDER_NOTE_TOP_BAR),
                 onNavigateUp = onNavigateUp,
                 onTitleUpdate = onReminderNoteTitleUpdate,
                 focusRequester = focusRequester,
@@ -111,7 +112,9 @@ fun ReminderNoteScreenContent(
                 .background(AppTheme.colorScheme.secondaryContainer)
         ) {
             TextField(
-                modifier = Modifier.fillMaxWidth(),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .testTag(REMINDER_NOTE_TEXT_FIELD),
                 value = TextFieldValue(
                     text = state.reminderContent,
                     selection = TextRange(state.reminderContent.length)
