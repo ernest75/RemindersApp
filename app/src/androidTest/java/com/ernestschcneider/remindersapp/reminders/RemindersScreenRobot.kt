@@ -21,7 +21,6 @@ fun launchRemindersScreen(
 class RemindersRobot(
     private val rule: AndroidComposeTestRule<ActivityScenarioRule<MainActivity>, MainActivity>
 ) {
-
     fun clickAddButton() {
         rule.onNodeWithTag(ADD_REMINDER_BUTTON)
             .performClick()
@@ -57,11 +56,7 @@ class RemindersRobot(
         rule.onNodeWithTag(REMINDERS_ITEM_DELETE_ICON + reminderId)
             .performClick()
     }
-
 }
-
-
-
 
 class RemindersVerification(
     private val rule: AndroidComposeTestRule<ActivityScenarioRule<MainActivity>, MainActivity>

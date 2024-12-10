@@ -1,15 +1,10 @@
 package com.ernestschneider.testutils
 
-import android.util.Log
 import com.ernestschcneider.models.Reminder
 import com.ernestschcneider.models.ReminderListItem
-import com.ernestschcneider.models.ReminderType
 import com.ernestschcneider.remindersapp.local.StorageRepo
-import kotlinx.coroutines.delay
 
 class InMemoryLocalRepo(private val reminders: MutableList<Reminder> = mutableListOf()) : StorageRepo {
-
-    private var responseDelay: Long = 0L
 
     override suspend fun getAllReminders(): List<Reminder> {
         return reminders
@@ -21,8 +16,6 @@ class InMemoryLocalRepo(private val reminders: MutableList<Reminder> = mutableLi
 
     override suspend fun deleteReminder(reminder: Reminder) {
         reminders.removeAt(reminder.reminderPosition)
-        val remindersJoer = reminders
-        println(remindersJoer.size)
     }
 
     override suspend fun getReminder(reminderId: String): Reminder {
