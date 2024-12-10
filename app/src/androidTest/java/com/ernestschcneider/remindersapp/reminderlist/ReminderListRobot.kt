@@ -34,7 +34,7 @@ class ReminderListRobot(
 
     fun addTitle() {
         rule.onNodeWithTag(TEXT_INPUT_TOP_BAR)
-            .performTextInput(TEX_TEST)
+            .performTextInput(TEX_INPUT_FOR_TEST)
     }
 }
 

@@ -1,20 +1,14 @@
 package com.ernestschcneider.remindersapp.remindernote
 
-import androidx.compose.ui.test.assertAll
-import androidx.compose.ui.test.assertAny
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.assertIsNotDisplayed
-import androidx.compose.ui.test.isDialog
 import androidx.compose.ui.test.junit4.AndroidComposeTestRule
-import androidx.compose.ui.test.onAllNodesWithTag
-import androidx.compose.ui.test.onChildAt
-import androidx.compose.ui.test.onChildren
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
-import androidx.compose.ui.test.performImeAction
 import androidx.compose.ui.test.performTextInput
 import androidx.test.ext.junit.rules.ActivityScenarioRule
+import com.ernestschcneider.models.Reminder
 import com.ernestschcneider.remindersapp.MainActivity
 import com.ernestschcneider.remindersapp.core.testtags.*
 import com.ernestschcneider.remindersapp.reminders.launchRemindersScreen
@@ -31,6 +25,16 @@ fun launchReminderNoteScreenWithoutNote(
   return ReminderNoteRobot(rule).apply(block)
 }
 
+fun launchReminderNoteScreenWithNote(
+    rule: AndroidComposeTestRule<ActivityScenarioRule<MainActivity>, MainActivity>,
+    block: ReminderNoteRobot.() -> Unit
+): ReminderNoteRobot {
+    launchRemindersScreen(rule) {
+        clickReminderNote()
+    }
+    return ReminderNoteRobot(rule).apply(block)
+}
+
 
 class ReminderNoteRobot(
     private val rule: AndroidComposeTestRule<ActivityScenarioRule<MainActivity>, MainActivity>
@@ -45,12 +49,12 @@ class ReminderNoteRobot(
         rule.onNodeWithTag(REMINDER_NOTE_TOP_BAR)
             .performClick()
         rule.onNodeWithTag(TEXT_INPUT_TOP_BAR)
-            .performTextInput(TEX_TEST)
+            .performTextInput(TEX_INPUT_FOR_TEST)
     }
 
     fun clickAddNote() {
         rule.onNodeWithTag(REMINDER_NOTE_TEXT_FIELD)
-            .performTextInput(TEX_TEST)
+            .performTextInput(TEX_INPUT_FOR_TEST)
     }
 
     fun clickOnSaveButton() {
@@ -64,12 +68,12 @@ class ReminderNoteVerification(
 ) {
 
     fun reminderNoteTitleIsShown() {
-        rule.onNodeWithText(TEX_TEST)
+        rule.onNodeWithText(TEX_INPUT_FOR_TEST)
             .assertIsDisplayed()
     }
 
     fun reminderNoteIsShown() {
-        rule.onNodeWithText(TEX_TEST)
+        rule.onNodeWithText(TEX_INPUT_FOR_TEST)
             .assertIsDisplayed()
     }
 
@@ -86,5 +90,20 @@ class ReminderNoteVerification(
     fun reminderNoteNoTitleDialogIsNotShown() {
         rule.onNodeWithTag(INFORMATIVE_DIALOG)
             .assertIsNotDisplayed()
+    }
+
+    fun existingReminderCorrectFieldsShown(reminderNote: Reminder) {
+        rule.onNodeWithText(reminderNote.reminderTitle).assertIsDisplayed()
+        rule.onNodeWithText(reminderNote.reminderContent).assertIsDisplayed()
+    }
+
+    fun reminderNoteModifiedTitleIsShown(reminderOldTitle: String) {
+        rule.onNodeWithText(reminderOldTitle + TEX_INPUT_FOR_TEST)
+            .assertIsDisplayed()
+    }
+
+    fun reminderNoteModifiedContentIsShown(reminderOldContent: String) {
+        rule.onNodeWithText(reminderOldContent + TEX_INPUT_FOR_TEST)
+            .assertIsDisplayed()
     }
 }

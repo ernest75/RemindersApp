@@ -3,6 +3,7 @@ package com.ernestschcneider.remindersapp.remindernote
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
 import com.ernestschcneider.models.ReminderType
 import com.ernestschcneider.remindersapp.MainActivity
+import com.ernestschcneider.remindersapp.core.testtags.REMINDER_NOTE_TITLE
 import com.ernestschcneider.remindersapp.local.HiltWrapper_LocalModule
 import com.ernestschcneider.remindersapp.local.StorageRepo
 import com.ernestschneider.testutils.InMemoryLocalRepo
@@ -26,9 +27,10 @@ class ReminderNoteTest {
 
     private val reminderNote = ReminderBuilder.aReminder()
         .withId("1")
-        .withReminderTitle("Title1")
+        .withReminderTitle(REMINDER_NOTE_TITLE)
         .withReminderContent("Content1")
         .withReminderType(ReminderType.Note)
+        .withReminderPosition(0)
         .build()
 
     private val remindersList = mutableListOf(reminderNote)
@@ -83,6 +85,35 @@ class ReminderNoteTest {
             clickOnSaveButton()
         } verify {
             reminderNoteNoTitleDialogIsShown()
+        }
+    }
+
+    @Test
+    fun existingReminderNote() {
+        launchReminderNoteScreenWithNote(reminderNoteTestRule) {
+            /// No Action
+        } verify {
+            existingReminderCorrectFieldsShown(reminderNote)
+        }
+    }
+
+    @Test
+    fun modifyReminderNoteTitle() {
+        launchReminderNoteScreenWithNote(reminderNoteTestRule) {
+            clickAddTitle()
+        } verify {
+            reminderNoteModifiedTitleIsShown(reminderNote.reminderTitle)
+            reminderNoteSaveButtonIsShown()
+        }
+    }
+
+    @Test
+    fun modifyReminderNoteContent() {
+        launchReminderNoteScreenWithNote(reminderNoteTestRule) {
+            clickAddNote()
+        } verify {
+            reminderNoteModifiedContentIsShown(reminderNote.reminderContent)
+            reminderNoteSaveButtonIsShown()
         }
     }
 }
