@@ -15,11 +15,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.ernestschcneider.models.Reminder
 import com.ernestschcneider.models.ReminderType
+import com.ernestschcneider.remindersapp.core.testtags.REMINDERS_ITEM_DELETE_ICON
 import com.ernestschcneider.remindersapp.core.view.R
 import com.ernestschcneider.remindersapp.core.view.theme.AppTheme
 import com.ernestschcneider.remindersapp.core.view.theme.PreviewLightDark
@@ -62,7 +64,8 @@ fun RemindersItem(
         Image(
             modifier = Modifier
                 .padding(end = 8.dp)
-                .clickable { onDeleteItemClicked(item) },
+                .clickable { onDeleteItemClicked(item) }
+                .testTag(REMINDERS_ITEM_DELETE_ICON + item.reminderId),
             painter = painterResource(id = R.drawable.ic_delete_outline_24),
             contentDescription = stringResource(
                 id = R.string.delete_icon

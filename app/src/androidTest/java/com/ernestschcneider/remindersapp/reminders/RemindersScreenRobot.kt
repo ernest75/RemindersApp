@@ -53,11 +53,9 @@ class RemindersRobot(
             .performClick()
     }
 
-    // TODO try to fix this, how to access to children's of lazylist custom actions
-    fun clickDeleteReminderNote() {
-//        val deleteIconContentDescription = rule.activity.getString(string.delete_icon)
-//        rule.onNodeWithContentDescription(deleteIconContentDescription).performClick()
-     //   rule.onNodeWithTag("remindersList").performScrollToNode().on
+    fun clickDeleteRemindersItem(reminderId: String) {
+        rule.onNodeWithTag(REMINDERS_ITEM_DELETE_ICON + reminderId)
+            .performClick()
     }
 
 }
@@ -94,12 +92,12 @@ class RemindersVerification(
     }
 
     fun reminderNoteIsNotShown() {
-        rule.onNodeWithTag(REMINDER_NOTE)
+        rule.onNodeWithText(REMINDER_NOTE_TITLE)
             .assertIsNotDisplayed()
     }
 
-    fun loadingIsShown() {
-        rule.onNodeWithTag(REMINDERS_LOADING)
-            .assertIsDisplayed()
+    fun reminderListIsNotShown() {
+        rule.onNodeWithText(REMINDER_LIST_TITLE)
+            .assertIsNotDisplayed()
     }
 }

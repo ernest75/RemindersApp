@@ -28,11 +28,16 @@ class RemindersViewModelTest {
         .withId("1")
         .withReminderTitle("Title1")
         .withReminderContent("Content1")
+        .withReminderPosition(0)
         .withReminderType(ReminderType.Note)
         .build()
 
-    private val reminderList1 = ReminderBuilder.aReminder().withId("2").withReminderTitle("Title2")
-        .withReminderType(ReminderType.List).withReminderList(
+    private val reminderList1 = ReminderBuilder.aReminder()
+        .withId("2")
+        .withReminderTitle("Title2")
+        .withReminderType(ReminderType.List)
+        .withReminderPosition(1)
+        .withReminderList(
             arrayListOf(
                 ReminderListItem(position = 0, text = "Element1"),
                 ReminderListItem(position = 1, text = "Element2")

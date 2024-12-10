@@ -4,7 +4,8 @@ import androidx.compose.ui.test.junit4.createAndroidComposeRule
 import com.ernestschcneider.models.ReminderListItem
 import com.ernestschcneider.models.ReminderType
 import com.ernestschcneider.remindersapp.MainActivity
-import com.ernestschcneider.remindersapp.core.testtags.*
+import com.ernestschcneider.remindersapp.core.testtags.REMINDER_LIST_TITLE
+import com.ernestschcneider.remindersapp.core.testtags.REMINDER_NOTE_TITLE
 import com.ernestschcneider.remindersapp.local.HiltWrapper_LocalModule
 import com.ernestschcneider.remindersapp.local.StorageRepo
 import com.ernestschneider.testutils.InMemoryLocalRepo
@@ -31,12 +32,14 @@ class RemindersTest {
         .withReminderTitle(REMINDER_NOTE_TITLE)
         .withReminderContent("Content1")
         .withReminderType(ReminderType.Note)
+        .withReminderPosition(0)
         .build()
 
     private val reminderList = ReminderBuilder.aReminder()
         .withId("2")
         .withReminderTitle(REMINDER_LIST_TITLE)
         .withReminderType(ReminderType.List)
+        .withReminderPosition(1)
         .withReminderList(
             arrayListOf(
                 ReminderListItem(position = 0, text = "Element1"),
@@ -61,7 +64,7 @@ class RemindersTest {
 
     @Test
     fun onAddReminderNoteAddsReminder() {
-        launchRemindersScreen(remindersTestRule){
+        launchRemindersScreen(remindersTestRule) {
             clickAddButton()
             clickAddReminderNoteButton()
         } verify {
@@ -82,7 +85,7 @@ class RemindersTest {
     @Test
     fun onListRemindersShown() {
         launchRemindersScreen(remindersTestRule) {
-        // No operation
+            // No operation
         } verify {
             reminderNoteElementIsShown()
             reminderListElementIsShown()
@@ -107,25 +110,22 @@ class RemindersTest {
         }
     }
 
-    // Todo Fix or delete this
-//    @Test
-//    fun onReminderNoteDelete() {
-//        launchRemindersScreen(remindersTestRule) {
-//            clickDeleteReminderNote()
-//        } verify {
-//            reminderNoteIsNotShown()
-//        }
-//    }
+    @Test
+    fun onReminderNoteDelete() {
+        launchRemindersScreen(remindersTestRule) {
+            clickDeleteRemindersItem(reminderNote.reminderId)
+        } verify {
+            reminderNoteIsNotShown()
+        }
+    }
 
-    // Todo Fix or delete this
-//    @Test
-//    fun onLoadingScreenShowsLoading() {
-//        launchRemindersScreen(remindersTestRule) {
-//            // No action
-//        } verify {
-//            Thread.sleep(2000)
-//            loadingIsShown()
-//        }
-//    }
+    @Test
+    fun onReminderListDelete() {
+        launchRemindersScreen(remindersTestRule) {
+            clickDeleteRemindersItem(reminderList.reminderId)
+        } verify {
+            reminderListIsNotShown()
+        }
+    }
 }
 
