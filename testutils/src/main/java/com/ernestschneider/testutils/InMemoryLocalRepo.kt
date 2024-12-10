@@ -2,11 +2,9 @@ package com.ernestschneider.testutils
 
 import com.ernestschcneider.models.Reminder
 import com.ernestschcneider.models.ReminderListItem
-import com.ernestschcneider.models.ReminderType
 import com.ernestschcneider.remindersapp.local.StorageRepo
 
 class InMemoryLocalRepo(private val reminders: MutableList<Reminder> = mutableListOf()) : StorageRepo {
-
 
     override suspend fun getAllReminders(): List<Reminder> {
         return reminders
@@ -17,7 +15,7 @@ class InMemoryLocalRepo(private val reminders: MutableList<Reminder> = mutableLi
     }
 
     override suspend fun deleteReminder(reminder: Reminder) {
-        reminders.remove(reminder)
+        reminders.removeAt(reminder.reminderPosition)
     }
 
     override suspend fun getReminder(reminderId: String): Reminder {

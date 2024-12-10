@@ -25,14 +25,13 @@ class RemindersViewModel  @Inject constructor(
 
     fun loadReminders() {
         viewModelScope.launch {
-            withContext(backgroundDispatcher) {
-                showLoading()
-                val reminders = localRepo.getAllReminders().sortedBy { it.reminderPosition }
-                _screenState.update { it.copy(reminders = reminders, showLoading = false) }
-                savePositions()
+            showLoading()
+            val reminders = withContext(backgroundDispatcher) {
+                localRepo.getAllReminders().sortedBy { it.reminderPosition }
             }
+            _screenState.update { it.copy(reminders = reminders, showLoading = false) }
+            savePositions()
         }
-
     }
 
     fun removeItem(item: Reminder) {
@@ -71,7 +70,7 @@ class RemindersViewModel  @Inject constructor(
     private fun savePositions() {
         viewModelScope.launch {
             withContext(backgroundDispatcher) {
-                val list = _screenState.value.reminders
+                val list = screenState.value.reminders
                 list.forEachIndexed { index, reminder ->
                     localRepo.updateReminderPosition(index, reminder.reminderId)
                 }
