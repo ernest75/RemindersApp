@@ -170,7 +170,8 @@ fun ReminderListScreenContent(
                 item {
                     AddReminder(
                         modifier = Modifier.padding(top = 24.dp),
-                        onAddReminderClicked = onAddFirstReminder
+                        onAddReminderClicked = onAddFirstReminder,
+                        testTag = ADD_FIRST_ON_REMINDER_LIST_BUTTON
                     )
                 }
                 itemsIndexed(screenState.remindersList) { index, item ->
@@ -193,7 +194,8 @@ fun ReminderListScreenContent(
                 item {
                     AddReminder(
                         modifier = Modifier.padding(bottom = 24.dp),
-                        onAddReminderClicked = onAddLastReminder
+                        onAddReminderClicked = onAddLastReminder,
+                        testTag = ADD_LAST_ON_REMINDER_LIST_BUTTON
                     )
                 }
                 item {

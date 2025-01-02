@@ -24,11 +24,13 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.ernestschcneider.models.ReminderListItem
+import com.ernestschcneider.remindersapp.core.testtags.REMINDERS_ITEM_DELETE_ICON
 import com.ernestschcneider.remindersapp.core.view.R
 import com.ernestschcneider.remindersapp.core.view.theme.AppTheme
 import com.ernestschcneider.remindersapp.core.view.theme.PreviewLightDark
@@ -99,6 +101,7 @@ fun RemindersListItem(
                             .padding(end = 16.dp)
                             .size(16.dp)
                             .clickable { deleteReminder(item) }
+                            .testTag(REMINDERS_ITEM_DELETE_ICON + item.position)
                     )
                 }
 
