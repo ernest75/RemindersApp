@@ -31,12 +31,14 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.platform.LocalWindowInfo
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextRange
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import com.ernestschcneider.models.ReminderListItem
+import com.ernestschcneider.remindersapp.core.testtags.*
 import com.ernestschcneider.remindersapp.core.view.R
 import com.ernestschcneider.remindersapp.core.view.composables.PrimaryButton
 import com.ernestschcneider.remindersapp.core.view.theme.AppTheme
@@ -98,7 +100,8 @@ fun AddReminderDialog(
                 TextField(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .focusRequester(focusRequester),
+                        .focusRequester(focusRequester)
+                        .testTag(ADD_REMINDER_DIALOG_TEXT_FIELD),
                     colors = TextFieldDefaults.colors(
                         focusedContainerColor = Color.Transparent,
                         disabledContainerColor = Color.Transparent,
@@ -139,7 +142,9 @@ fun AddReminderDialog(
                 Row(modifier = Modifier.fillMaxWidth()) {
                     Spacer(Modifier.weight(0.5F))
                     PrimaryButton(
-                        modifier = Modifier.padding(end = 4.dp),
+                        modifier = Modifier
+                            .padding(end = 4.dp)
+                            .testTag(ADD_REMINDER_DIALOG_OK_BUTTON),
                         label = stringResource(id = R.string.ok),
                         onClick = {
                             onSaveReminderClicked(
@@ -155,6 +160,8 @@ fun AddReminderDialog(
                         }
                     )
                     PrimaryButton(
+                        modifier = Modifier
+                            .testTag(ADD_REMINDER_DIALOG_CANCEL_BUTTON),
                         label = stringResource(id = R.string.cancel),
                         onClick = onDismiss
                     )
