@@ -167,3 +167,18 @@ private fun NoteCreationScreenPreview() {
         )
     }
 }
+
+@PreviewLightDark
+@Composable
+private fun NoteCreationScreenEmptyDialogPreview() {
+    AppTheme {
+        ReminderNoteScreenContent(
+            onNavigateUp = {},
+            onReminderNoteContentUpdate = {},
+            state = ReminderNoteState(showEmptyTitleDialog = true, showSaveButton = true),
+            onReminderNoteSaved = {},
+            onReminderNoteTitleUpdate = {},
+            onDismissEmptyTitleDialog = {}
+        )
+    }
+}
