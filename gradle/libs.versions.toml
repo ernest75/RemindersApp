@@ -28,6 +28,7 @@ ktlintVersion = "11.0.0"
 junitJupiterVersion = "5.8.2"
 gsonVersion = "2.11.0"
 mockitoVersion= "5.2.1"
+paparazziVersion = "1.3.1"
 
 [libraries]
 androidx-ktx = { module = "androidx.core:core-ktx", version.ref = "androidxCoreKtxVersion" }
@@ -96,3 +97,4 @@ parcelable = { id = "org.jetbrains.kotlin.plugin.parcelize", version.ref = "kotl
 compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlinVersion" }
 hilt-android = { id = "com.google.dagger.hilt.android", version.ref = "hiltVersion" }
 ktlint = { id = "org.jlleitschuh.gradle.ktlint", version.ref = "ktlintVersion"}
+paparazzi = { id = "app.cash.paparazzi", version.ref = "paparazziVersion" }
