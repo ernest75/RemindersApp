@@ -248,12 +248,32 @@ internal fun RemindersScreenContent(
 
 @Composable
 @PreviewLightDark
-private fun RemaindersScreenPreview() {
+private fun RemaindersScreenEmptyPreview() {
     AppTheme {
         RemindersScreenContent(
             onNavigateUp = {},
             onReminderClicked = {},
             screenState = RemindersScreenState(showLoading = true),
+            onDeleteItemClicked = {},
+            onAddButtonClicked = {},
+            onDismissDialog = {},
+            onReminderCreationClick = {},
+            onListReminderCreationClick = {},
+            onListReminderClick = {},
+            onMoveReminder = { _, _ -> },
+            onReminderMoved = {}
+        )
+    }
+}
+
+@Composable
+@PreviewLightDark
+private fun RemaindersScreenNotEmptyPreview() {
+    AppTheme {
+        RemindersScreenContent(
+            onNavigateUp = {},
+            onReminderClicked = {},
+            screenState = RemindersScreenState(reminders = listOf(Reminder(reminderTitle = "Title1"))),
             onDeleteItemClicked = {},
             onAddButtonClicked = {},
             onDismissDialog = {},

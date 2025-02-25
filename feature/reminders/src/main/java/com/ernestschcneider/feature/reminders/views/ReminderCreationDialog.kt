@@ -11,7 +11,6 @@ import androidx.compose.material3.BasicAlertDialog
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardColors
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -56,12 +55,12 @@ fun ReminderCreationDialog(
                 )
                 {
                     RemindersText(
-                        textId = string.new_reminder,
+                        text = stringResource(id = string.new_reminder),
                         style = AppTheme.typography.titleLarge,
                     )
 
                     RemindersText(
-                        textId = string.new_reminder_explanation,
+                        text = stringResource(id = string.new_reminder_explanation),
                         style = AppTheme.typography.paragraph
                     )
                 }
