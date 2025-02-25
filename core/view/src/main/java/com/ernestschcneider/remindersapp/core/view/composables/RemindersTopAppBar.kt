@@ -15,6 +15,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Icon
+import androidx.compose.material3.LocalTextStyle
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
@@ -30,6 +31,7 @@ import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import com.ernestschcneider.remindersapp.core.testtags.*
 import com.ernestschcneider.remindersapp.core.view.R
@@ -66,11 +68,12 @@ fun RemindersTopAppBar(
                     modifier = Modifier
                         .padding(start = 16.dp)
                         .align(Alignment.Center)
-                        .size(24.dp)
+                        .size(24.dp),
+                    tint = AppTheme.colorScheme.contentTint
                 )
             }
             Spacer(modifier = Modifier.width(12.dp))
-            TextField(
+            RemindersTextField(
                 modifier = Modifier
                     .fillMaxWidth()
                     .focusRequester(focusRequester)
@@ -82,17 +85,20 @@ fun RemindersTopAppBar(
                     focusedIndicatorColor = Color.Transparent,
                     unfocusedIndicatorColor = Color.Transparent,
                     disabledIndicatorColor = Color.Transparent,
+                    unfocusedTextColor = AppTheme.colorScheme.contentTint,
+                    focusedTextColor = AppTheme.colorScheme.contentTint
                 ),
                 placeholder = {
-                    Text(
-                        text = stringResource(id = titlePlaceHolderId),
-                        color = AppTheme.colorScheme.secondary
+                    RemindersText(
+                        textId = titlePlaceHolderId
                     )
                 },
                 textStyle = AppTheme.typography.labelLarge,
-                value = value,
+                value = TextFieldValue(
+                    text =value
+                ),
                 onValueChange = {
-                    onTitleUpdate(it)
+                    onTitleUpdate(it.text)
                 },
                 keyboardOptions = KeyboardOptions(
                     imeAction = ImeAction.Done
@@ -113,6 +119,7 @@ fun RemindersTopAppBar(
 @PreviewLightDark
 @Composable
 private fun ReminderTopAppBar() {
+    AppTheme {
     RemindersTopAppBar(
         onNavigateUp = {},
         onTitleUpdate = {},
@@ -120,4 +127,5 @@ private fun ReminderTopAppBar() {
         value = "Title",
         titlePlaceHolderId = R.string.type_reminder_title
     )
+    }
 }

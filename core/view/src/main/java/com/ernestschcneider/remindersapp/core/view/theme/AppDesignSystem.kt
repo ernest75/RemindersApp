@@ -23,7 +23,7 @@ data class AppColorScheme(
     val secondaryContainer: Color,
     val scrim: Color,
     val surfaceContainerLowest: Color,
-    val iconTint: Color
+    val contentTint: Color
 )
 
 @Stable
@@ -66,7 +66,7 @@ val LocalAppColorScheme = staticCompositionLocalOf {
         secondaryContainer = Color.Unspecified,
         scrim = Color.Unspecified,
         surfaceContainerLowest = Color.Unspecified,
-        iconTint = Color.Unspecified
+        contentTint = Color.Unspecified
     )
 }
 

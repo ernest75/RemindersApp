@@ -33,6 +33,7 @@ import com.ernestschcneider.remindersapp.core.view.R
 import com.ernestschcneider.remindersapp.core.view.R.string
 import com.ernestschcneider.remindersapp.core.view.composables.InformativeDialog
 import com.ernestschcneider.remindersapp.core.view.composables.PrimaryButton
+import com.ernestschcneider.remindersapp.core.view.composables.RemindersTextField
 import com.ernestschcneider.remindersapp.core.view.composables.RemindersTopAppBar
 import com.ernestschcneider.remindersapp.core.view.theme.AppTheme
 import com.ernestschcneider.remindersapp.core.view.theme.PreviewLightDark
@@ -111,7 +112,7 @@ fun ReminderNoteScreenContent(
                 .fillMaxSize()
                 .background(AppTheme.colorScheme.secondaryContainer)
         ) {
-            TextField(
+            RemindersTextField(
                 modifier = Modifier
                     .fillMaxWidth()
                     .testTag(REMINDER_NOTE_TEXT_FIELD),
@@ -125,7 +126,9 @@ fun ReminderNoteScreenContent(
                     disabledContainerColor = AppTheme.colorScheme.secondaryContainer,
                     unfocusedContainerColor = AppTheme.colorScheme.secondaryContainer,
                     focusedIndicatorColor = Color.Transparent,
-                    unfocusedIndicatorColor = Color.Transparent
+                    unfocusedIndicatorColor = Color.Transparent,
+                    focusedTextColor = AppTheme.colorScheme.contentTint,
+                    unfocusedTextColor = AppTheme.colorScheme.contentTint
                 ),
                 keyboardOptions = KeyboardOptions(
                     imeAction = ImeAction.Done

@@ -3,7 +3,6 @@ package com.ernestschcneider.remindersapp.core.view.theme
 import androidx.compose.foundation.LocalIndication
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.ripple.LocalRippleTheme
 import androidx.compose.material.ripple.rememberRipple
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
@@ -26,7 +25,7 @@ private val darkColorScheme = AppColorScheme(
     secondaryContainer = secondaryContainerDark,
     scrim = scrimDark,
     surfaceContainerLowest = surfaceContainerLowestDark,
-    iconTint = iconTintDark
+    contentTint = iconTintDark
 )
 
 private val lightColorScheme = AppColorScheme(
@@ -43,7 +42,7 @@ private val lightColorScheme = AppColorScheme(
     secondaryContainer = secondaryContainerLight,
     scrim = scrimLight,
     surfaceContainerLowest = surfaceContainerLowestLight,
-    iconTint = iconTintLight
+    contentTint = iconTintLight
 )
 
 private val typography = AppTypography(

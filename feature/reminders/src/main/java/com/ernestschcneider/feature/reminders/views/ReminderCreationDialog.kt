@@ -22,6 +22,7 @@ import com.ernestschcneider.remindersapp.core.testtags.*
 import com.ernestschcneider.remindersapp.core.view.R
 import com.ernestschcneider.remindersapp.core.view.R.string
 import com.ernestschcneider.remindersapp.core.view.composables.PrimaryButton
+import com.ernestschcneider.remindersapp.core.view.composables.RemindersText
 import com.ernestschcneider.remindersapp.core.view.theme.AppTheme
 import com.ernestschcneider.remindersapp.core.view.theme.PreviewLightDark
 
@@ -54,13 +55,13 @@ fun ReminderCreationDialog(
                     verticalArrangement = Arrangement.spacedBy(28.dp)
                 )
                 {
-                    Text(
-                        text = stringResource(id = string.new_reminder),
+                    RemindersText(
+                        textId = string.new_reminder,
                         style = AppTheme.typography.titleLarge,
                     )
 
-                    Text(
-                        text = stringResource(id = string.new_reminder_explanation),
+                    RemindersText(
+                        textId = string.new_reminder_explanation,
                         style = AppTheme.typography.paragraph
                     )
                 }

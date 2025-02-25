@@ -138,7 +138,7 @@ internal fun RemindersScreenContent(
                             contentDescription = stringResource(
                                 id = R.string.close_icon
                             ),
-                            tint = AppTheme.colorScheme.iconTint
+                            tint = AppTheme.colorScheme.contentTint
                         )
                     }
                 },
