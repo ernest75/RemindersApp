@@ -134,9 +134,11 @@ internal fun RemindersScreenContent(
                 navigationIcon = {
                     IconButton(onClick = onNavigateUp) {
                         Icon(
-                            imageVector = Icons.Default.Close, contentDescription = stringResource(
+                            imageVector = Icons.Filled.Close,
+                            contentDescription = stringResource(
                                 id = R.string.close_icon
-                            )
+                            ),
+                            tint = AppTheme.colorScheme.iconTint
                         )
                     }
                 },
