@@ -20,6 +20,7 @@ import androidx.compose.ui.unit.dp
 import com.ernestschcneider.remindersapp.core.testtags.*
 import com.ernestschcneider.remindersapp.core.view.R
 import com.ernestschcneider.remindersapp.core.view.theme.AppTheme
+import com.ernestschcneider.remindersapp.core.view.theme.PreviewLightDark
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -48,12 +49,12 @@ fun InformativeDialog(
                 verticalArrangement = Arrangement.spacedBy(28.dp),
 
                 ) {
-                Text(
-                    text = stringResource(id = titleId),
+                RemindersText(
+                    textId = titleId,
                     style = AppTheme.typography.titleLarge,
                 )
-                Text(
-                    text = stringResource(id = explanationId),
+                RemindersText(
+                    textId = explanationId,
                     style = AppTheme.typography.paragraph
                 )
                 PrimaryButton(
@@ -66,12 +67,14 @@ fun InformativeDialog(
     }
 }
 
-@Preview
+@PreviewLightDark
 @Composable
 fun PreviewInformativeDialog() {
-    InformativeDialog(
-        onDismiss = {},
-        titleId = R.string.close_icon,
-        explanationId = R.string.app_name
-    )
+    AppTheme {
+        InformativeDialog(
+            onDismiss = {},
+            titleId = R.string.close_icon,
+            explanationId = R.string.app_name
+        )
+    }
 }
