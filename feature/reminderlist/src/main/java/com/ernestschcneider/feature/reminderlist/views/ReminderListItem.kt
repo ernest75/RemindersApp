@@ -32,6 +32,7 @@ import androidx.compose.ui.unit.dp
 import com.ernestschcneider.models.ReminderListItem
 import com.ernestschcneider.remindersapp.core.testtags.REMINDERS_ITEM_DELETE_ICON
 import com.ernestschcneider.remindersapp.core.view.R
+import com.ernestschcneider.remindersapp.core.view.composables.RemindersText
 import com.ernestschcneider.remindersapp.core.view.theme.AppTheme
 import com.ernestschcneider.remindersapp.core.view.theme.PreviewLightDark
 
@@ -71,13 +72,13 @@ fun RemindersListItem(
                     } else {
                         item.text
                     }
-                    Text(
+                    RemindersText(
                         modifier = Modifier
                             .padding(start = 16.dp),
                         text = textLimited,
                         style = AppTheme.typography.labelLarge,
                         maxLines = 1,
-                        overflow = TextOverflow.Ellipsis,
+                        overflow = TextOverflow.Ellipsis
                     )
                     Spacer(
                         Modifier
@@ -91,7 +92,8 @@ fun RemindersListItem(
                             .align(Alignment.CenterVertically)
                             .padding(end = 16.dp)
                             .size(16.dp)
-                            .clickable { editReminder(item) }
+                            .clickable { editReminder(item) },
+                        tint = AppTheme.colorScheme.contentTint
                     )
                     Icon(
                         painter = painterResource(id = R.drawable.ic_delete_outline_24),
@@ -101,7 +103,8 @@ fun RemindersListItem(
                             .padding(end = 16.dp)
                             .size(16.dp)
                             .clickable { deleteReminder(item) }
-                            .testTag(REMINDERS_ITEM_DELETE_ICON + item.position)
+                            .testTag(REMINDERS_ITEM_DELETE_ICON + item.position),
+                        tint = AppTheme.colorScheme.contentTint
                     )
                 }
 
@@ -121,7 +124,7 @@ fun RemindersListItem(
 private fun ReminderListItemPreview() {
     AppTheme {
         RemindersListItem(
-            item = ReminderListItem(),
+            item = ReminderListItem(text = "hello"),
             editReminder = {},
             deleteReminder = {},
             crossReminder = {}

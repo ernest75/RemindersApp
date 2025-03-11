@@ -22,7 +22,8 @@ data class AppColorScheme(
     val onSurfaceBright: Color,
     val secondaryContainer: Color,
     val scrim: Color,
-    val surfaceContainerLowest: Color
+    val surfaceContainerLowest: Color,
+    val contentTint: Color
 )
 
 @Stable
@@ -64,7 +65,8 @@ val LocalAppColorScheme = staticCompositionLocalOf {
         onSurfaceBright = Color.Unspecified,
         secondaryContainer = Color.Unspecified,
         scrim = Color.Unspecified,
-        surfaceContainerLowest = Color.Unspecified
+        surfaceContainerLowest = Color.Unspecified,
+        contentTint = Color.Unspecified
     )
 }
 

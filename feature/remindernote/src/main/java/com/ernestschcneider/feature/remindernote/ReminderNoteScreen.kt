@@ -10,7 +10,6 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.FabPosition
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -28,11 +27,15 @@ import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.ernestschcneider.remindersapp.core.testtags.*
+import com.ernestschcneider.remindersapp.core.testtags.REMINDER_NOTE
+import com.ernestschcneider.remindersapp.core.testtags.REMINDER_NOTE_SAVE_BUTTON
+import com.ernestschcneider.remindersapp.core.testtags.REMINDER_NOTE_TEXT_FIELD
+import com.ernestschcneider.remindersapp.core.testtags.REMINDER_NOTE_TOP_BAR
 import com.ernestschcneider.remindersapp.core.view.R
 import com.ernestschcneider.remindersapp.core.view.R.string
 import com.ernestschcneider.remindersapp.core.view.composables.InformativeDialog
 import com.ernestschcneider.remindersapp.core.view.composables.PrimaryButton
+import com.ernestschcneider.remindersapp.core.view.composables.RemindersTextField
 import com.ernestschcneider.remindersapp.core.view.composables.RemindersTopAppBar
 import com.ernestschcneider.remindersapp.core.view.theme.AppTheme
 import com.ernestschcneider.remindersapp.core.view.theme.PreviewLightDark
@@ -111,7 +114,7 @@ fun ReminderNoteScreenContent(
                 .fillMaxSize()
                 .background(AppTheme.colorScheme.secondaryContainer)
         ) {
-            TextField(
+            RemindersTextField(
                 modifier = Modifier
                     .fillMaxWidth()
                     .testTag(REMINDER_NOTE_TEXT_FIELD),
@@ -125,7 +128,9 @@ fun ReminderNoteScreenContent(
                     disabledContainerColor = AppTheme.colorScheme.secondaryContainer,
                     unfocusedContainerColor = AppTheme.colorScheme.secondaryContainer,
                     focusedIndicatorColor = Color.Transparent,
-                    unfocusedIndicatorColor = Color.Transparent
+                    unfocusedIndicatorColor = Color.Transparent,
+                    focusedTextColor = AppTheme.colorScheme.contentTint,
+                    unfocusedTextColor = AppTheme.colorScheme.contentTint
                 ),
                 keyboardOptions = KeyboardOptions(
                     imeAction = ImeAction.Done

@@ -11,7 +11,6 @@ import androidx.compose.material3.BasicAlertDialog
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardColors
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -22,6 +21,7 @@ import com.ernestschcneider.remindersapp.core.testtags.*
 import com.ernestschcneider.remindersapp.core.view.R
 import com.ernestschcneider.remindersapp.core.view.R.string
 import com.ernestschcneider.remindersapp.core.view.composables.PrimaryButton
+import com.ernestschcneider.remindersapp.core.view.composables.RemindersText
 import com.ernestschcneider.remindersapp.core.view.theme.AppTheme
 import com.ernestschcneider.remindersapp.core.view.theme.PreviewLightDark
 
@@ -54,12 +54,12 @@ fun ReminderCreationDialog(
                     verticalArrangement = Arrangement.spacedBy(28.dp)
                 )
                 {
-                    Text(
+                    RemindersText(
                         text = stringResource(id = string.new_reminder),
                         style = AppTheme.typography.titleLarge,
                     )
 
-                    Text(
+                    RemindersText(
                         text = stringResource(id = string.new_reminder_explanation),
                         style = AppTheme.typography.paragraph
                     )

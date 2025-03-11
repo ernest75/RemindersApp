@@ -9,17 +9,16 @@ import androidx.compose.material3.BasicAlertDialog
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardColors
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.ernestschcneider.remindersapp.core.testtags.*
 import com.ernestschcneider.remindersapp.core.view.R
 import com.ernestschcneider.remindersapp.core.view.theme.AppTheme
+import com.ernestschcneider.remindersapp.core.view.theme.PreviewLightDark
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -48,11 +47,11 @@ fun InformativeDialog(
                 verticalArrangement = Arrangement.spacedBy(28.dp),
 
                 ) {
-                Text(
+                RemindersText(
                     text = stringResource(id = titleId),
                     style = AppTheme.typography.titleLarge,
                 )
-                Text(
+                RemindersText(
                     text = stringResource(id = explanationId),
                     style = AppTheme.typography.paragraph
                 )
@@ -66,12 +65,14 @@ fun InformativeDialog(
     }
 }
 
-@Preview
+@PreviewLightDark
 @Composable
 fun PreviewInformativeDialog() {
-    InformativeDialog(
-        onDismiss = {},
-        titleId = R.string.close_icon,
-        explanationId = R.string.app_name
-    )
+    AppTheme {
+        InformativeDialog(
+            onDismiss = {},
+            titleId = R.string.close_icon,
+            explanationId = R.string.app_name
+        )
+    }
 }
