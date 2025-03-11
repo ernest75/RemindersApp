@@ -32,6 +32,7 @@ import androidx.compose.ui.unit.dp
 import com.ernestschcneider.models.ReminderListItem
 import com.ernestschcneider.remindersapp.core.testtags.REMINDERS_ITEM_DELETE_ICON
 import com.ernestschcneider.remindersapp.core.view.R
+import com.ernestschcneider.remindersapp.core.view.composables.RemindersText
 import com.ernestschcneider.remindersapp.core.view.theme.AppTheme
 import com.ernestschcneider.remindersapp.core.view.theme.PreviewLightDark
 
@@ -71,14 +72,13 @@ fun RemindersListItem(
                     } else {
                         item.text
                     }
-                    Text(
+                    RemindersText(
                         modifier = Modifier
                             .padding(start = 16.dp),
                         text = textLimited,
                         style = AppTheme.typography.labelLarge,
                         maxLines = 1,
-                        overflow = TextOverflow.Ellipsis,
-                        color = AppTheme.colorScheme.onBackGround
+                        overflow = TextOverflow.Ellipsis
                     )
                     Spacer(
                         Modifier

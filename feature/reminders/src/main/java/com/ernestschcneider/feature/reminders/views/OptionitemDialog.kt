@@ -69,5 +69,4 @@ fun OptionItemDialogPreview() {
             contentDescriptionIconId = R.string.note_icon
         )
     }
-
 }
