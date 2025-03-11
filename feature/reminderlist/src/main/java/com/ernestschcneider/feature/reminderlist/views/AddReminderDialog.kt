@@ -96,6 +96,7 @@ fun AddReminderDialog(
                 Text(
                     text = stringResource(id = R.string.add_reminder),
                     style = AppTheme.typography.titleLarge,
+                    color = AppTheme.colorScheme.onBackGround
                 )
                 TextField(
                     modifier = Modifier
@@ -109,13 +110,15 @@ fun AddReminderDialog(
                         focusedIndicatorColor = Color.Transparent,
                         unfocusedIndicatorColor = Color.Transparent,
                         disabledIndicatorColor = Color.Transparent,
+                        unfocusedTextColor = AppTheme.colorScheme.contentTint,
+                        focusedTextColor = AppTheme.colorScheme.contentTint
                     ),
                     maxLines = 10,
                     textStyle = AppTheme.typography.labelLarge,
                     placeholder = {
                         Text(
                             text = stringResource(id = R.string.add_reminder),
-                            color = AppTheme.colorScheme.secondary
+                            color = AppTheme.colorScheme.onBackGround
                         )
                     },
                     value = textFieldValue,
@@ -211,13 +214,15 @@ private fun onSaveReminderClicked(
 @PreviewLightDark
 @Composable
 fun PreviewDialog() {
-    AddReminderDialog(
-        onDismiss = {},
-        focusRequester = FocusRequester(),
-        onFirsReminderAdded = {},
-        onLastReminderAdded = {},
-        item = ReminderListItem(),
-        isFirstReminder = false,
-        onReminderEdited = {}
-    )
+    AppTheme {
+        AddReminderDialog(
+            onDismiss = {},
+            focusRequester = FocusRequester(),
+            onFirsReminderAdded = {},
+            onLastReminderAdded = {},
+            item = ReminderListItem(text= "hello"),
+            isFirstReminder = false,
+            onReminderEdited = {}
+        )
+    }
 }

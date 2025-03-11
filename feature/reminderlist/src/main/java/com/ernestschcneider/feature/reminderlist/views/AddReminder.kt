@@ -17,6 +17,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.ernestschcneider.remindersapp.core.view.R
 import com.ernestschcneider.remindersapp.core.view.theme.AppTheme
+import com.ernestschcneider.remindersapp.core.view.theme.PreviewLightDark
 
 @Composable
 fun AddReminder(
@@ -26,7 +27,7 @@ fun AddReminder(
 ) {
     Row(modifier = modifier
         .fillMaxWidth()
-        .clickable { onAddReminderClicked()}
+        .clickable { onAddReminderClicked() }
         .testTag(testTag)
     ) {
         Icon(
@@ -35,14 +36,28 @@ fun AddReminder(
             modifier = Modifier
                 .align(Alignment.CenterVertically)
                 .padding(start = 16.dp)
-                .size(24.dp)
+                .size(24.dp),
+            tint = AppTheme.colorScheme.contentTint
         )
         Text(
             modifier = Modifier
                 .padding(start = 48.dp)
                 .align(Alignment.CenterVertically),
             text = stringResource(id = R.string.add_reminder),
+            color = AppTheme.colorScheme.onBackGround,
             style = AppTheme.typography.labelLarge
+        )
+    }
+}
+
+@PreviewLightDark
+@Composable
+private fun AddReminderPreview() {
+    AppTheme {
+        AddReminder(
+            modifier = Modifier,
+            onAddReminderClicked = {  },
+            testTag = "tag"
         )
     }
 }
