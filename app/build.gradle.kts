@@ -17,8 +17,8 @@ android {
         applicationId = "com.ernestschcneider.remindersapp"
         minSdk = libs.versions.minSdkVersion.get().toInt()
         targetSdk = libs.versions.compileSdkVersion.get().toInt()
-        versionCode = 6
-        versionName = "6.0"
+        versionCode = 7
+        versionName = "7.0"
 
         testInstrumentationRunner = "com.ernestschcneider.remindersapp.CustomTestRunner"
         vectorDrawables {
