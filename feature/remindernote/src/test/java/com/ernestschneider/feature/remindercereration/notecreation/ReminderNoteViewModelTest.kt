@@ -2,9 +2,9 @@ package com.ernestschneider.feature.remindercereration.notecreation
 
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.lifecycle.SavedStateHandle
-import com.ernestschcneider.remindersapp.EMPTY_REMINDER_ID
 import com.ernestschcneider.feature.remindernote.REMINDER_ID_ARG
 import com.ernestschcneider.feature.remindernote.ReminderNoteViewModel
+import com.ernestschcneider.remindersapp.core.commons.EMPTY_REMINDER_ID
 import com.ernestschcneider.remindersapp.models.Reminder
 import com.ernestschcneider.remindersapp.models.ReminderType
 import com.ernestschcneider.remindersapp.core.dispatchers.CoroutineTestExtension
@@ -36,14 +36,6 @@ class ReminderNoteViewModelTest {
         .withReminderContent("Content1")
         .withReminderType(ReminderType.Note)
         .build()
-
-//    private val reminderList1 = ReminderBuilder.aReminder().withId("2").withReminderTitle("Title2")
-//        .withReminderType(ReminderType.List).withReminderList(
-//            arrayListOf(
-//                ReminderListItem(position = 0, text = "Element1"),
-//                ReminderListItem(position = 1, text = "Element2")
-//            )
-//        ).build()
 
     @Test
     fun onReminderContentUpdate() {
@@ -124,7 +116,6 @@ class ReminderNoteViewModelTest {
         val reminderContent = "foo"
         val backNavigation = true
         val spiedLocalRepo = spy(localRepo)
-        // TODO improve this?
         val viewModel = ReminderNoteViewModel(
             savedStateHandle = getSavedStateHandle(reminderId = reminderId),
             localRepo = spiedLocalRepo,

@@ -26,7 +26,6 @@ class RemindersViewModelTest {
     private val updateReminderPositionUseCase = UpdateReminderPositionUseCase(localRepo)
     private val backgroundDispatcher = Dispatchers.Unconfined
     private val viewModel = RemindersViewModel(
-        localRepo = localRepo,
         getRemindersUseCase = getRemindersUseCase,
         removeReminderUseCase = removeReminderUseCase,
         updateReminderPositionUseCase = updateReminderPositionUseCase,
