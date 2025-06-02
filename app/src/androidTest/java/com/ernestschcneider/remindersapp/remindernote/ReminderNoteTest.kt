@@ -1,13 +1,11 @@
 package com.ernestschcneider.remindersapp.remindernote
 
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
-import androidx.compose.ui.test.printToLog
-import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
 import com.ernestschcneider.remindersapp.models.ReminderType
 import com.ernestschcneider.remindersapp.MainActivity
 import com.ernestschcneider.remindersapp.core.testtags.REMINDER_NOTE_TITLE
 import com.ernestschcneider.remindersapp.data.local.repo.LocalModule
-import com.ernestschcneider.remindersapp.local.StorageRepo
+import com.ernestschcneider.remindersapp.local.LocalRepo
 import com.ernestschneider.testutils.InMemoryLocalRepo
 import com.ernestschneider.testutils.ReminderBuilder
 import dagger.hilt.android.testing.BindValue
@@ -39,7 +37,7 @@ class ReminderNoteTest {
 
     @BindValue
     @JvmField
-    val localRepo: StorageRepo = InMemoryLocalRepo(remindersList)
+    val localRepo: LocalRepo = InMemoryLocalRepo(remindersList)
 
     @Test
     fun addTitle() {

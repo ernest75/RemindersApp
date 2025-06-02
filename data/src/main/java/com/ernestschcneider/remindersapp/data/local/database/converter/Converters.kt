@@ -1,7 +1,7 @@
 package com.ernestschcneider.remindersapp.data.local.database.converter
 
 import androidx.room.TypeConverter
-import com.ernestschcneider.remindersapp.models.DEFAULT_UUID
+import com.ernestschcneider.remindersapp.core.commons.DEFAULT_UUID
 import com.ernestschcneider.remindersapp.models.ReminderListItem
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken

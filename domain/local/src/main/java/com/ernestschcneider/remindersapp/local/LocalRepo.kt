@@ -3,7 +3,7 @@ package com.ernestschcneider.remindersapp.local
 import com.ernestschcneider.remindersapp.models.Reminder
 import com.ernestschcneider.remindersapp.models.ReminderListItem
 
-interface StorageRepo {
+interface LocalRepo {
     suspend fun getAllReminders():List<Reminder>
 
     suspend fun saveReminder(reminder: Reminder)
@@ -17,4 +17,6 @@ interface StorageRepo {
     suspend fun updateReminderPosition(position: Int, reminderId: String)
 
     suspend fun updateReminderList(reminderList: ArrayList<ReminderListItem>, reminderId: String)
+
+    suspend fun countReminders(): Int
 }

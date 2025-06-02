@@ -7,7 +7,7 @@ import com.ernestschcneider.remindersapp.MainActivity
 import com.ernestschcneider.remindersapp.core.testtags.REMINDER_LIST_TITLE
 import com.ernestschcneider.remindersapp.core.testtags.REMINDER_NOTE_TITLE
 import com.ernestschcneider.remindersapp.data.local.repo.LocalModule
-import com.ernestschcneider.remindersapp.local.StorageRepo
+import com.ernestschcneider.remindersapp.local.LocalRepo
 import com.ernestschneider.testutils.InMemoryLocalRepo
 import com.ernestschneider.testutils.ReminderBuilder
 import dagger.hilt.android.testing.BindValue
@@ -51,7 +51,7 @@ class RemindersTest {
 
     @BindValue
     @JvmField
-    val localRepo: StorageRepo = InMemoryLocalRepo(remindersList)
+    val localRepo: LocalRepo = InMemoryLocalRepo(remindersList)
 
     @Test
     fun clickOnCreateReminderShowsDialog() {

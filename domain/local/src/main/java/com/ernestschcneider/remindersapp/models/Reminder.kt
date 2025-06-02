@@ -1,5 +1,7 @@
 package com.ernestschcneider.remindersapp.models
 
+import com.ernestschcneider.remindersapp.core.commons.DEFAULT_UUID
+
 data class Reminder(
     val reminderId: String = DEFAULT_UUID,
     val reminderTitle: String,
@@ -9,4 +11,4 @@ data class Reminder(
     val reminderType: ReminderType = ReminderType.Note
 )
 
-const val DEFAULT_UUID = "00000000-0000-0000-0000-000000000000"
+

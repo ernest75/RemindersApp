@@ -6,7 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ernestschcneider.remindersapp.core.commons.EMPTY_REMINDER_ID
 import com.ernestschcneider.remindersapp.models.Reminder
-import com.ernestschcneider.remindersapp.local.StorageRepo
+import com.ernestschcneider.remindersapp.local.LocalRepo
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -20,7 +20,7 @@ import javax.inject.Inject
 @HiltViewModel
 class ReminderNoteViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
-    private val localRepo: StorageRepo,
+    private val localRepo: LocalRepo,
     private val backgroundDispatcher: CoroutineDispatcher
 ) : ViewModel() {
 

@@ -1,6 +1,6 @@
 package com.ernestschcneider.remindersapp.data.local.repo
 
-import com.ernestschcneider.remindersapp.local.StorageRepo
+import com.ernestschcneider.remindersapp.local.LocalRepo
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -13,6 +13,6 @@ abstract class LocalModule {
     @Binds
     @Singleton
     internal abstract fun providesLocalRepo(
-        repository: LocalRepo
-    ): StorageRepo
+        repository: LocalRepoImpl
+    ): LocalRepo
 }

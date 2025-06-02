@@ -6,6 +6,10 @@ import com.ernestschcneider.remindersapp.core.commons.REMINDER_LIST_ID
 import com.ernestschcneider.remindersapp.models.ReminderListItem
 import com.ernestschcneider.remindersapp.models.ReminderType
 import com.ernestschcneider.remindersapp.core.dispatchers.CoroutineTestExtension
+import com.ernestschcneider.remindersapp.data.usecases.CountRemindersUseCase
+import com.ernestschcneider.remindersapp.data.usecases.GetReminderUseCase
+import com.ernestschcneider.remindersapp.data.usecases.SaveReminderUseCase
+import com.ernestschcneider.remindersapp.data.usecases.UpdateReminderUseCase
 import com.ernestschneider.testutils.InMemoryLocalRepo
 import com.ernestschneider.testutils.ReminderBuilder
 import kotlinx.coroutines.Dispatchers
@@ -21,11 +25,18 @@ class ReminderListViewModelTest {
     private val localRepo = InMemoryLocalRepo()
     private val backgroundDispatcher = Dispatchers.Unconfined
     private val savedStateHandle = getSavedStateHandle()
+    private val countRemindersUseCase = CountRemindersUseCase(localRepo)
+    private val saveReminderUseCase = SaveReminderUseCase(localRepo)
+    private val updateReminderUseCase = UpdateReminderUseCase(localRepo)
+    private val getReminderUseCase = GetReminderUseCase(localRepo)
 
     private val viewModel = ReminderListViewModel(
-        localRepo = localRepo,
-        backgroundDispatcher = backgroundDispatcher,
-        savedStateHandle = savedStateHandle
+        savedStateHandle = savedStateHandle,
+        countRemindersUseCase = countRemindersUseCase,
+        saveReminderUseCase = saveReminderUseCase,
+        updateReminderUseCase = updateReminderUseCase,
+        getReminderUseCase = getReminderUseCase,
+        backgroundDispatcher = backgroundDispatcher
     )
 
     private val reminderNote1 = ReminderBuilder.aReminder().withId("1").withReminderTitle("Title1")
@@ -154,7 +165,10 @@ class ReminderListViewModelTest {
         val reminderId = "2"
         val viewModel = ReminderListViewModel(
             savedStateHandle = getSavedStateHandle(reminderListId = reminderId),
-            localRepo = localRepo,
+            countRemindersUseCase = countRemindersUseCase,
+            saveReminderUseCase = saveReminderUseCase,
+            updateReminderUseCase = updateReminderUseCase,
+            getReminderUseCase = getReminderUseCase,
             backgroundDispatcher = backgroundDispatcher
         )
         localRepo.saveReminders(listOf(reminderNote1, reminderList1))
@@ -184,11 +198,14 @@ class ReminderListViewModelTest {
         val firstReminder = ReminderListItem(text = "1", position = 0)
         val lastReminder = ReminderListItem(text = "2", position = 1)
         val reminderList = arrayListOf(firstReminder, lastReminder)
-        val spiedLocalRepo = spy(localRepo)
+        val spiedUseCase = spy(updateReminderUseCase)
         localRepo.saveReminders(listOf(reminderNote1, reminderList1))
         val viewModel = ReminderListViewModel(
             savedStateHandle = getSavedStateHandle(REMINDER_LIST_ID),
-            localRepo = spiedLocalRepo,
+            countRemindersUseCase = countRemindersUseCase,
+            saveReminderUseCase = saveReminderUseCase,
+            updateReminderUseCase = spiedUseCase,
+            getReminderUseCase = getReminderUseCase,
             backgroundDispatcher = backgroundDispatcher
         )
         val reminder = ReminderBuilder.aReminder().withId(REMINDER_LIST_ID)
@@ -200,7 +217,7 @@ class ReminderListViewModelTest {
 
         viewModel.onSaveListReminderClicked()
 
-        verify(spiedLocalRepo).updateReminder(reminder)
+        verify(spiedUseCase).invoke(reminder)
         assertEquals(backNavigation, viewModel.screenState.value.backNavigation)
     }
 
@@ -208,7 +225,10 @@ class ReminderListViewModelTest {
     fun onReminderDeleteClicked() {
         val viewModel = ReminderListViewModel(
             savedStateHandle = getSavedStateHandle(REMINDER_LIST_ID),
-            localRepo = localRepo,
+            countRemindersUseCase = countRemindersUseCase,
+            saveReminderUseCase = saveReminderUseCase,
+            updateReminderUseCase = updateReminderUseCase,
+            getReminderUseCase = getReminderUseCase,
             backgroundDispatcher = backgroundDispatcher
         )
         val element1 = "element1"
@@ -339,7 +359,10 @@ class ReminderListViewModelTest {
         val reminderId = "2"
         val viewModel = ReminderListViewModel(
             savedStateHandle = getSavedStateHandle(reminderListId = reminderId),
-            localRepo = localRepo,
+            countRemindersUseCase = countRemindersUseCase,
+            saveReminderUseCase = saveReminderUseCase,
+            updateReminderUseCase = updateReminderUseCase,
+            getReminderUseCase = getReminderUseCase,
             backgroundDispatcher = backgroundDispatcher
         )
         localRepo.saveReminders(listOf(reminderList1))

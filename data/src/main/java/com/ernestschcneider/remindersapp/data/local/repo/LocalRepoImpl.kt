@@ -3,7 +3,7 @@ package com.ernestschcneider.remindersapp.data.local.repo
 import com.ernestschcneider.remindersapp.models.Reminder
 import com.ernestschcneider.remindersapp.models.ReminderListItem
 import com.ernestschcneider.remindersapp.data.local.database.ReminderDao
-import com.ernestschcneider.remindersapp.local.StorageRepo
+import com.ernestschcneider.remindersapp.local.LocalRepo
 import com.ernestschcneider.remindersapp.data.local.mappers.toDomain
 import com.ernestschcneider.remindersapp.data.local.mappers.toReminderEntity
 import java.util.ArrayList
@@ -11,9 +11,9 @@ import java.util.UUID
 import javax.inject.Inject
 
 
-class LocalRepo @Inject constructor(
+class LocalRepoImpl @Inject constructor(
     private val reminderDao: ReminderDao
-): StorageRepo {
+): LocalRepo {
 
     override suspend fun getAllReminders():List<Reminder>{
       return reminderDao.getAllReminders().map {
@@ -44,4 +44,6 @@ class LocalRepo @Inject constructor(
     override suspend fun updateReminderList(reminderList: ArrayList<ReminderListItem>, reminderId: String) {
         reminderDao.updateReminderList(reminderList, UUID.fromString(reminderId))
     }
+
+    override suspend fun countReminders(): Int = reminderDao.countReminders()
 }

@@ -3,7 +3,7 @@ package com.ernestschcneider.remindersapp.data.local.database
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.ernestschcneider.remindersapp.models.DEFAULT_UUID
+import com.ernestschcneider.remindersapp.core.commons.DEFAULT_UUID
 import com.ernestschcneider.remindersapp.models.ReminderListItem
 import com.ernestschcneider.remindersapp.models.ReminderType
 import java.util.UUID

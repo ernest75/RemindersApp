@@ -32,4 +32,7 @@ interface ReminderDao {
     @Query("UPDATE reminders SET remindersList=:remindersList WHERE id = :id")
     fun updateReminderList(remindersList: ArrayList<ReminderListItem>, id:UUID)
 
+    @Query("SELECT COUNT(*) FROM reminders")
+    suspend fun countReminders(): Int
+
 }
