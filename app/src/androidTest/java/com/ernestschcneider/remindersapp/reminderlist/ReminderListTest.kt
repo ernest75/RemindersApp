@@ -5,7 +5,7 @@ import com.ernestschcneider.remindersapp.models.ReminderListItem
 import com.ernestschcneider.remindersapp.models.ReminderType
 import com.ernestschcneider.remindersapp.MainActivity
 import com.ernestschcneider.remindersapp.core.testtags.REMINDER_LIST_TITLE
-import com.ernestschcneider.remindersapp.local.HiltWrapper_LocalModule
+import com.ernestschcneider.remindersapp.data.local.repo.LocalModule
 import com.ernestschcneider.remindersapp.local.StorageRepo
 import com.ernestschneider.testutils.InMemoryLocalRepo
 import com.ernestschneider.testutils.ReminderBuilder
@@ -17,7 +17,7 @@ import org.junit.Rule
 import org.junit.Test
 
 @HiltAndroidTest
-@UninstallModules(HiltWrapper_LocalModule::class)
+@UninstallModules(LocalModule::class)
 class ReminderListTest {
 
     @get: Rule(order = 0)

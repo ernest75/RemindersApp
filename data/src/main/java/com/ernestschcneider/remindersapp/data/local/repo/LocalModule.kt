@@ -9,7 +9,7 @@ import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-internal abstract class LocalModule {
+abstract class LocalModule {
     @Binds
     @Singleton
     internal abstract fun providesLocalRepo(

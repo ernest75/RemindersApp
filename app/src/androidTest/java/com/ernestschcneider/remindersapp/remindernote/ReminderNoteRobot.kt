@@ -1,12 +1,16 @@
 package com.ernestschcneider.remindersapp.remindernote
 
+import androidx.compose.ui.test.SemanticsMatcher
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.assertIsNotDisplayed
+import androidx.compose.ui.test.hasAnyDescendant
 import androidx.compose.ui.test.junit4.AndroidComposeTestRule
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
 import androidx.compose.ui.test.performTextInput
+import androidx.compose.ui.test.printToLog
+import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import com.ernestschcneider.remindersapp.models.Reminder
 import com.ernestschcneider.remindersapp.MainActivity
@@ -98,7 +102,7 @@ class ReminderNoteVerification(
     }
 
     fun reminderNoteModifiedTitleIsShown(reminderOldTitle: String) {
-        rule.onNodeWithText(reminderOldTitle + TEX_INPUT_FOR_TEST)
+        rule.onNodeWithText(TEX_INPUT_FOR_TEST + reminderOldTitle )
             .assertIsDisplayed()
     }
 
