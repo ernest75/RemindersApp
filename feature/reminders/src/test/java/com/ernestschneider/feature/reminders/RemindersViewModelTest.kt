@@ -4,9 +4,9 @@ import com.ernestschcneider.feature.reminders.RemindersViewModel
 import com.ernestschcneider.feature.reminders.useaces.GetRemindersUseCase
 import com.ernestschcneider.feature.reminders.useaces.RemoveReminderUseCase
 import com.ernestschcneider.feature.reminders.useaces.UpdateReminderPositionUseCase
-import com.ernestschcneider.models.Reminder
-import com.ernestschcneider.models.ReminderListItem
-import com.ernestschcneider.models.ReminderType
+import com.ernestschcneider.remindersapp.models.Reminder
+import com.ernestschcneider.remindersapp.models.ReminderListItem
+import com.ernestschcneider.remindersapp.models.ReminderType
 import com.ernestschcneider.remindersapp.core.dispatchers.CoroutineTestExtension
 import com.ernestschneider.testutils.InMemoryLocalRepo
 import com.ernestschneider.testutils.ReminderBuilder

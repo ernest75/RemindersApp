@@ -38,7 +38,7 @@ android {
 dependencies {
 
     implementation(project(":domain:local"))
-    implementation(project(":domain:data"))
+    implementation(project(":data"))
     implementation(libs.bundles.hilt)
     kapt(libs.hilt.compiler)
 

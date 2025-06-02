@@ -2,11 +2,11 @@ package com.ernestschneider.feature.remindercereration.notecreation
 
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.lifecycle.SavedStateHandle
-import com.ernestschcneider.EMPTY_REMINDER_ID
+import com.ernestschcneider.remindersapp.EMPTY_REMINDER_ID
 import com.ernestschcneider.feature.remindernote.REMINDER_ID_ARG
 import com.ernestschcneider.feature.remindernote.ReminderNoteViewModel
-import com.ernestschcneider.models.Reminder
-import com.ernestschcneider.models.ReminderType
+import com.ernestschcneider.remindersapp.models.Reminder
+import com.ernestschcneider.remindersapp.models.ReminderType
 import com.ernestschcneider.remindersapp.core.dispatchers.CoroutineTestExtension
 import com.ernestschneider.testutils.InMemoryLocalRepo
 import com.ernestschneider.testutils.ReminderBuilder

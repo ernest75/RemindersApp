@@ -1,6 +1,6 @@
 package com.ernestschcneider.feature.reminders.useaces
 
-import com.ernestschcneider.models.Reminder
+import com.ernestschcneider.remindersapp.models.Reminder
 import com.ernestschcneider.remindersapp.local.StorageRepo
 import javax.inject.Inject
 

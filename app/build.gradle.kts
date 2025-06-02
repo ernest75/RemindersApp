@@ -79,7 +79,8 @@ android {
 
 dependencies {
     implementation(project(":core:view"))
-    implementation(project(":domain:data"))
+    implementation(project(":core:commons"))
+    implementation(project(":data"))
     implementation(project(":domain:local"))
     implementation(project(":testutils"))
     implementation(project(":feature:reminders"))

@@ -36,8 +36,7 @@ android {
 }
 
 dependencies {
-    implementation(project(":core:database"))
-    implementation(project(":domain:data"))
+    implementation(project(":core:commons"))
     implementation(libs.bundles.hilt)
 
     kapt(libs.hilt.compiler)

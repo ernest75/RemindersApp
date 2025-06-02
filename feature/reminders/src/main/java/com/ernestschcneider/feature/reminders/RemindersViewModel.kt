@@ -5,8 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.ernestschcneider.feature.reminders.useaces.GetRemindersUseCase
 import com.ernestschcneider.feature.reminders.useaces.RemoveReminderUseCase
 import com.ernestschcneider.feature.reminders.useaces.UpdateReminderPositionUseCase
-import com.ernestschcneider.models.Reminder
-import com.ernestschcneider.remindersapp.local.StorageRepo
+import com.ernestschcneider.remindersapp.models.Reminder
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.MutableStateFlow

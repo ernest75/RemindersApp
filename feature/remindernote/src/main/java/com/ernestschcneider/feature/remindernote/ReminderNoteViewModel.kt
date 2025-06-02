@@ -4,8 +4,8 @@ import androidx.compose.ui.text.input.TextFieldValue
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.ernestschcneider.EMPTY_REMINDER_ID
-import com.ernestschcneider.models.Reminder
+import com.ernestschcneider.remindersapp.core.commons.EMPTY_REMINDER_ID
+import com.ernestschcneider.remindersapp.models.Reminder
 import com.ernestschcneider.remindersapp.local.StorageRepo
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher

@@ -1,7 +1,7 @@
 package com.ernestschcneider.remindersapp.remindernote
 
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
-import com.ernestschcneider.models.ReminderType
+import com.ernestschcneider.remindersapp.models.ReminderType
 import com.ernestschcneider.remindersapp.MainActivity
 import com.ernestschcneider.remindersapp.core.testtags.REMINDER_NOTE_TITLE
 import com.ernestschcneider.remindersapp.local.HiltWrapper_LocalModule

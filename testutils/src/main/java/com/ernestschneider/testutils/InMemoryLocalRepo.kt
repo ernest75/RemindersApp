@@ -1,7 +1,7 @@
 package com.ernestschneider.testutils
 
-import com.ernestschcneider.models.Reminder
-import com.ernestschcneider.models.ReminderListItem
+import com.ernestschcneider.remindersapp.models.Reminder
+import com.ernestschcneider.remindersapp.models.ReminderListItem
 import com.ernestschcneider.remindersapp.local.StorageRepo
 
 class InMemoryLocalRepo(private val reminders: MutableList<Reminder> = mutableListOf()) : StorageRepo {

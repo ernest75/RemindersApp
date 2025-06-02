@@ -1,7 +1,7 @@
 package com.ernestschcneider.feature.reminderlist
 
 import androidx.compose.runtime.Stable
-import com.ernestschcneider.models.ReminderListItem
+import com.ernestschcneider.remindersapp.models.ReminderListItem
 
 @Stable
 data class ReminderListState(

@@ -2,7 +2,7 @@ package com.ernestschcneider.feature.reminderlist
 
 import app.cash.paparazzi.DeviceConfig
 import app.cash.paparazzi.Paparazzi
-import com.ernestschcneider.models.ReminderListItem
+import com.ernestschcneider.remindersapp.models.ReminderListItem
 import com.ernestschcneider.remindersapp.core.view.theme.AppTheme
 import org.junit.Rule
 import org.junit.Test

@@ -1,10 +1,10 @@
 package com.ernestschcneider.feature.reminderlist
 
 import androidx.lifecycle.SavedStateHandle
-import com.ernestschcneider.EMPTY_REMINDER_ID
-import com.ernestschcneider.REMINDER_LIST_ID
-import com.ernestschcneider.models.ReminderListItem
-import com.ernestschcneider.models.ReminderType
+import com.ernestschcneider.remindersapp.EMPTY_REMINDER_ID
+import com.ernestschcneider.remindersapp.REMINDER_LIST_ID
+import com.ernestschcneider.remindersapp.models.ReminderListItem
+import com.ernestschcneider.remindersapp.models.ReminderType
 import com.ernestschcneider.remindersapp.core.dispatchers.CoroutineTestExtension
 import com.ernestschneider.testutils.InMemoryLocalRepo
 import com.ernestschneider.testutils.ReminderBuilder

@@ -1,8 +1,7 @@
 package com.ernestschcneider.remindersapp.local
 
-import com.ernestschcneider.models.Reminder
-import com.ernestschcneider.models.ReminderListItem
-import java.util.UUID
+import com.ernestschcneider.remindersapp.models.Reminder
+import com.ernestschcneider.remindersapp.models.ReminderListItem
 
 interface StorageRepo {
     suspend fun getAllReminders():List<Reminder>

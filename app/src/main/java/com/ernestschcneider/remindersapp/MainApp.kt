@@ -7,12 +7,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.rememberNavController
-import com.ernestschcneider.REMINDERS_ROUTE
 import com.ernestschcneider.feature.reminderlist.navigateToReminderList
 import com.ernestschcneider.feature.reminderlist.reminderListScreen
 import com.ernestschcneider.feature.remindernote.navigateToReminderNote
 import com.ernestschcneider.feature.remindernote.reminderNoteScreen
 import com.ernestschcneider.feature.reminders.remindersScreen
+import com.ernestschcneider.remindersapp.core.commons.REMINDERS_ROUTE
 
 @Composable
 fun MainApp() {
