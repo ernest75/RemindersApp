@@ -27,6 +27,7 @@ import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -82,7 +83,7 @@ internal fun ReminderListScreen(
 fun ReminderListScreenContent(
     onNavigateUp: () -> Unit,
     screenState: ReminderListState,
-    onReminderListTitleUpdate: (String) -> Unit,
+    onReminderListTitleUpdate: (TextFieldValue) -> Unit,
     onAddFirstReminder: () -> Unit,
     onFirstReminderAdded: (String) -> Unit,
     onAddLastReminder: () -> Unit,

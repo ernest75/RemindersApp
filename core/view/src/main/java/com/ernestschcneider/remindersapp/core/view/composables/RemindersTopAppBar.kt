@@ -39,9 +39,9 @@ import com.ernestschcneider.remindersapp.core.view.theme.PreviewLightDark
 fun RemindersTopAppBar(
     modifier: Modifier = Modifier,
     onNavigateUp: () -> Unit,
-    onTitleUpdate: (newValue: String) -> Unit,
+    onTitleUpdate: (TextFieldValue) -> Unit,
     focusRequester: FocusRequester,
-    value: String,
+    value: TextFieldValue,
     parentScreenHasMoreFocusableElements: Boolean = true,
     @StringRes titlePlaceHolderId: Int
 ) {
@@ -91,11 +91,9 @@ fun RemindersTopAppBar(
                     )
                 },
                 textStyle = AppTheme.typography.labelLarge,
-                value = TextFieldValue(
-                    text =value
-                ),
+                value = value,
                 onValueChange = {
-                    onTitleUpdate(it.text)
+                    onTitleUpdate(it)
                 },
                 keyboardOptions = KeyboardOptions(
                     imeAction = ImeAction.Done
@@ -121,7 +119,7 @@ private fun ReminderTopAppBar() {
         onNavigateUp = {},
         onTitleUpdate = {},
         focusRequester = FocusRequester(),
-        value = "Title",
+        value = TextFieldValue("Title"),
         titlePlaceHolderId = R.string.type_reminder_title
     )
     }

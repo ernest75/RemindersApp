@@ -1,6 +1,7 @@
 package com.ernestschcneider.remindersapp.reminders
 
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
+import androidx.compose.ui.text.input.TextFieldValue
 import com.ernestschcneider.remindersapp.models.ReminderListItem
 import com.ernestschcneider.remindersapp.models.ReminderType
 import com.ernestschcneider.remindersapp.MainActivity
@@ -29,7 +30,7 @@ class RemindersTest {
 
     private val reminderNote = ReminderBuilder.aReminder()
         .withId("1")
-        .withReminderTitle(REMINDER_NOTE_TITLE)
+        .withReminderTitle(TextFieldValue(REMINDER_NOTE_TITLE))
         .withReminderContent("Content1")
         .withReminderType(ReminderType.Note)
         .withReminderPosition(0)
@@ -37,7 +38,7 @@ class RemindersTest {
 
     private val reminderList = ReminderBuilder.aReminder()
         .withId("2")
-        .withReminderTitle(REMINDER_LIST_TITLE)
+        .withReminderTitle(TextFieldValue(REMINDER_LIST_TITLE))
         .withReminderType(ReminderType.List)
         .withReminderPosition(1)
         .withReminderList(

@@ -44,11 +44,11 @@ class ReminderNoteViewModel @Inject constructor(
         }
     }
 
-    fun onReminderTitleUpdate(reminderTitle: String) {
-        if (reminderTitle != _screenState.value.reminderTitle){
+    fun onReminderTitleUpdate(newValue: TextFieldValue) {
+        if (newValue.text != _screenState.value.reminderTitle.text){
             _screenState.update {
                 it.copy(
-                    reminderTitle = reminderTitle,
+                    reminderTitle = newValue,
                     showSaveButton = true
                 )
             }
@@ -56,13 +56,13 @@ class ReminderNoteViewModel @Inject constructor(
     }
 
     fun onSavedReminderClicked() {
-        if (_screenState.value.reminderTitle.isNotEmpty()) {
+        if (_screenState.value.reminderTitle.text.isNotEmpty()) {
             viewModelScope.launch {
                 withContext(backgroundDispatcher) {
                     if (reminderNoteArgs.reminderId == EMPTY_REMINDER_ID) {
                         val position = countRemindersUseCase()
                         val reminder = Reminder(
-                            reminderTitle = _screenState.value.reminderTitle,
+                            reminderTitle = _screenState.value.reminderTitle.text,
                             reminderContent = _screenState.value.reminderContent,
                             reminderPosition = position
                         )
@@ -72,11 +72,11 @@ class ReminderNoteViewModel @Inject constructor(
                         val position = getReminderUseCase(reminderId).reminderPosition
                         val reminder = Reminder(
                             reminderId = reminderId,
-                            reminderTitle = _screenState.value.reminderTitle,
+                            reminderTitle = _screenState.value.reminderTitle.text,
                             reminderContent = _screenState.value.reminderContent,
                             reminderPosition = position
                         )
-                        saveReminderUseCase(reminder)
+                        updateReminderUseCase(reminder)
                     }
                     _screenState.update { it.copy(backNavigation = true) }
                 }
@@ -97,7 +97,7 @@ class ReminderNoteViewModel @Inject constructor(
                     val reminder = getReminderUseCase(reminderId)
                     _screenState.update {
                         it.copy(
-                            reminderTitle = reminder.reminderTitle,
+                            reminderTitle = TextFieldValue(reminder.reminderTitle),
                             reminderContent = reminder.reminderContent,
                             showSaveButton = false
                         )

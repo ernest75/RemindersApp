@@ -1,5 +1,6 @@
 package com.ernestschcneider.feature.reminderlist
 
+import androidx.compose.ui.text.input.TextFieldValue
 import app.cash.paparazzi.DeviceConfig
 import app.cash.paparazzi.Paparazzi
 import com.ernestschcneider.remindersapp.models.ReminderListItem
@@ -50,7 +51,7 @@ class ReminderListScreenShootTest {
                     onNavigateUp = {},
                     screenState = ReminderListState(
                         remindersList = listOf(),
-                        reminderListTitle = "Title"
+                        reminderListTitle = TextFieldValue("Title")
                     ),
                     onReminderListTitleUpdate = {},
                     onAddFirstReminder = {},
@@ -108,7 +109,7 @@ class ReminderListScreenShootTest {
                 ReminderListScreenContent(
                     onNavigateUp = {},
                     screenState = ReminderListState(
-                        reminderListTitle = "Title",
+                        reminderListTitle = TextFieldValue("Title"),
                         remindersList = listOf(item)
                     ),
                     onReminderListTitleUpdate = {},
@@ -135,7 +136,7 @@ class ReminderListScreenShootTest {
         paparazzi.snapshot {
            val list = mutableListOf<ReminderListItem>()
            for (i in 0 until 5) {
-                list.add(ReminderListItem(position = i, text = "Element$i" ))
+                list.add(ReminderListItem(position = i, text = "Element$i"))
             }
             AppTheme {
                 ReminderListScreenContent(
@@ -173,7 +174,7 @@ class ReminderListScreenShootTest {
                 ReminderListScreenContent(
                     onNavigateUp = {},
                     screenState = ReminderListState(
-                        reminderListTitle = "Title",
+                        reminderListTitle = TextFieldValue("Title"),
                         remindersList = list
                     ),
                     onReminderListTitleUpdate = {},

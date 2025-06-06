@@ -1,5 +1,6 @@
 package com.ernestschcneider.feature.reminderlist
 
+import androidx.compose.ui.text.input.TextFieldValue
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -37,7 +38,7 @@ class ReminderListViewModel @Inject constructor(
     val screenState: StateFlow<ReminderListState> = _screenState.asStateFlow()
     private val reminderListArgs = ReminderListArgs(savedStateHandle)
 
-    fun onReminderListTitleUpdate(reminderListTitle: String) {
+    fun onReminderListTitleUpdate(reminderListTitle: TextFieldValue) {
         _screenState.update {
             it.copy(
                 reminderListTitle = reminderListTitle,
@@ -117,7 +118,7 @@ class ReminderListViewModel @Inject constructor(
     }
 
     fun onSaveListReminderClicked() {
-        if (_screenState.value.reminderListTitle.isNotEmpty()) {
+        if (_screenState.value.reminderListTitle.text.isNotEmpty()) {
             val remindersArray = arrayListOf<ReminderListItem>().apply {
                 addAll(_screenState.value.remindersList)
             }
@@ -127,7 +128,7 @@ class ReminderListViewModel @Inject constructor(
                     if (reminderId == EMPTY_REMINDER_ID) {
                         val position = countRemindersUseCase()
                         val reminder = Reminder(
-                            reminderTitle = _screenState.value.reminderListTitle,
+                            reminderTitle = _screenState.value.reminderListTitle.text,
                             remindersList = remindersArray,
                             reminderType = ReminderType.List,
                             reminderPosition = position
@@ -137,7 +138,7 @@ class ReminderListViewModel @Inject constructor(
                         val position = getReminderUseCase(reminderId).reminderPosition
                         val reminder = Reminder(
                             reminderId = reminderId,
-                            reminderTitle = _screenState.value.reminderListTitle,
+                            reminderTitle = _screenState.value.reminderListTitle.text,
                             remindersList = remindersArray,
                             reminderType = ReminderType.List,
                             reminderPosition = position
@@ -173,7 +174,7 @@ class ReminderListViewModel @Inject constructor(
                     val reminder = getReminderUseCase(reminderId)
                     _screenState.update {
                         it.copy(
-                            reminderListTitle = reminder.reminderTitle,
+                            reminderListTitle = TextFieldValue(reminder.reminderTitle),
                             remindersList = reminder.remindersList,
                             showSaveButton = showSaveButton
                         )

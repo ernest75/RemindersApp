@@ -1,5 +1,6 @@
 package com.ernestschcneider.feature.reminderlist
 
+import androidx.compose.ui.text.input.TextFieldValue
 import androidx.lifecycle.SavedStateHandle
 import com.ernestschcneider.remindersapp.core.commons.EMPTY_REMINDER_ID
 import com.ernestschcneider.remindersapp.core.commons.REMINDER_LIST_ID
@@ -39,10 +40,14 @@ class ReminderListViewModelTest {
         backgroundDispatcher = backgroundDispatcher
     )
 
-    private val reminderNote1 = ReminderBuilder.aReminder().withId("1").withReminderTitle("Title1")
+    private val reminderNote1 = ReminderBuilder.aReminder().withId("1").withReminderTitle(
+        TextFieldValue("Title1")
+    )
         .withReminderContent("Content1").withReminderType(ReminderType.Note).build()
 
-    private val reminderList1 = ReminderBuilder.aReminder().withId("2").withReminderTitle("Title2")
+    private val reminderList1 = ReminderBuilder.aReminder().withId("2").withReminderTitle(
+        TextFieldValue("Title2")
+    )
         .withReminderType(ReminderType.List).withReminderList(
             arrayListOf(
                 ReminderListItem(position = 0, text = "Element1"),
@@ -52,7 +57,7 @@ class ReminderListViewModelTest {
 
     @Test
     fun onReminderListTitleUpdate() {
-        val reminderListTitle = "reminderListTitle"
+        val reminderListTitle = TextFieldValue("reminderListTitle")
 
         viewModel.onReminderListTitleUpdate(reminderListTitle)
 
@@ -120,7 +125,7 @@ class ReminderListViewModelTest {
 
     @Test
     fun onSaveReminderListNotEmptyTitle() {
-        val reminderListTitle = "title"
+        val reminderListTitle = TextFieldValue("title")
         val firstReminder = "1"
         val lastReminder = "2"
         val reminderList = listOf(
@@ -176,7 +181,7 @@ class ReminderListViewModelTest {
 
         viewModel.loadReminderList()
 
-        assertEquals(reminder.reminderTitle, viewModel.screenState.value.reminderListTitle)
+        assertEquals(reminder.reminderTitle, viewModel.screenState.value.reminderListTitle.text)
         assertEquals(reminder.remindersList, viewModel.screenState.value.remindersList)
         assertEquals(reminder.reminderType, ReminderType.List)
         assertEquals(false, viewModel.screenState.value.showSaveButton)
@@ -193,7 +198,7 @@ class ReminderListViewModelTest {
 
     @Test
     fun onSaveExistingReminderList() = runTest {
-        val reminderListTitle = "noteTitle"
+        val reminderListTitle = TextFieldValue("noteTitle")
         val backNavigation = true
         val firstReminder = ReminderListItem(text = "1", position = 0)
         val lastReminder = ReminderListItem(text = "2", position = 1)
@@ -388,7 +393,7 @@ class ReminderListViewModelTest {
             reminderListItemFinal1,
             reminderListItemFinal2
         )
-        viewModel.onMoveListItem(0,1)
+        viewModel.onMoveListItem(0, 1)
 
         viewModel.onDragFinished()
 

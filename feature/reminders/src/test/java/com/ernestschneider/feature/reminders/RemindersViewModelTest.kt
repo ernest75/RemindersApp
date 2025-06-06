@@ -1,5 +1,6 @@
 package com.ernestschneider.feature.reminders
 
+import androidx.compose.ui.text.input.TextFieldValue
 import com.ernestschcneider.feature.reminders.RemindersViewModel
 import com.ernestschcneider.feature.reminders.useaces.GetRemindersUseCase
 import com.ernestschcneider.feature.reminders.useaces.RemoveReminderUseCase
@@ -34,7 +35,7 @@ class RemindersViewModelTest {
 
     private val reminderNote1 = ReminderBuilder.aReminder()
         .withId("1")
-        .withReminderTitle("Title1")
+        .withReminderTitle(TextFieldValue("Title1"))
         .withReminderContent("Content1")
         .withReminderPosition(0)
         .withReminderType(ReminderType.Note)
@@ -42,7 +43,7 @@ class RemindersViewModelTest {
 
     private val reminderList1 = ReminderBuilder.aReminder()
         .withId("2")
-        .withReminderTitle("Title2")
+        .withReminderTitle(TextFieldValue("Title2"))
         .withReminderType(ReminderType.List)
         .withReminderPosition(1)
         .withReminderList(

@@ -5,13 +5,13 @@ import androidx.lifecycle.SavedStateHandle
 import com.ernestschcneider.feature.remindernote.REMINDER_ID_ARG
 import com.ernestschcneider.feature.remindernote.ReminderNoteViewModel
 import com.ernestschcneider.remindersapp.core.commons.EMPTY_REMINDER_ID
-import com.ernestschcneider.remindersapp.models.Reminder
-import com.ernestschcneider.remindersapp.models.ReminderType
 import com.ernestschcneider.remindersapp.core.dispatchers.CoroutineTestExtension
 import com.ernestschcneider.remindersapp.data.usecases.CountRemindersUseCase
 import com.ernestschcneider.remindersapp.data.usecases.GetReminderUseCase
 import com.ernestschcneider.remindersapp.data.usecases.SaveReminderUseCase
 import com.ernestschcneider.remindersapp.data.usecases.UpdateReminderUseCase
+import com.ernestschcneider.remindersapp.models.Reminder
+import com.ernestschcneider.remindersapp.models.ReminderType
 import com.ernestschneider.testutils.InMemoryLocalRepo
 import com.ernestschneider.testutils.ReminderBuilder
 import kotlinx.coroutines.Dispatchers
@@ -43,7 +43,7 @@ class ReminderNoteViewModelTest {
 
     private val reminderNote1 = ReminderBuilder.aReminder()
         .withId("1")
-        .withReminderTitle("Title1")
+        .withReminderTitle(TextFieldValue("Title1"))
         .withReminderContent("Content1")
         .withReminderType(ReminderType.Note)
         .build()
@@ -62,7 +62,7 @@ class ReminderNoteViewModelTest {
 
     @Test
     fun onReminderTitleUpdate() {
-        val reminderTitle = "reminderTitle"
+        val reminderTitle = TextFieldValue("reminderTitle")
         viewModel.onReminderTitleUpdate(reminderTitle)
         viewModel.onSavedReminderClicked()
 
@@ -88,15 +88,15 @@ class ReminderNoteViewModelTest {
         val reminder = localRepo.getReminder(reminderId)
         viewModel.loadReminder()
 
-        viewModel.onReminderTitleUpdate(reminder.reminderTitle)
+        viewModel.onReminderTitleUpdate(TextFieldValue(reminder.reminderTitle))
 
-        assertEquals(reminder.reminderTitle, viewModel.screenState.value.reminderTitle)
+        assertEquals(reminder.reminderTitle, viewModel.screenState.value.reminderTitle.text)
         assertEquals(false, viewModel.screenState.value.showSaveButton)
     }
 
     @Test
     fun onSavedReminderClickedNotEmptyTitle() {
-        val reminderTitle = "reminderTitle"
+        val reminderTitle = TextFieldValue("reminderTitle")
         val reminderContent = "reminderContent"
         val textFieldValue = TextFieldValue(reminderContent)
         viewModel.onReminderTitleUpdate(reminderTitle)
@@ -111,7 +111,7 @@ class ReminderNoteViewModelTest {
 
     @Test
     fun onSavedReminderClickedEmptyContent() {
-        val reminderTitle = "noteTitle"
+        val reminderTitle = TextFieldValue("noteTitle")
         val reminderContent = ""
         val backNavigation = true
         viewModel.onReminderTitleUpdate(reminderTitle)
@@ -126,15 +126,15 @@ class ReminderNoteViewModelTest {
     @Test
     fun onSavedExistingReminderClicked() = runTest {
         val reminderId = "1"
-        val reminderTitle = "noteTitle"
+        val reminderTitle = TextFieldValue("noteTitle")
         val reminderContent = "foo"
         val backNavigation = true
-        val spiedSaveReminderUseCase = spy(saveReminderUseCase)
+        val spiedSaveReminderUseCase = spy(updateReminderUseCase)
         val viewModel = ReminderNoteViewModel(
             savedStateHandle = getSavedStateHandle(reminderId = reminderId),
             countRemindersUseCase = countRemindersUseCase,
-            saveReminderUseCase = spiedSaveReminderUseCase,
-            updateReminderUseCase = updateReminderUseCase,
+            saveReminderUseCase = saveReminderUseCase,
+            updateReminderUseCase = spiedSaveReminderUseCase,
             getReminderUseCase = getReminderUseCase,
             backgroundDispatcher = backgroundDispatcher
         )
@@ -144,7 +144,7 @@ class ReminderNoteViewModelTest {
         viewModel.onReminderContentUpdate(textFieldValue)
         val reminder = Reminder(
             reminderId = reminderNote1.reminderId,
-            reminderTitle = reminderTitle,
+            reminderTitle = reminderTitle.text,
             reminderContent = reminderContent,
             remindersList = reminderNote1.remindersList,
             reminderPosition = reminderNote1.reminderPosition,
@@ -197,7 +197,7 @@ class ReminderNoteViewModelTest {
 
         viewModel.loadReminder()
 
-        assertEquals(reminder.reminderTitle, viewModel.screenState.value.reminderTitle)
+        assertEquals(reminder.reminderTitle, viewModel.screenState.value.reminderTitle.text)
         assertEquals(reminder.reminderContent, viewModel.screenState.value.reminderContent)
         assertEquals(reminder.reminderType, ReminderType.Note)
         assertEquals(false, viewModel.screenState.value.showSaveButton)

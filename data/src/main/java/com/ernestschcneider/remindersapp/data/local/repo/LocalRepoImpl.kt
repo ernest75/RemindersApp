@@ -3,6 +3,7 @@ package com.ernestschcneider.remindersapp.data.local.repo
 import com.ernestschcneider.remindersapp.models.Reminder
 import com.ernestschcneider.remindersapp.models.ReminderListItem
 import com.ernestschcneider.remindersapp.data.local.database.ReminderDao
+import com.ernestschcneider.remindersapp.data.local.datasource.ReminderLocalDataSource
 import com.ernestschcneider.remindersapp.local.LocalRepo
 import com.ernestschcneider.remindersapp.data.local.mappers.toDomain
 import com.ernestschcneider.remindersapp.data.local.mappers.toReminderEntity
@@ -12,38 +13,38 @@ import javax.inject.Inject
 
 
 class LocalRepoImpl @Inject constructor(
-    private val reminderDao: ReminderDao
+    private val reminderLocalDataSource: ReminderLocalDataSource
 ): LocalRepo {
 
     override suspend fun getAllReminders():List<Reminder>{
-      return reminderDao.getAllReminders().map {
+      return reminderLocalDataSource.getAllReminders().map {
            it.toDomain()
        }
     }
 
     override suspend fun saveReminder(reminder: Reminder) {
-       reminderDao.insert(reminder.toReminderEntity())
+       reminderLocalDataSource.saveReminder(reminder.toReminderEntity())
     }
 
     override suspend fun deleteReminder(reminder: Reminder) {
-        reminderDao.delete(reminder.toReminderEntity())
+        reminderLocalDataSource.deleteReminder(reminder.toReminderEntity())
     }
 
     override suspend fun getReminder(reminderId: String ): Reminder {
-       return reminderDao.getReminderById(UUID.fromString(reminderId)).toDomain()
+       return reminderLocalDataSource.getReminder(reminderId).toDomain()
     }
 
     override suspend fun updateReminder(reminder: Reminder) {
-        reminderDao.update(reminder.toReminderEntity())
+        reminderLocalDataSource.updateReminder(reminder.toReminderEntity())
     }
 
     override suspend fun updateReminderPosition(position: Int, reminderId: String) {
-        reminderDao.updateReminderPosition(position, UUID.fromString(reminderId))
+        reminderLocalDataSource.updateReminderPosition(position, reminderId)
     }
 
     override suspend fun updateReminderList(reminderList: ArrayList<ReminderListItem>, reminderId: String) {
-        reminderDao.updateReminderList(reminderList, UUID.fromString(reminderId))
+        reminderLocalDataSource.updateReminderList(reminderList, reminderId)
     }
 
-    override suspend fun countReminders(): Int = reminderDao.countReminders()
+    override suspend fun countReminders(): Int = reminderLocalDataSource.countReminders()
 }
