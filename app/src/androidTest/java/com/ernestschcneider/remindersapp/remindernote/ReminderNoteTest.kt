@@ -101,9 +101,9 @@ class ReminderNoteTest {
     @Test
     fun modifyReminderNoteTitle() {
         launchReminderNoteScreenWithNote(reminderNoteTestRule) {
-            clickAddTitle()
+            clickModifyTitle()
         } verify {
-            reminderNoteModifiedTitleIsShown(reminderNote.reminderTitle)
+            reminderNoteModifiedTitleIsShown()
             reminderNoteSaveButtonIsShown()
         }
     }
