@@ -10,5 +10,3 @@ data class Reminder(
     val remindersList: ArrayList<ReminderListItem> = arrayListOf(),
     val reminderType: ReminderType = ReminderType.Note
 )
-
-

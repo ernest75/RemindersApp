@@ -8,3 +8,4 @@ class GetReminderUseCase @Inject constructor(
 ) {
     suspend operator fun invoke(reminderId: String) = reminderRepository.getReminder(reminderId)
 }
+

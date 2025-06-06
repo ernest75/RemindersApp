@@ -1,11 +1,10 @@
 package com.ernestschcneider.remindersapp.data.usecases
 
-import com.ernestschcneider.remindersapp.data.local.repo.LocalRepoImpl
 import com.ernestschcneider.remindersapp.local.LocalRepo
 import com.ernestschcneider.remindersapp.models.Reminder
 import javax.inject.Inject
 
-class SaveReminderUseCase@Inject constructor(
+class SaveReminderUseCase @Inject constructor(
     private val reminderRepository: LocalRepo
 ) {
     suspend operator fun invoke(reminder: Reminder){
