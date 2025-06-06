@@ -8,8 +8,8 @@ import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
 import androidx.compose.ui.test.performTextInput
 import androidx.test.ext.junit.rules.ActivityScenarioRule
-import com.ernestschcneider.models.Reminder
-import com.ernestschcneider.models.ReminderListItem
+import com.ernestschcneider.remindersapp.models.Reminder
+import com.ernestschcneider.remindersapp.models.ReminderListItem
 import com.ernestschcneider.remindersapp.MainActivity
 import com.ernestschcneider.remindersapp.core.testtags.*
 import com.ernestschcneider.remindersapp.reminders.launchRemindersScreen

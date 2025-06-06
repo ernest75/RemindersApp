@@ -1,11 +1,12 @@
 package com.ernestschcneider.remindersapp.remindernote
 
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
-import com.ernestschcneider.models.ReminderType
+import androidx.compose.ui.text.input.TextFieldValue
+import com.ernestschcneider.remindersapp.models.ReminderType
 import com.ernestschcneider.remindersapp.MainActivity
 import com.ernestschcneider.remindersapp.core.testtags.REMINDER_NOTE_TITLE
-import com.ernestschcneider.remindersapp.local.HiltWrapper_LocalModule
-import com.ernestschcneider.remindersapp.local.StorageRepo
+import com.ernestschcneider.remindersapp.data.local.repo.LocalModule
+import com.ernestschcneider.remindersapp.local.LocalRepo
 import com.ernestschneider.testutils.InMemoryLocalRepo
 import com.ernestschneider.testutils.ReminderBuilder
 import dagger.hilt.android.testing.BindValue
@@ -16,7 +17,7 @@ import org.junit.Rule
 import org.junit.Test
 
 @HiltAndroidTest
-@UninstallModules(HiltWrapper_LocalModule::class)
+@UninstallModules(LocalModule::class)
 class ReminderNoteTest {
 
     @get: Rule(order = 0)
@@ -27,7 +28,7 @@ class ReminderNoteTest {
 
     private val reminderNote = ReminderBuilder.aReminder()
         .withId("1")
-        .withReminderTitle(REMINDER_NOTE_TITLE)
+        .withReminderTitle(TextFieldValue(REMINDER_NOTE_TITLE))
         .withReminderContent("Content1")
         .withReminderType(ReminderType.Note)
         .withReminderPosition(0)
@@ -37,7 +38,7 @@ class ReminderNoteTest {
 
     @BindValue
     @JvmField
-    val localRepo: StorageRepo = InMemoryLocalRepo(remindersList)
+    val localRepo: LocalRepo = InMemoryLocalRepo(remindersList)
 
     @Test
     fun addTitle() {
@@ -100,9 +101,9 @@ class ReminderNoteTest {
     @Test
     fun modifyReminderNoteTitle() {
         launchReminderNoteScreenWithNote(reminderNoteTestRule) {
-            clickAddTitle()
+            clickModifyTitle()
         } verify {
-            reminderNoteModifiedTitleIsShown(reminderNote.reminderTitle)
+            reminderNoteModifiedTitleIsShown()
             reminderNoteSaveButtonIsShown()
         }
     }

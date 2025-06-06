@@ -2,11 +2,12 @@ package com.ernestschcneider.feature.reminders
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.ernestschcneider.models.Reminder
-import com.ernestschcneider.remindersapp.local.StorageRepo
+import com.ernestschcneider.feature.reminders.useaces.GetRemindersUseCase
+import com.ernestschcneider.feature.reminders.useaces.RemoveReminderUseCase
+import com.ernestschcneider.feature.reminders.useaces.UpdateReminderPositionUseCase
+import com.ernestschcneider.remindersapp.models.Reminder
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -17,7 +18,9 @@ import javax.inject.Inject
 
 @HiltViewModel
 class RemindersViewModel  @Inject constructor(
-    private val localRepo: StorageRepo,
+    private val getRemindersUseCase: GetRemindersUseCase,
+    private val removeReminderUseCase: RemoveReminderUseCase,
+    private val updateReminderPositionUseCase: UpdateReminderPositionUseCase,
     private val backgroundDispatcher: CoroutineDispatcher
 ) : ViewModel() {
     private val _screenState = MutableStateFlow(RemindersScreenState())
@@ -27,7 +30,7 @@ class RemindersViewModel  @Inject constructor(
         viewModelScope.launch {
             showLoading()
             val reminders = withContext(backgroundDispatcher) {
-                localRepo.getAllReminders().sortedBy { it.reminderPosition }
+                getRemindersUseCase().sortedBy { it.reminderPosition }
             }
             _screenState.update { it.copy(reminders = reminders, showLoading = false) }
             savePositions()
@@ -37,7 +40,7 @@ class RemindersViewModel  @Inject constructor(
     fun removeItem(item: Reminder) {
         viewModelScope.launch {
             withContext(backgroundDispatcher) {
-                localRepo.deleteReminder(item)
+                removeReminderUseCase(item)
                 loadReminders()
             }
         }
@@ -72,7 +75,7 @@ class RemindersViewModel  @Inject constructor(
             withContext(backgroundDispatcher) {
                 val list = screenState.value.reminders
                 list.forEachIndexed { index, reminder ->
-                    localRepo.updateReminderPosition(index, reminder.reminderId)
+                    updateReminderPositionUseCase(index, reminder.reminderId)
                 }
             }
         }

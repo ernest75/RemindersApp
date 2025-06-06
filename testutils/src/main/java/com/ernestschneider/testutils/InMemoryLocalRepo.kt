@@ -1,10 +1,10 @@
 package com.ernestschneider.testutils
 
-import com.ernestschcneider.models.Reminder
-import com.ernestschcneider.models.ReminderListItem
-import com.ernestschcneider.remindersapp.local.StorageRepo
+import com.ernestschcneider.remindersapp.models.Reminder
+import com.ernestschcneider.remindersapp.models.ReminderListItem
+import com.ernestschcneider.remindersapp.local.LocalRepo
 
-class InMemoryLocalRepo(private val reminders: MutableList<Reminder> = mutableListOf()) : StorageRepo {
+class InMemoryLocalRepo(private val reminders: MutableList<Reminder> = mutableListOf()) : LocalRepo {
 
     override suspend fun getAllReminders(): List<Reminder> {
         return reminders
@@ -53,6 +53,10 @@ class InMemoryLocalRepo(private val reminders: MutableList<Reminder> = mutableLi
             reminderPosition = reminder.reminderPosition
         )
         reminders.add(reminder.reminderPosition, reminderChanged)
+    }
+
+    override suspend fun countReminders(): Int {
+        return reminders.size
     }
 
     private fun findReminderById(reminderId: String): Reminder {

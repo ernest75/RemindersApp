@@ -1,5 +1,6 @@
 package com.ernestschneider.feature.remindercereration.notecreation
 
+import androidx.compose.ui.text.input.TextFieldValue
 import app.cash.paparazzi.DeviceConfig
 import app.cash.paparazzi.Paparazzi
 import com.ernestschcneider.feature.remindernote.ReminderNoteScreenContent
@@ -22,7 +23,7 @@ class ReminderNoteScreenShootTest {
                 ReminderNoteScreenContent(
                     onNavigateUp = {},
                     onReminderNoteContentUpdate = {},
-                    state = ReminderNoteState(reminderTitle = "Title"),
+                    state = ReminderNoteState(reminderTitle = TextFieldValue("Title")),
                     onReminderNoteSaved = {},
                     onReminderNoteTitleUpdate = {},
                     onDismissEmptyTitleDialog = {}
@@ -39,7 +40,7 @@ class ReminderNoteScreenShootTest {
                     onNavigateUp = {},
                     onReminderNoteContentUpdate = {},
                     state = ReminderNoteState(
-                        reminderTitle = "Title",
+                        reminderTitle = TextFieldValue("Title"),
                         reminderContent = "Content"
                     ),
                     onReminderNoteSaved = {},
@@ -58,7 +59,7 @@ class ReminderNoteScreenShootTest {
                     onNavigateUp = {},
                     onReminderNoteContentUpdate = {},
                     state = ReminderNoteState(
-                        reminderTitle = "Title",
+                        reminderTitle = TextFieldValue("Title"),
                         reminderContent = "Content",
                         showSaveButton = true,
                     ),

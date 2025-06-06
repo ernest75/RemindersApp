@@ -70,7 +70,7 @@ fun ReminderNoteScreenContent(
     state: ReminderNoteState,
     onNavigateUp: () -> Unit,
     onReminderNoteContentUpdate: (TextFieldValue) -> Unit,
-    onReminderNoteTitleUpdate: (String) -> Unit,
+    onReminderNoteTitleUpdate: (TextFieldValue) -> Unit,
     onReminderNoteSaved: () -> Unit,
     onDismissEmptyTitleDialog: () -> Unit
 ) {

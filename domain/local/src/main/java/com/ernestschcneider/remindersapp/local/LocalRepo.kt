@@ -1,44 +1,22 @@
 package com.ernestschcneider.remindersapp.local
 
-import com.ernestschcneider.models.Reminder
-import com.ernestschcneider.models.ReminderListItem
-import com.ernestschcneider.remindersapp.core.database.ReminderDao
-import java.util.ArrayList
-import java.util.UUID
-import javax.inject.Inject
+import com.ernestschcneider.remindersapp.models.Reminder
+import com.ernestschcneider.remindersapp.models.ReminderListItem
 
+interface LocalRepo {
+    suspend fun getAllReminders():List<Reminder>
 
-class LocalRepo @Inject constructor(
-    private val reminderDao: ReminderDao
-): StorageRepo {
+    suspend fun saveReminder(reminder: Reminder)
 
-    override suspend fun getAllReminders():List<Reminder>{
-      return reminderDao.getAllReminders().map {
-           it.toDomain()
-       }
-    }
+    suspend fun deleteReminder(reminder: Reminder)
 
-    override suspend fun saveReminder(reminder: Reminder) {
-       reminderDao.insert(reminder.toReminderEntity())
-    }
+    suspend fun getReminder(reminderId: String): Reminder
 
-    override suspend fun deleteReminder(reminder: Reminder) {
-        reminderDao.delete(reminder.toReminderEntity())
-    }
+    suspend fun updateReminder(reminder: Reminder)
 
-    override suspend fun getReminder(reminderId: String ): Reminder {
-       return reminderDao.getReminderById(UUID.fromString(reminderId)).toDomain()
-    }
+    suspend fun updateReminderPosition(position: Int, reminderId: String)
 
-    override suspend fun updateReminder(reminder: Reminder) {
-        reminderDao.update(reminder.toReminderEntity())
-    }
+    suspend fun updateReminderList(reminderList: ArrayList<ReminderListItem>, reminderId: String)
 
-    override suspend fun updateReminderPosition(position: Int, reminderId: String) {
-        reminderDao.updateReminderPosition(position, UUID.fromString(reminderId))
-    }
-
-    override suspend fun updateReminderList(reminderList: ArrayList<ReminderListItem>, reminderId: String) {
-        reminderDao.updateReminderList(reminderList, UUID.fromString(reminderId))
-    }
+    suspend fun countReminders(): Int
 }

@@ -1,12 +1,14 @@
 package com.ernestschneider.testutils
 
-import com.ernestschcneider.models.Reminder
-import com.ernestschcneider.models.ReminderListItem
-import com.ernestschcneider.models.ReminderType
+import androidx.compose.ui.text.input.TextFieldValue
+import com.ernestschcneider.remindersapp.models.Reminder
+import com.ernestschcneider.remindersapp.models.ReminderListItem
+import com.ernestschcneider.remindersapp.models.ReminderType
+import org.w3c.dom.Text
 
 class ReminderBuilder {
     private var id: String = ""
-    private var reminderTitle: String = ""
+    private var reminderTitle: TextFieldValue = TextFieldValue("")
     private var reminderContent: String = ""
     private var reminderType = ReminderType.Note
     private var reminderList: ArrayList<ReminderListItem> = arrayListOf()
@@ -16,7 +18,7 @@ class ReminderBuilder {
         this.id = id
     }
 
-    fun withReminderTitle(reminderTitle: String) = apply {
+    fun withReminderTitle(reminderTitle: TextFieldValue) = apply {
         this.reminderTitle = reminderTitle
     }
 
@@ -39,7 +41,7 @@ class ReminderBuilder {
     fun build(): Reminder {
         return Reminder(
             reminderId = id,
-            reminderTitle = reminderTitle,
+            reminderTitle = reminderTitle.text,
             reminderContent = reminderContent,
             reminderType = reminderType,
             remindersList = reminderList,

@@ -1,5 +1,6 @@
 package com.ernestschcneider.remindersapp.remindernote
 
+import androidx.compose.ui.test.ExperimentalTestApi
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.assertIsNotDisplayed
 import androidx.compose.ui.test.junit4.AndroidComposeTestRule
@@ -7,10 +8,16 @@ import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
 import androidx.compose.ui.test.performTextInput
+import androidx.compose.ui.test.performTextReplacement
 import androidx.test.ext.junit.rules.ActivityScenarioRule
-import com.ernestschcneider.models.Reminder
 import com.ernestschcneider.remindersapp.MainActivity
-import com.ernestschcneider.remindersapp.core.testtags.*
+import com.ernestschcneider.remindersapp.core.testtags.INFORMATIVE_DIALOG
+import com.ernestschcneider.remindersapp.core.testtags.REMINDER_NOTE_SAVE_BUTTON
+import com.ernestschcneider.remindersapp.core.testtags.REMINDER_NOTE_TEXT_FIELD
+import com.ernestschcneider.remindersapp.core.testtags.REMINDER_NOTE_TOP_BAR
+import com.ernestschcneider.remindersapp.core.testtags.TEXT_INPUT_TOP_BAR
+import com.ernestschcneider.remindersapp.core.testtags.TEX_INPUT_FOR_TEST
+import com.ernestschcneider.remindersapp.models.Reminder
 import com.ernestschcneider.remindersapp.reminders.launchRemindersScreen
 
 
@@ -36,6 +43,7 @@ fun launchReminderNoteScreenWithNote(
 }
 
 
+@OptIn(ExperimentalTestApi::class)
 class ReminderNoteRobot(
     private val rule: AndroidComposeTestRule<ActivityScenarioRule<MainActivity>, MainActivity>
 ) {
@@ -50,6 +58,12 @@ class ReminderNoteRobot(
             .performClick()
         rule.onNodeWithTag(TEXT_INPUT_TOP_BAR)
             .performTextInput(TEX_INPUT_FOR_TEST)
+    }
+
+
+    fun clickModifyTitle() {
+        rule.onNodeWithTag(TEXT_INPUT_TOP_BAR)
+            .performTextReplacement(TEX_INPUT_FOR_TEST)
     }
 
     fun clickAddNote() {
@@ -97,8 +111,8 @@ class ReminderNoteVerification(
         rule.onNodeWithText(reminderNote.reminderContent).assertIsDisplayed()
     }
 
-    fun reminderNoteModifiedTitleIsShown(reminderOldTitle: String) {
-        rule.onNodeWithText(reminderOldTitle + TEX_INPUT_FOR_TEST)
+    fun reminderNoteModifiedTitleIsShown() {
+        rule.onNodeWithText(TEX_INPUT_FOR_TEST )
             .assertIsDisplayed()
     }
 

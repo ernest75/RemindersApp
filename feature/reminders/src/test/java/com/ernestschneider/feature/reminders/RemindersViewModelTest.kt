@@ -1,9 +1,13 @@
 package com.ernestschneider.feature.reminders
 
+import androidx.compose.ui.text.input.TextFieldValue
 import com.ernestschcneider.feature.reminders.RemindersViewModel
-import com.ernestschcneider.models.Reminder
-import com.ernestschcneider.models.ReminderListItem
-import com.ernestschcneider.models.ReminderType
+import com.ernestschcneider.feature.reminders.useaces.GetRemindersUseCase
+import com.ernestschcneider.feature.reminders.useaces.RemoveReminderUseCase
+import com.ernestschcneider.feature.reminders.useaces.UpdateReminderPositionUseCase
+import com.ernestschcneider.remindersapp.models.Reminder
+import com.ernestschcneider.remindersapp.models.ReminderListItem
+import com.ernestschcneider.remindersapp.models.ReminderType
 import com.ernestschcneider.remindersapp.core.dispatchers.CoroutineTestExtension
 import com.ernestschneider.testutils.InMemoryLocalRepo
 import com.ernestschneider.testutils.ReminderBuilder
@@ -18,15 +22,20 @@ import org.junit.jupiter.api.extension.ExtendWith
 class RemindersViewModelTest {
 
     private val localRepo = InMemoryLocalRepo()
+    private val getRemindersUseCase = GetRemindersUseCase(localRepo)
+    private val removeReminderUseCase = RemoveReminderUseCase(localRepo)
+    private val updateReminderPositionUseCase = UpdateReminderPositionUseCase(localRepo)
     private val backgroundDispatcher = Dispatchers.Unconfined
     private val viewModel = RemindersViewModel(
-        localRepo = localRepo,
-        backgroundDispatcher = backgroundDispatcher
+        getRemindersUseCase = getRemindersUseCase,
+        removeReminderUseCase = removeReminderUseCase,
+        updateReminderPositionUseCase = updateReminderPositionUseCase,
+        backgroundDispatcher = backgroundDispatcher,
     )
 
     private val reminderNote1 = ReminderBuilder.aReminder()
         .withId("1")
-        .withReminderTitle("Title1")
+        .withReminderTitle(TextFieldValue("Title1"))
         .withReminderContent("Content1")
         .withReminderPosition(0)
         .withReminderType(ReminderType.Note)
@@ -34,7 +43,7 @@ class RemindersViewModelTest {
 
     private val reminderList1 = ReminderBuilder.aReminder()
         .withId("2")
-        .withReminderTitle("Title2")
+        .withReminderTitle(TextFieldValue("Title2"))
         .withReminderType(ReminderType.List)
         .withReminderPosition(1)
         .withReminderList(
@@ -51,8 +60,8 @@ class RemindersViewModelTest {
     }
 
     @Test
-    fun loadingReminders() {
-        val reminders = localRepo.getReminders()
+    fun loadingReminders() = runTest {
+        val reminders = getRemindersUseCase.invoke()
 
         viewModel.loadReminders()
 
@@ -62,8 +71,9 @@ class RemindersViewModelTest {
 
     @Test
     fun removeItem() {
-        localRepo.saveReminders(listOf(reminderNote1, reminderList1))
-        val reminder = localRepo.getReminderAt(1)
+        val reminders = listOf(reminderNote1, reminderList1)
+        localRepo.saveReminders(reminders)
+        val reminder = reminders.last()
 
         viewModel.removeItem(reminder)
 

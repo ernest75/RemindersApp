@@ -1,12 +1,13 @@
 package com.ernestschcneider.remindersapp.reminderlist
 
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
-import com.ernestschcneider.models.ReminderListItem
-import com.ernestschcneider.models.ReminderType
+import androidx.compose.ui.text.input.TextFieldValue
+import com.ernestschcneider.remindersapp.models.ReminderListItem
+import com.ernestschcneider.remindersapp.models.ReminderType
 import com.ernestschcneider.remindersapp.MainActivity
 import com.ernestschcneider.remindersapp.core.testtags.REMINDER_LIST_TITLE
-import com.ernestschcneider.remindersapp.local.HiltWrapper_LocalModule
-import com.ernestschcneider.remindersapp.local.StorageRepo
+import com.ernestschcneider.remindersapp.data.local.repo.LocalModule
+import com.ernestschcneider.remindersapp.local.LocalRepo
 import com.ernestschneider.testutils.InMemoryLocalRepo
 import com.ernestschneider.testutils.ReminderBuilder
 import dagger.hilt.android.testing.BindValue
@@ -17,7 +18,7 @@ import org.junit.Rule
 import org.junit.Test
 
 @HiltAndroidTest
-@UninstallModules(HiltWrapper_LocalModule::class)
+@UninstallModules(LocalModule::class)
 class ReminderListTest {
 
     @get: Rule(order = 0)
@@ -32,7 +33,7 @@ class ReminderListTest {
     )
     private val reminderList = ReminderBuilder.aReminder()
         .withId("2")
-        .withReminderTitle(REMINDER_LIST_TITLE)
+        .withReminderTitle(TextFieldValue(REMINDER_LIST_TITLE))
         .withReminderType(ReminderType.List)
         .withReminderPosition(1)
         .withReminderList(
@@ -43,7 +44,7 @@ class ReminderListTest {
 
     @BindValue
     @JvmField
-    val localRepo: StorageRepo = InMemoryLocalRepo(remindersList)
+    val localRepo: LocalRepo = InMemoryLocalRepo(remindersList)
 
     @Test
     fun onEmptyTitleNoteListSaveButtonNotShown() {
