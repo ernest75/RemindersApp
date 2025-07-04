@@ -1,6 +1,6 @@
 [versions]
 minSdkVersion = "26"
-compileSdkVersion = "34"
+compileSdkVersion = "35"
 kotlinCompilerExtensionVersion = "1.5.10"
 javaVersion = "17"
 roomVersion = "2.6.1"
