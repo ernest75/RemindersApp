@@ -3,6 +3,7 @@ plugins {
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.hilt.android)
     alias(libs.plugins.kapt)
+    alias(libs.plugins.ksp)
 }
 
 android {
@@ -43,7 +44,10 @@ dependencies {
     implementation(libs.gson)
     implementation(libs.bundles.hilt)
 
-    kapt(libs.room.compiler)
+    implementation(libs.room.runtime)
+    implementation(libs.room.ktx)
+    ksp(libs.room.compiler)
+
     kapt(libs.hilt.compiler)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
